@@ -1,5 +1,5 @@
 {
-  "id": "js-305-boss-form-validator",
+  "id": "js-306-boss-form-validator",
   "title": "Босс: Связка React Hook Form + Zod (z.infer и zodResolver)",
   "track": "logic",
   "level": 3,

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const layoutTasks = [
-  // ================= LEVEL 2 (Tailwind CSS Basics & Grid) =================
+  // ================= LEVEL 2 (Tailwind CSS Basics & Grid - 5 задач) =================
   {
     id: 'layout-201-grid-two-cols',
     title: 'Tailwind Grid: сетка из двух карточек',
@@ -101,7 +101,38 @@ const layoutTasks = [
     solution: '<article class="plan-card h-[200px] p-5 flex flex-col justify-between bg-slate-800 text-slate-50 rounded-xl">\n  <div>\n    <h3 class="m-0 mb-1.5 text-lg font-bold">Pro Stack</h3>\n    <p class="m-0 text-xs text-slate-400">Полный доступ к 39 технологиям</p>\n  </div>\n  <button class="bg-sky-400 text-slate-900 border-none p-2.5 rounded-lg font-bold" type="button">Выбрать тариф</button>\n</article>'
   },
   {
-    id: 'layout-204-boss-dashboard',
+    id: 'layout-204-tailwind-alert',
+    title: 'Tailwind Callout: информационный блок с акцентной полосой слева',
+    track: 'layout',
+    level: 2,
+    isBoss: false,
+    topic: 'tailwind-borders',
+    mapTopics: ['Tailwind CSS', 'Vite', 'ESLint'],
+    learn: 'Боковой акцент border-l-4 border-sky-400 и внутренние отступы p-4 rounded-lg.',
+    needsDom: true,
+    codeLanguage: 'tailwind',
+    prompt: 'Оформи блок предупреждения линтера .callout классами Tailwind: левая рамка 4px цвета sky-400, паддинг 16px, скругление 8px и флекс-колонка с шагом 4px.',
+    specs: [
+      'Добавь на .callout классы: border-l-4 border-sky-400 p-4 rounded-lg flex flex-col gap-1'
+    ],
+    starterHtml: '<div class="callout bg-slate-900 text-slate-50">\n  <strong class="text-sm">ESLint Flat Config</strong>\n  <span class="text-xs text-slate-400">Все правила типизации активны</span>\n</div>\n',
+    starterCss: '',
+    targetHtml: '<div class="callout border-l-4 border-sky-400 p-4 rounded-lg flex flex-col gap-1 bg-slate-900 text-slate-50">\n  <strong class="text-sm">ESLint Flat Config</strong>\n  <span class="text-xs text-slate-400">Все правила типизации активны</span>\n</div>',
+    targetCss: '',
+    hints: [
+      { tier: 1, text: 'Левая рамка шириной 4px в Tailwind — это класс border-l-4.' },
+      { tier: 2, text: 'Паддинг 16px — p-4, шаг 4px — gap-1.' },
+      { tier: 3, text: 'Добавь к .callout: border-l-4 border-sky-400 p-4 rounded-lg flex flex-col gap-1.' }
+    ],
+    checks: [
+      { type: 'computedStyle', name: 'Левая граница 4px (border-l-4)', selector: '.callout', property: 'borderLeftWidth', expected: '4px' },
+      { type: 'computedStyle', name: 'Паддинг 16px (p-4)', selector: '.callout', property: 'paddingTop', expected: '16px' },
+      { type: 'computedStyle', name: 'Шаг 4px (gap-1)', selector: '.callout', property: 'rowGap', expected: '4px' }
+    ],
+    solution: '<div class="callout border-l-4 border-sky-400 p-4 rounded-lg flex flex-col gap-1 bg-slate-900 text-slate-50">\n  <strong class="text-sm">ESLint Flat Config</strong>\n  <span class="text-xs text-slate-400">Все правила типизации активны</span>\n</div>'
+  },
+  {
+    id: 'layout-205-boss-dashboard',
     title: 'Босс: Адаптивный каркас дашборда на Tailwind Grid',
     track: 'layout',
     level: 2,
@@ -134,7 +165,7 @@ const layoutTasks = [
     solution: '<div class="dashboard grid grid-cols-[120px_1fr] gap-4">\n  <aside class="side bg-slate-900 text-slate-400 p-3.5 rounded-xl text-xs">Меню</aside>\n  <main class="stats grid grid-cols-2 gap-3">\n    <div class="bg-slate-800 text-slate-50 p-3.5 rounded-xl font-bold">XP: 450</div>\n    <div class="bg-slate-800 text-slate-50 p-3.5 rounded-xl font-bold">Streak: 7</div>\n  </main>\n</div>'
   },
 
-  // ================= LEVEL 3 (shadcn/ui + React Ecosystem) =================
+  // ================= LEVEL 3 (shadcn/ui + React Ecosystem - 5 задач) =================
   {
     id: 'layout-301-shadcn-input',
     title: 'shadcn/ui FormItem: поле ввода с ошибкой валидации Zod',
@@ -232,7 +263,39 @@ const layoutTasks = [
     solution: '<div class="toast flex justify-between items-center p-3.5 rounded-[10px] bg-slate-900 text-slate-50 border border-slate-700">\n  <div>\n    <strong class="text-sm">Прогресс сохранён</strong>\n    <p class="m-0 mt-1 text-xs text-slate-400">Начислено +25 XP</p>\n  </div>\n  <button class="bg-transparent border-none text-slate-400 text-sm" type="button">✕</button>\n</div>'
   },
   {
-    id: 'layout-304-boss-auth-card',
+    id: 'layout-304-shadcn-avatar',
+    title: 'shadcn/ui Avatar Profile: карточка профиля с инициалами',
+    track: 'layout',
+    level: 3,
+    isBoss: false,
+    topic: 'shadcn-avatar',
+    mapTopics: ['shadcn/ui', 'React', 'Tailwind CSS'],
+    learn: 'Центрирование инициалов внутри круглого AvatarFallback через flex items-center justify-center w-10 h-10 rounded-full.',
+    needsDom: true,
+    codeLanguage: 'tailwind',
+    prompt: 'Оформи карточку .user-row (флекс по центру с gap 12px и паддингом 12px) и круглый аватар .avatar-fallback (40×40px, идеально отцентрированный текст).',
+    specs: [
+      'Добавь на .user-row классы: flex items-center gap-3 p-3',
+      'Добавь на .avatar-fallback классы: w-10 h-10 rounded-full flex items-center justify-center'
+    ],
+    starterHtml: '<div class="user-row bg-slate-800 text-slate-50 rounded-xl">\n  <div class="avatar-fallback bg-sky-500 text-slate-950 font-bold text-xs">DU</div>\n  <div>\n    <div class="text-sm font-bold">Daniela</div>\n    <div class="text-xs text-slate-400">Full-Stack Engineer</div>\n  </div>\n</div>\n',
+    starterCss: '',
+    targetHtml: '<div class="user-row flex items-center gap-3 p-3 bg-slate-800 text-slate-50 rounded-xl">\n  <div class="avatar-fallback w-10 h-10 rounded-full flex items-center justify-center bg-sky-500 text-slate-950 font-bold text-xs">DU</div>\n  <div>\n    <div class="text-sm font-bold">Daniela</div>\n    <div class="text-xs text-slate-400">Full-Stack Engineer</div>\n  </div>\n</div>',
+    targetCss: '',
+    hints: [
+      { tier: 1, text: '40px в Tailwind — это 10 (w-10 h-10).' },
+      { tier: 2, text: 'Центрирование инициалов: flex items-center justify-center.' },
+      { tier: 3, text: 'На .user-row добавь flex items-center gap-3 p-3, на .avatar-fallback — w-10 h-10 rounded-full flex items-center justify-center.' }
+    ],
+    checks: [
+      { type: 'boundingRect', name: 'Размер .avatar-fallback 40px (w-10)', selector: '.avatar-fallback', property: 'width', expected: 40, tolerance: 2 },
+      { type: 'computedStyle', name: 'Центрирование инициалов по горизонтали', selector: '.avatar-fallback', property: 'justifyContent', expected: 'center' },
+      { type: 'computedStyle', name: 'Отступ в .user-row равен 12px (gap-3)', selector: '.user-row', property: 'columnGap', expected: '12px' }
+    ],
+    solution: '<div class="user-row flex items-center gap-3 p-3 bg-slate-800 text-slate-50 rounded-xl">\n  <div class="avatar-fallback w-10 h-10 rounded-full flex items-center justify-center bg-sky-500 text-slate-950 font-bold text-xs">DU</div>\n  <div>\n    <div class="text-sm font-bold">Daniela</div>\n    <div class="text-xs text-slate-400">Full-Stack Engineer</div>\n  </div>\n</div>'
+  },
+  {
+    id: 'layout-305-boss-auth-card',
     title: 'Босс: Карточка авторизации shadcn/ui Card + Footer',
     track: 'layout',
     level: 3,
@@ -265,7 +328,7 @@ const layoutTasks = [
     solution: '<section class="auth-card p-5 rounded-xl flex flex-col gap-4 bg-slate-800 text-slate-50">\n  <h3 class="m-0 text-base font-bold">Вход в VibeDojo</h3>\n  <div>\n    <input class="w-full px-2.5 py-2 rounded-md border border-slate-600 bg-slate-900 text-white" placeholder="Email" />\n  </div>\n  <footer class="auth-footer flex justify-end gap-2">\n    <button class="px-3 py-2 rounded-md border border-slate-600 bg-transparent text-slate-200" type="button">Отмена</button>\n    <button class="px-3 py-2 rounded-md border-none bg-sky-400 text-slate-900 font-bold" type="button">Войти</button>\n  </footer>\n</section>'
   },
 
-  // ================= LEVEL 4 (Next.js, Vitest, Playwright UI) =================
+  // ================= LEVEL 4 (Next.js, Vitest, Playwright UI - 5 задач) =================
   {
     id: 'layout-401-skeleton-card',
     title: 'Next.js Loading UI: Skeleton-карточка на Tailwind',
@@ -362,7 +425,39 @@ const layoutTasks = [
     solution: '<div class="test-bar h-12 px-4 flex justify-between items-center bg-emerald-900 text-slate-50 rounded-[10px]">\n  <span class="bg-emerald-500 text-emerald-950 px-2 py-1 rounded font-bold text-xs">PASS</span>\n  <div class="counters flex gap-3 text-xs">\n    <span>12 passed</span>\n    <span>180ms</span>\n  </div>\n</div>'
   },
   {
-    id: 'layout-404-boss-playwright-report',
+    id: 'layout-404-nextjs-nav',
+    title: 'Next.js App Router: верхняя панель навигации Layout',
+    track: 'layout',
+    level: 4,
+    isBoss: false,
+    topic: 'nextjs-layout',
+    mapTopics: ['Next.js', 'React', 'Tailwind CSS'],
+    learn: 'Шапка root layout в Next.js: h-14 (56px) px-5 flex justify-between items-center.',
+    needsDom: true,
+    codeLanguage: 'tailwind',
+    prompt: 'Оформи корневую шапку Next.js .next-header высотой 56px с горизонтальным отступом 20px и разносом элементов по краям.',
+    specs: [
+      'Добавь на .next-header классы: h-14 px-5 flex justify-between items-center',
+      'h-14 = 56px, px-5 = 20px'
+    ],
+    starterHtml: '<header class="next-header bg-slate-900 text-slate-50 rounded-xl border border-slate-700">\n  <strong class="text-sm">▲ Next.js App</strong>\n  <nav class="flex gap-3 text-xs text-slate-300">\n    <span>Docs</span>\n    <span class="text-sky-400 font-bold">Playground</span>\n  </nav>\n</header>\n',
+    starterCss: '',
+    targetHtml: '<header class="next-header h-14 px-5 flex justify-between items-center bg-slate-900 text-slate-50 rounded-xl border border-slate-700">\n  <strong class="text-sm">▲ Next.js App</strong>\n  <nav class="flex gap-3 text-xs text-slate-300">\n    <span>Docs</span>\n    <span class="text-sky-400 font-bold">Playground</span>\n  </nav>\n</header>',
+    targetCss: '',
+    hints: [
+      { tier: 1, text: '56px в шкале Tailwind — это h-14 (14 × 4px).' },
+      { tier: 2, text: 'Горизонтальный паддинг 20px — это px-5.' },
+      { tier: 3, text: 'Добавь к .next-header: h-14 px-5 flex justify-between items-center.' }
+    ],
+    checks: [
+      { type: 'boundingRect', name: 'Высота шапки 56px (h-14)', selector: '.next-header', property: 'height', expected: 56, tolerance: 2 },
+      { type: 'computedStyle', name: 'Разнос по краям justify-between', selector: '.next-header', property: 'justifyContent', expected: 'space-between' },
+      { type: 'computedStyle', name: 'Паддинг слева 20px (px-5)', selector: '.next-header', property: 'paddingLeft', expected: '20px' }
+    ],
+    solution: '<header class="next-header h-14 px-5 flex justify-between items-center bg-slate-900 text-slate-50 rounded-xl border border-slate-700">\n  <strong class="text-sm">▲ Next.js App</strong>\n  <nav class="flex gap-3 text-xs text-slate-300">\n    <span>Docs</span>\n    <span class="text-sky-400 font-bold">Playground</span>\n  </nav>\n</header>'
+  },
+  {
+    id: 'layout-405-boss-playwright-report',
     title: 'Босс: Инспектор трассировки Playwright Trace Viewer',
     track: 'layout',
     level: 4,
@@ -394,7 +489,7 @@ const layoutTasks = [
     solution: '<div class="pw-report bg-slate-900 text-slate-50 p-3 rounded-xl">\n  <header class="pw-header h-11 flex justify-between items-center border-b border-slate-700 mb-3 text-xs">\n    <strong>checkout.spec.ts</strong>\n    <span>3 passed (1.2s)</span>\n  </header>\n  <div class="pw-body grid grid-cols-[140px_1fr] gap-3">\n    <aside class="pw-steps bg-slate-800 p-3 rounded-lg text-xs">1. page.goto<br/>2. click #pay</aside>\n    <section class="pw-screen bg-slate-800 p-3 rounded-lg text-xs">Скриншот 1280×720</section>\n  </div>\n</div>'
   },
 
-  // ================= LEVEL 5 (Prisma Studio, Redis, Express UI) =================
+  // ================= LEVEL 5 (Prisma Studio, Redis, Express UI - 5 задач) =================
   {
     id: 'layout-501-prisma-row',
     title: 'Prisma Studio: строка записи PostgreSQL на Tailwind Grid',
@@ -491,7 +586,38 @@ const layoutTasks = [
     solution: '<div class="route-item flex items-center gap-3 p-3 bg-slate-800 text-slate-50 rounded-[10px]">\n  <span class="method w-16 bg-emerald-500 text-emerald-950 text-center py-1 rounded font-bold text-xs">POST</span>\n  <code class="flex-1 text-xs">/api/v1/tasks</code>\n  <span class="text-emerald-500 font-bold text-xs">201</span>\n</div>'
   },
   {
-    id: 'layout-504-boss-prisma-explorer',
+    id: 'layout-504-express-health',
+    title: 'Node.js & Express: виджет Healthcheck сервисов',
+    track: 'layout',
+    level: 5,
+    isBoss: false,
+    topic: 'node-health',
+    mapTopics: ['Node.js', 'Express', 'PostgreSQL', 'Redis'],
+    learn: 'Двухколоночная сетка статусов сервисов grid grid-cols-2 gap-3 p-3.5.',
+    needsDom: true,
+    codeLanguage: 'tailwind',
+    prompt: 'Оформи блок статусов микросервисов .health-grid в 2 равные колонки с отступом 12px и паддингом 14px.',
+    specs: [
+      'Добавь на .health-grid классы: grid grid-cols-2 gap-3 p-3.5'
+    ],
+    starterHtml: '<div class="health-grid bg-slate-900 text-slate-50 rounded-xl">\n  <div class="bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400">Postgres · 2ms</div>\n  <div class="bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400">Redis · 1ms</div>\n</div>\n',
+    starterCss: '',
+    targetHtml: '<div class="health-grid grid grid-cols-2 gap-3 p-3.5 bg-slate-900 text-slate-50 rounded-xl">\n  <div class="bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400">Postgres · 2ms</div>\n  <div class="bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400">Redis · 1ms</div>\n</div>',
+    targetCss: '',
+    hints: [
+      { tier: 1, text: 'Две равные колонки — grid grid-cols-2.' },
+      { tier: 2, text: 'gap-3 = 12px, p-3.5 = 14px.' },
+      { tier: 3, text: 'Добавь к .health-grid: grid grid-cols-2 gap-3 p-3.5.' }
+    ],
+    checks: [
+      { type: 'computedStyle', name: '.health-grid использует grid', selector: '.health-grid', property: 'display', expected: 'grid' },
+      { type: 'computedStyle', name: 'Отступ gap-3 равен 12px', selector: '.health-grid', property: 'columnGap', expected: '12px' },
+      { type: 'computedStyle', name: 'Паддинг p-3.5 равен 14px', selector: '.health-grid', property: 'paddingTop', expected: '14px' }
+    ],
+    solution: '<div class="health-grid grid grid-cols-2 gap-3 p-3.5 bg-slate-900 text-slate-50 rounded-xl">\n  <div class="bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400">Postgres · 2ms</div>\n  <div class="bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400">Redis · 1ms</div>\n</div>'
+  },
+  {
+    id: 'layout-505-boss-prisma-explorer',
     title: 'Босс: Панель Prisma Studio (Toolbar + Data Grid)',
     track: 'layout',
     level: 5,
@@ -523,7 +649,7 @@ const layoutTasks = [
     solution: '<div class="studio bg-slate-900 text-slate-50 p-3.5 rounded-xl">\n  <header class="studio-bar h-12 flex justify-between items-center text-xs">\n    <strong>Table: User</strong>\n    <span>Rows: 128</span>\n  </header>\n  <div class="studio-grid grid grid-cols-[80px_1fr_100px] gap-2">\n    <div class="bg-slate-800 p-2 rounded text-xs font-mono">id</div>\n    <div class="bg-slate-800 p-2 rounded text-xs font-mono">email</div>\n    <div class="bg-slate-800 p-2 rounded text-xs font-mono">status</div>\n  </div>\n</div>'
   },
 
-  // ================= LEVEL 6 (FastAPI, Pydantic, Alembic UI) =================
+  // ================= LEVEL 6 (FastAPI, Pydantic, Alembic, pytest UI - 5 задач) =================
   {
     id: 'layout-601-fastapi-swagger',
     title: 'FastAPI Swagger UI: строка GET-эндпоинта',
@@ -618,7 +744,38 @@ const layoutTasks = [
     solution: '<div class="rev-card p-3 rounded-lg flex justify-between items-center bg-slate-900 text-slate-50 border-l-4 border-sky-400">\n  <div>\n    <strong class="text-xs">add_users_table</strong>\n    <div class="text-xs text-slate-400 font-mono mt-1">rev: 8f1a2b3c -> head</div>\n  </div>\n  <span class="bg-sky-500 text-white px-2 py-1 rounded text-xs font-bold">APPLIED</span>\n</div>'
   },
   {
-    id: 'layout-604-boss-fastapi-inspector',
+    id: 'layout-604-pytest-matrix',
+    title: 'pytest Report: строка параметризованного прогона',
+    track: 'layout',
+    level: 6,
+    isBoss: false,
+    topic: 'pytest-ui',
+    mapTopics: ['pytest', 'Python', 'Tailwind CSS'],
+    learn: 'Выравнивание имени теста, параметров и бейджа PASSED через h-10 px-3 flex justify-between items-center.',
+    needsDom: true,
+    codeLanguage: 'tailwind',
+    prompt: 'Оформи строку отчёта pytest .pytest-row высотой 40px с горизонтальным паддингом 12px, флекс-раскладкой со space-between и центрированием.',
+    specs: [
+      'Добавь на .pytest-row классы: h-10 px-3 flex justify-between items-center'
+    ],
+    starterHtml: '<div class="pytest-row bg-slate-800 text-slate-50 rounded-lg font-mono text-xs">\n  <span>test_discount[100-90]</span>\n  <span class="text-emerald-400 font-bold">PASSED</span>\n</div>\n',
+    starterCss: '',
+    targetHtml: '<div class="pytest-row h-10 px-3 flex justify-between items-center bg-slate-800 text-slate-50 rounded-lg font-mono text-xs">\n  <span>test_discount[100-90]</span>\n  <span class="text-emerald-400 font-bold">PASSED</span>\n</div>',
+    targetCss: '',
+    hints: [
+      { tier: 1, text: 'Высота 40px — это h-10, горизонтальный отступ 12px — px-3.' },
+      { tier: 2, text: 'Разнос по краям: flex justify-between items-center.' },
+      { tier: 3, text: 'Добавь к .pytest-row: h-10 px-3 flex justify-between items-center.' }
+    ],
+    checks: [
+      { type: 'boundingRect', name: 'Высота строки 40px (h-10)', selector: '.pytest-row', property: 'height', expected: 40, tolerance: 2 },
+      { type: 'computedStyle', name: 'Разнос justify-between', selector: '.pytest-row', property: 'justifyContent', expected: 'space-between' },
+      { type: 'computedStyle', name: 'Паддинг слева 12px (px-3)', selector: '.pytest-row', property: 'paddingLeft', expected: '12px' }
+    ],
+    solution: '<div class="pytest-row h-10 px-3 flex justify-between items-center bg-slate-800 text-slate-50 rounded-lg font-mono text-xs">\n  <span>test_discount[100-90]</span>\n  <span class="text-emerald-400 font-bold">PASSED</span>\n</div>'
+  },
+  {
+    id: 'layout-605-boss-fastapi-inspector',
     title: 'Босс: Документация эндпоинта FastAPI (200 OK / 422 Error)',
     track: 'layout',
     level: 6,
@@ -651,7 +808,7 @@ const layoutTasks = [
     solution: '<section class="api-doc p-4 flex flex-col gap-3 bg-slate-900 text-slate-50 rounded-xl">\n  <header class="font-mono font-bold text-xs">POST /api/users (UserCreate)</header>\n  <div class="responses grid grid-cols-2 gap-2.5">\n    <div class="p-2.5 rounded-lg text-xs font-semibold bg-emerald-900 text-emerald-300">200 OK · UserOut</div>\n    <div class="p-2.5 rounded-lg text-xs font-semibold bg-red-900 text-red-300">422 Validation Error</div>\n  </div>\n</section>'
   },
 
-  // ================= LEVEL 7 (GitHub Actions, Sentry, Docker, AWS/Vercel UI) =================
+  // ================= LEVEL 7 (GitHub Actions, Sentry, Docker, Vercel, AWS UI - 5 задач) =================
   {
     id: 'layout-701-gh-actions-pipeline',
     title: 'GitHub Actions: пайплайн из 3 джобов на Tailwind Grid',
@@ -747,7 +904,38 @@ const layoutTasks = [
     solution: '<div class="container-metric h-[84px] p-3.5 flex flex-col justify-between bg-slate-900 text-slate-50 rounded-[10px]">\n  <div class="text-xs font-semibold">nginx-proxy · CPU 35%</div>\n  <div class="h-2 bg-slate-700 rounded-full overflow-hidden">\n    <div class="w-[35%] h-full bg-sky-400"></div>\n  </div>\n</div>'
   },
   {
-    id: 'layout-704-boss-devops-center',
+    id: 'layout-704-vercel-deployments',
+    title: 'Vercel & GitHub: карточка Preview Deployment',
+    track: 'layout',
+    level: 7,
+    isBoss: false,
+    topic: 'vercel-ui',
+    mapTopics: ['Vercel', 'GitHub', 'Git', 'Tailwind CSS'],
+    learn: 'Оформление строки деплоя ветки с бейджем Ready и таймингом сборки.',
+    needsDom: true,
+    codeLanguage: 'tailwind',
+    prompt: 'Оформи карточку деплоя .deploy-card классами Tailwind: паддинг 14px, скругление 12px, флекс с разносом по краям и центрированием по вертикали.',
+    specs: [
+      'Добавь на .deploy-card классы: p-3.5 rounded-xl flex justify-between items-center'
+    ],
+    starterHtml: '<div class="deploy-card bg-slate-900 text-slate-50 border border-slate-700">\n  <div>\n    <strong class="text-xs">vibedojo-git-feat-ui.vercel.app</strong>\n    <div class="text-xs text-slate-400 font-mono mt-1">branch: feat/ui · 4a9c12e</div>\n  </div>\n  <span class="bg-emerald-500 text-emerald-950 px-2.5 py-1 rounded-full text-xs font-bold">Ready</span>\n</div>\n',
+    starterCss: '',
+    targetHtml: '<div class="deploy-card p-3.5 rounded-xl flex justify-between items-center bg-slate-900 text-slate-50 border border-slate-700">\n  <div>\n    <strong class="text-xs">vibedojo-git-feat-ui.vercel.app</strong>\n    <div class="text-xs text-slate-400 font-mono mt-1">branch: feat/ui · 4a9c12e</div>\n  </div>\n  <span class="bg-emerald-500 text-emerald-950 px-2.5 py-1 rounded-full text-xs font-bold">Ready</span>\n</div>',
+    targetCss: '',
+    hints: [
+      { tier: 1, text: 'p-3.5 = 14px, rounded-xl = 12px.' },
+      { tier: 2, text: 'Разнос по краям: flex justify-between items-center.' },
+      { tier: 3, text: 'Добавь к .deploy-card: p-3.5 rounded-xl flex justify-between items-center.' }
+    ],
+    checks: [
+      { type: 'computedStyle', name: 'Разнос justify-between', selector: '.deploy-card', property: 'justifyContent', expected: 'space-between' },
+      { type: 'computedStyle', name: 'Скругление 12px (rounded-xl)', selector: '.deploy-card', property: 'borderTopLeftRadius', expected: '12px' },
+      { type: 'computedStyle', name: 'Паддинг 14px (p-3.5)', selector: '.deploy-card', property: 'paddingTop', expected: '14px' }
+    ],
+    solution: '<div class="deploy-card p-3.5 rounded-xl flex justify-between items-center bg-slate-900 text-slate-50 border border-slate-700">\n  <div>\n    <strong class="text-xs">vibedojo-git-feat-ui.vercel.app</strong>\n    <div class="text-xs text-slate-400 font-mono mt-1">branch: feat/ui · 4a9c12e</div>\n  </div>\n  <span class="bg-emerald-500 text-emerald-950 px-2.5 py-1 rounded-full text-xs font-bold">Ready</span>\n</div>'
+  },
+  {
+    id: 'layout-705-boss-devops-center',
     title: 'Босс: Production Control Center (AWS + Vercel + Docker + Sentry)',
     track: 'layout',
     level: 7,
@@ -781,6 +969,64 @@ const layoutTasks = [
 ];
 
 const logicTasks = [
+  // ================= LEVEL 1 ДОПОЛНЕНИЯ (Git, GitHub, pnpm) =================
+  {
+    id: 'js-06-git-ignore',
+    title: 'Git & GitHub: правила .gitignore и проверка секретов',
+    track: 'logic',
+    level: 1,
+    isBoss: false,
+    topic: 'git-workflow',
+    mapTopics: ['Git', 'GitHub'],
+    learn: 'Стандартный набор правил .gitignore (node_modules, dist, .env) для защиты репозитория от мусора и утечки ключей.',
+    needsDom: false,
+    codeLanguage: 'javascript',
+    prompt: 'Напиши функцию `shouldGitIgnore(filePath)`, которая возвращает `true`, если путь начинается с `"node_modules/"`, `"dist/"` или равен `".env"` либо `".env.local"`, иначе `false`.',
+    specs: [
+      'Секреты .env и .env.local никогда не должны попадать в Git',
+      'Папки сборки dist/ и зависимостей node_modules/ игнорируются'
+    ],
+    starterJs: 'function shouldGitIgnore(filePath) {\n  \n}\n',
+    hints: [
+      { tier: 1, text: 'Используй методы строки startsWith("node_modules/") и startsWith("dist/").' },
+      { tier: 2, text: 'Документация gitignore: https://git-scm.com/docs/gitignore' },
+      { tier: 3, text: 'return filePath.startsWith("node_modules/") || filePath.startsWith("dist/") || filePath === ".env" || filePath === ".env.local";' }
+    ],
+    tests: [
+      { name: 'игнорирует .env', call: 'shouldGitIgnore(".env")', expected: true },
+      { name: 'игнорирует node_modules', call: 'shouldGitIgnore("node_modules/react/index.js")', expected: true },
+      { name: 'пропускает исходники src/', call: 'shouldGitIgnore("src/App.tsx")', expected: false }
+    ],
+    solution: 'function shouldGitIgnore(filePath) {\n  return (\n    filePath.startsWith("node_modules/") ||\n    filePath.startsWith("dist/") ||\n    filePath === ".env" ||\n    filePath === ".env.local"\n  );\n}'
+  },
+  {
+    id: 'js-07-pnpm-scripts',
+    title: 'pnpm: генератор package.json со скриптами и packageManager',
+    track: 'logic',
+    level: 1,
+    isBoss: false,
+    topic: 'pnpm-config',
+    mapTopics: ['pnpm', 'JavaScript'],
+    learn: 'Фиксация версии пакетного менеджера через поле packageManager и стандартные скрипты dev/build/test в package.json.',
+    needsDom: false,
+    codeLanguage: 'javascript',
+    prompt: 'Напиши функцию `createPnpmPackageJson(name)`, которая возвращает объект `package.json`: `{ name, private: true, packageManager: "pnpm@10.0.0", scripts: { dev: "vite", build: "tsc -b && vite build", test: "vitest run" } }`.',
+    specs: [
+      'Поле packageManager должно быть равно "pnpm@10.0.0" (для Corepack)',
+      'Внутри scripts задай ключи dev, build и test'
+    ],
+    starterJs: 'function createPnpmPackageJson(name) {\n  \n}\n',
+    hints: [
+      { tier: 1, text: 'Corepack читает поле packageManager: "pnpm@10.0.0" для автоматического выбора версии pnpm.' },
+      { tier: 2, text: 'Документация pnpm: https://pnpm.io/package_json' },
+      { tier: 3, text: 'Верни объект с полями name, private: true, packageManager: "pnpm@10.0.0" и объектом scripts.' }
+    ],
+    tests: [
+      { name: 'создаёт манифест для pnpm', call: 'createPnpmPackageJson("vibe-dojo")', expected: { name: 'vibe-dojo', private: true, packageManager: 'pnpm@10.0.0', scripts: { dev: 'vite', build: 'tsc -b && vite build', test: 'vitest run' } } }
+    ],
+    solution: 'function createPnpmPackageJson(name) {\n  return {\n    name,\n    private: true,\n    packageManager: "pnpm@10.0.0",\n    scripts: {\n      dev: "vite",\n      build: "tsc -b && vite build",\n      test: "vitest run",\n    },\n  };\n}'
+  },
+
   // ================= LEVEL 2 (TypeScript, Tailwind cn, Vite, ESLint, Prettier) =================
   {
     id: 'js-201-cn-helper',
@@ -941,7 +1187,7 @@ const logicTasks = [
     solution: 'function createToolingConfig(singleQuote: boolean = true) {\n  return {\n    tsconfig: {\n      strict: true,\n      noUncheckedIndexedAccess: true,\n      target: "ES2022",\n    },\n    prettier: {\n      semi: true,\n      singleQuote,\n      tabWidth: 2,\n    },\n  };\n}'
   },
 
-  // ================= LEVEL 3 (React, Zustand, TanStack Query, React Hook Form, Zod) =================
+  // ================= LEVEL 3 (React, shadcn/ui, Zustand, TanStack Query, React Hook Form, Zod) =================
   {
     id: 'js-301-zustand-reducer',
     title: 'Zustand: создание типизированного стора create<State>()',
@@ -1069,7 +1315,37 @@ const logicTasks = [
     solution: 'const RegisterSchema = z.object({\n  email: z.string().email(),\n  password: z.string().min(8),\n  age: z.number().int().min(18),\n});'
   },
   {
-    id: 'js-305-boss-form-validator',
+    id: 'js-305-react-tsx-card',
+    title: 'React + shadcn/ui: типизированный TSX-компонент UserBadge',
+    track: 'logic',
+    level: 3,
+    isBoss: false,
+    topic: 'react-tsx',
+    mapTopics: ['React', 'shadcn/ui', 'TypeScript'],
+    learn: 'Объявление типа Props и написание функционального React-компонента с деструктуризацией пропсов и JSX.',
+    needsDom: false,
+    codeLanguage: 'typescript',
+    prompt: 'Объяви `type Props = { name: string; pro?: boolean };` и напиши React-компонент `export function UserBadge({ name, pro = false }: Props)`, который возвращает JSX `<Badge variant={pro ? "default" : "secondary"}>{name}</Badge>`.',
+    specs: [
+      'Объяви type Props = { name: string; pro?: boolean }',
+      'Деструктурируй { name, pro = false }: Props и верни <Badge ...>{name}</Badge>'
+    ],
+    starterJs: 'type Props = {\n  name: string;\n  pro?: boolean;\n};\n\nexport function UserBadge({ name, pro = false }: Props) {\n  \n}\n',
+    hints: [
+      { tier: 1, text: 'Передай проп variant={pro ? "default" : "secondary"} внутрь тега <Badge>.' },
+      { tier: 2, text: 'Документация React TypeScript: https://react.dev/learn/typescript' },
+      { tier: 3, text: 'return <Badge variant={pro ? "default" : "secondary"}>{name}</Badge>;' }
+    ],
+    codeChecks: [
+      { name: 'Объявлен тип пропсов type Props', pattern: 'type\\s+Props\\s*=\\s*\\{', expectedHint: 'type Props = { name: string; pro?: boolean }' },
+      { name: 'Сигнатура export function UserBadge({ name, pro = false }: Props)', pattern: 'function\\s+UserBadge\\(\\s*\\{\\s*name\\s*,\\s*pro\\s*=\\s*false\\s*\\}\\s*:\\s*Props\\s*\\)', expectedHint: 'function UserBadge({ name, pro = false }: Props)' },
+      { name: 'Возврат JSX <Badge variant={pro ? "default" : "secondary"}>{name}</Badge>', pattern: '<Badge\\s+variant=\\{pro\\s*\\?\\s*["\']default["\']\\s*:\\s*["\']secondary["\']\\}>\\{name\\}<\\/Badge>', expectedHint: '<Badge variant={pro ? "default" : "secondary"}>{name}</Badge>' }
+    ],
+    tests: [],
+    solution: 'type Props = {\n  name: string;\n  pro?: boolean;\n};\n\nexport function UserBadge({ name, pro = false }: Props) {\n  return <Badge variant={pro ? "default" : "secondary"}>{name}</Badge>;\n}'
+  },
+  {
+    id: 'js-306-boss-form-validator',
     title: 'Босс: Связка React Hook Form + Zod (z.infer и zodResolver)',
     track: 'logic',
     level: 3,
@@ -1222,7 +1498,37 @@ const logicTasks = [
     solution: 'function generateMetadata(slug: string) {\n  return {\n    title: `${slug} | VibeDojo`,\n    openGraph: { title: slug },\n  };\n}'
   },
   {
-    id: 'js-405-boss-test-suite-summary',
+    id: 'js-405-nextjs-dynamic-page',
+    title: 'Next.js 15 Server Component: асинхронный params в page.tsx',
+    track: 'logic',
+    level: 4,
+    isBoss: false,
+    topic: 'nextjs-server-page',
+    mapTopics: ['Next.js', 'React', 'TypeScript'],
+    learn: 'В Next.js 15 проп params в page.tsx является Promise<{ slug: string }>, который нужно распаковать через await params.',
+    needsDom: false,
+    codeLanguage: 'typescript',
+    prompt: 'Напиши асинхронный серверный компонент `export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> })`: распакуй `const { slug } = await params;` и верни JSX `<h1>{slug}</h1>`.',
+    specs: [
+      'Типизируй проп params как Promise<{ slug: string }>',
+      'Распакуй const { slug } = await params и верни <h1>{slug}</h1>'
+    ],
+    starterJs: 'export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {\n  \n}\n',
+    hints: [
+      { tier: 1, text: 'В Next.js 15 динамические параметры асинхронные: const { slug } = await params;' },
+      { tier: 2, text: 'Документация Next.js 15 Dynamic APIs: https://nextjs.org/docs/app/building-your-application/upgrading/version-15' },
+      { tier: 3, text: 'const { slug } = await params;\nreturn <h1>{slug}</h1>;' }
+    ],
+    codeChecks: [
+      { name: 'Тип params: Promise<{ slug: string }>', pattern: 'params\\s*:\\s*Promise<\\{\\s*slug\\s*:\\s*string\\s*\\}>', expectedHint: 'params: Promise<{ slug: string }>' },
+      { name: 'Асинхронное чтение const { slug } = await params', pattern: 'const\\s*\\{\\s*slug\\s*\\}\\s*=\\s*await\\s+params', expectedHint: 'const { slug } = await params' },
+      { name: 'Рендер заголовка <h1>{slug}</h1>', pattern: '<h1>\\{slug\\}<\\/h1>', expectedHint: 'return <h1>{slug}</h1>' }
+    ],
+    tests: [],
+    solution: 'export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {\n  const { slug } = await params;\n  return <h1>{slug}</h1>;\n}'
+  },
+  {
+    id: 'js-406-boss-test-suite-summary',
     title: 'Босс: E2E-тест авторизации на Playwright (test / page / expect)',
     track: 'logic',
     level: 4,
@@ -1350,21 +1656,21 @@ const logicTasks = [
   },
   {
     id: 'js-504-postgres-group-by',
-    title: 'PostgreSQL: SQL-запрос с GROUP BY, COUNT и HAVING',
+    title: 'PostgreSQL (PGlite): живой SQL-запрос с GROUP BY, COUNT и SUM',
     track: 'logic',
     level: 5,
     isBoss: false,
     topic: 'postgresql-sql',
     mapTopics: ['PostgreSQL', 'SQL'],
-    learn: 'Написание аналитического SQL-запроса с фильтрацией WHERE, группировкой GROUP BY и агрегацией COUNT / SUM.',
+    learn: 'Написание аналитического SQL-запроса, который реально исполняется движком PostgreSQL (PGlite) на таблице orders.',
     needsDom: false,
     codeLanguage: 'sql',
     prompt: 'Напиши SQL-запрос для PostgreSQL: выбери `status`, `COUNT(*) AS total_count` и `SUM(amount) AS total_amount` из таблицы `orders`, где `amount > 0`, сгруппируй по `status` (`GROUP BY status`) и отсортируй по `total_amount DESC`.',
     specs: [
-      'Используй SELECT status, COUNT(*) AS total_count, SUM(amount) AS total_amount',
-      'Укажи FROM orders, WHERE amount > 0, GROUP BY status и ORDER BY total_amount DESC'
+      'Запрос реально выполняется в движке PostgreSQL (PGlite) на таблице orders(id, status, amount)',
+      'Используй SELECT status, COUNT(*) AS total_count, SUM(amount) AS total_amount FROM orders WHERE amount > 0 GROUP BY status ORDER BY total_amount DESC;'
     ],
-    starterJs: '-- Напиши SQL-запрос для PostgreSQL\nSELECT \n',
+    starterJs: '-- Таблица: orders (id SERIAL, status TEXT, amount INTEGER)\nSELECT \n',
     hints: [
       { tier: 1, text: 'Порядок секций в SQL: SELECT -> FROM -> WHERE -> GROUP BY -> ORDER BY.' },
       { tier: 2, text: 'Документация PostgreSQL GROUP BY: https://www.postgresql.org/docs/current/queries-table-expressions.html' },
@@ -1372,15 +1678,44 @@ const logicTasks = [
     ],
     codeChecks: [
       { name: 'Агрегации COUNT(*) AS total_count и SUM(amount) AS total_amount', pattern: 'COUNT\\(\\*\\)\\s+AS\\s+total_count.*SUM\\(amount\\)\\s+AS\\s+total_amount', flags: 'is', expectedHint: 'COUNT(*) AS total_count, SUM(amount) AS total_amount' },
-      { name: 'Фильтрация FROM orders WHERE amount > 0', pattern: 'FROM\\s+orders\\s+WHERE\\s+amount\\s*>\\s*0', flags: 'is', expectedHint: 'FROM orders WHERE amount > 0' },
-      { name: 'Группировка GROUP BY status', pattern: 'GROUP\\s+BY\\s+status', flags: 'is', expectedHint: 'GROUP BY status' },
-      { name: 'Сортировка ORDER BY total_amount DESC', pattern: 'ORDER\\s+BY\\s+total_amount\\s+DESC', flags: 'is', expectedHint: 'ORDER BY total_amount DESC' }
+      { name: 'Группировка GROUP BY status', pattern: 'GROUP\\s+BY\\s+status', flags: 'is', expectedHint: 'GROUP BY status' }
     ],
     tests: [],
     solution: 'SELECT status, COUNT(*) AS total_count, SUM(amount) AS total_amount\nFROM orders\nWHERE amount > 0\nGROUP BY status\nORDER BY total_amount DESC;'
   },
   {
-    id: 'js-505-boss-rate-limiter',
+    id: 'js-505-node-env-config',
+    title: 'Node.js Runtime: чтение и валидация переменных окружения',
+    track: 'logic',
+    level: 5,
+    isBoss: false,
+    topic: 'node-env',
+    mapTopics: ['Node.js', 'TypeScript', 'PostgreSQL'],
+    learn: 'Fail-fast проверка обязательных переменных окружения (DATABASE_URL, PORT) при старте сервера Node.js.',
+    needsDom: false,
+    codeLanguage: 'typescript',
+    prompt: 'Напиши функцию `function loadServerEnv(env: Record<string, string | undefined>)`: если `env.DATABASE_URL` пуст, выброси `throw new Error("Missing DATABASE_URL")`. Иначе верни `{ dbUrl: env.DATABASE_URL, port: Number(env.PORT || 3000) }`.',
+    specs: [
+      'При отсутствии DATABASE_URL выбрасывай new Error("Missing DATABASE_URL")',
+      'Поле port приводится к числу Number(env.PORT || 3000)'
+    ],
+    starterJs: 'function loadServerEnv(env: Record<string, string | undefined>) {\n  \n}\n',
+    hints: [
+      { tier: 1, text: 'Проверь if (!env.DATABASE_URL) throw new Error("Missing DATABASE_URL");' },
+      { tier: 2, text: 'Документация Node.js process.env: https://nodejs.org/api/process.html#processenv' },
+      { tier: 3, text: 'if (!env.DATABASE_URL) throw new Error("Missing DATABASE_URL");\nreturn { dbUrl: env.DATABASE_URL, port: Number(env.PORT || 3000) };' }
+    ],
+    codeChecks: [
+      { name: 'Выброс ошибки throw new Error("Missing DATABASE_URL")', pattern: 'throw\\s+new\\s+Error\\(\\s*["\']Missing DATABASE_URL["\']\\s*\\)', expectedHint: 'throw new Error("Missing DATABASE_URL")' }
+    ],
+    tests: [
+      { name: 'валидный env с дефолтным портом 3000', call: 'loadServerEnv({ DATABASE_URL: "postgres://localhost/db" })', expected: { dbUrl: 'postgres://localhost/db', port: 3000 } },
+      { name: 'кастомный порт 8080', call: 'loadServerEnv({ DATABASE_URL: "postgres://localhost/db", PORT: "8080" })', expected: { dbUrl: 'postgres://localhost/db', port: 8080 } }
+    ],
+    solution: 'function loadServerEnv(env: Record<string, string | undefined>) {\n  if (!env.DATABASE_URL) {\n    throw new Error("Missing DATABASE_URL");\n  }\n  return {\n    dbUrl: env.DATABASE_URL,\n    port: Number(env.PORT || 3000),\n  };\n}'
+  },
+  {
+    id: 'js-506-boss-rate-limiter',
     title: 'Босс: Sliding Window Rate Limiter для Express + Redis',
     track: 'logic',
     level: 5,
@@ -1535,7 +1870,36 @@ const logicTasks = [
     solution: 'import pytest\n\n@pytest.mark.parametrize("price,expected", [(100, 90), (200, 180)])\ndef test_discount(price, expected):\n    assert apply_discount(price) == expected'
   },
   {
-    id: 'js-605-boss-fastapi-endpoint',
+    id: 'js-605-python-comprehension',
+    title: 'Python Typing & List Comprehension: фильтрация и нормализация',
+    track: 'logic',
+    level: 6,
+    isBoss: false,
+    topic: 'python-core',
+    mapTopics: ['Python', 'FastAPI'],
+    learn: 'Идиоматичный Python 3.12+: аннотации типов list[str] -> list[str] и списковые включения (list comprehension).',
+    needsDom: false,
+    codeLanguage: 'python',
+    prompt: 'Напиши на Python функцию с аннотациями типов `def normalize_tags(tags: list[str]) -> list[str]:`, которая возвращает списковое включение `[t.strip().lower() for t in tags if t.strip()]`.',
+    specs: [
+      'Типизируй сигнатуру: def normalize_tags(tags: list[str]) -> list[str]:',
+      'Используй list comprehension [t.strip().lower() for t in tags if t.strip()]'
+    ],
+    starterJs: 'def normalize_tags(tags: list[str]) -> list[str]:\n    \n',
+    hints: [
+      { tier: 1, text: 'В Python 3.10+ списки аннотируются встроенным типом list[str].' },
+      { tier: 2, text: 'Метод .strip() в Python — это аналог .trim() из JS.' },
+      { tier: 3, text: 'return [t.strip().lower() for t in tags if t.strip()]' }
+    ],
+    codeChecks: [
+      { name: 'Сигнатура с типами def normalize_tags(tags: list[str]) -> list[str]:', pattern: 'def\\s+normalize_tags\\(\\s*tags\\s*:\\s*list\\[str\\]\\s*\\)\\s*->\\s*list\\[str\\]\\s*:', expectedHint: 'def normalize_tags(tags: list[str]) -> list[str]:' },
+      { name: 'Списковое включение [t.strip().lower() for t in tags if t.strip()]', pattern: '\\[\\s*t\\.strip\\(\\)\\.lower\\(\\)\\s+for\\s+t\\s+in\\s+tags\\s+if\\s+t\\.strip\\(\\)\\s*\\]', expectedHint: '[t.strip().lower() for t in tags if t.strip()]' }
+    ],
+    tests: [],
+    solution: 'def normalize_tags(tags: list[str]) -> list[str]:\n    return [t.strip().lower() for t in tags if t.strip()]'
+  },
+  {
+    id: 'js-606-boss-fastapi-endpoint',
     title: 'Босс: Эндпоинт FastAPI с response_model, status_code=201 и HTTPException',
     track: 'logic',
     level: 6,
@@ -1695,7 +2059,68 @@ const logicTasks = [
     solution: 'function createSentryConfig(dsn: string, env: string = "production") {\n  return {\n    dsn,\n    environment: env,\n    tracesSampleRate: env === "production" ? 0.2 : 1.0,\n    enabled: Boolean(dsn),\n  };\n}'
   },
   {
-    id: 'js-705-boss-prod-readiness',
+    id: 'js-705-linux-systemd',
+    title: 'Linux & AWS EC2: юнит-файл systemd (app.service)',
+    track: 'logic',
+    level: 7,
+    isBoss: false,
+    topic: 'linux-systemd',
+    mapTopics: ['Linux', 'AWS', 'FastAPI'],
+    learn: 'Конфигурация фонового демона systemd в Linux: секция [Service], User=www-data, ExecStart и Restart=always.',
+    needsDom: false,
+    codeLanguage: 'nginx',
+    prompt: 'Допиши секцию `[Service]` для Linux-юнита `app.service`: укажи пользователя `User=www-data`, рабочую директорию `WorkingDirectory=/srv/app`, команду запуска `ExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000` и автоперезапуск `Restart=always`.',
+    specs: [
+      'Укажи User=www-data и WorkingDirectory=/srv/app',
+      'Укажи ExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000 и Restart=always'
+    ],
+    starterJs: '[Unit]\nDescription=FastAPI Production Service\nAfter=network.target\n\n[Service]\n\n[Install]\nWantedBy=multi-user.target\n',
+    hints: [
+      { tier: 1, text: 'В systemd директивы пишутся в формате Ключ=Значение без пробелов вокруг знака =.' },
+      { tier: 2, text: 'Restart=always гарантирует, что Linux поднимет сервис при падении.' },
+      { tier: 3, text: 'Внутри [Service] пропиши:\nUser=www-data\nWorkingDirectory=/srv/app\nExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000\nRestart=always' }
+    ],
+    codeChecks: [
+      { name: 'Пользователь User=www-data', pattern: '^User=www-data', flags: 'm', expectedHint: 'User=www-data' },
+      { name: 'Директория WorkingDirectory=/srv/app', pattern: '^WorkingDirectory=/srv/app', flags: 'm', expectedHint: 'WorkingDirectory=/srv/app' },
+      { name: 'Команда запуска uvicorn на 0.0.0.0:8000', pattern: '^ExecStart=/usr/bin/uvicorn\\s+main:app\\s+--host\\s+0\\.0\\.0\\.0\\s+--port\\s+8000', flags: 'm', expectedHint: 'ExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000' },
+      { name: 'Политика автоперезапуска Restart=always', pattern: '^Restart=always', flags: 'm', expectedHint: 'Restart=always' }
+    ],
+    tests: [],
+    solution: '[Unit]\nDescription=FastAPI Production Service\nAfter=network.target\n\n[Service]\nUser=www-data\nWorkingDirectory=/srv/app\nExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000\nRestart=always\n\n[Install]\nWantedBy=multi-user.target'
+  },
+  {
+    id: 'js-706-vercel-aws-config',
+    title: 'Vercel & AWS S3: генератор конфига реврайтов и кэш-заголовков',
+    track: 'logic',
+    level: 7,
+    isBoss: false,
+    topic: 'vercel-config',
+    mapTopics: ['Vercel', 'AWS', 'TypeScript'],
+    learn: 'Настройка rewrites в vercel.json для проксирования /api/* и привязка бакета AWS S3.',
+    needsDom: false,
+    codeLanguage: 'typescript',
+    prompt: 'Напиши функцию `function buildVercelConfig(apiOrigin: string, s3Bucket: string)`, которая возвращает `{ rewrites: [{ source: "/api/:path*", destination: `${apiOrigin}/api/:path*` }], env: { S3_BUCKET: s3Bucket } }`.',
+    specs: [
+      'В массиве rewrites один маршрут с source: "/api/:path*"',
+      'Поле destination равно `${apiOrigin}/api/:path*`, а env.S3_BUCKET равен s3Bucket'
+    ],
+    starterJs: 'function buildVercelConfig(apiOrigin: string, s3Bucket: string) {\n  \n}\n',
+    hints: [
+      { tier: 1, text: 'В Vercel подстановка пути задаётся шаблоном /api/:path*.' },
+      { tier: 2, text: 'Документация Vercel Rewrites: https://vercel.com/docs/projects/project-configuration#rewrites' },
+      { tier: 3, text: 'return { rewrites: [{ source: "/api/:path*", destination: `${apiOrigin}/api/:path*` }], env: { S3_BUCKET: s3Bucket } };' }
+    ],
+    codeChecks: [
+      { name: 'Шаблон маршрута "/api/:path*"', pattern: '/api/:path\\*', expectedHint: 'source: "/api/:path*"' }
+    ],
+    tests: [
+      { name: 'формирует конфиг Vercel + S3', call: 'buildVercelConfig("https://api.dojo.dev", "dojo-assets-eu")', expected: { rewrites: [{ source: '/api/:path*', destination: 'https://api.dojo.dev/api/:path*' }], env: { S3_BUCKET: 'dojo-assets-eu' } } }
+    ],
+    solution: 'function buildVercelConfig(apiOrigin: string, s3Bucket: string) {\n  return {\n    rewrites: [\n      {\n        source: "/api/:path*",\n        destination: `${apiOrigin}/api/:path*`,\n      },\n    ],\n    env: {\n      S3_BUCKET: s3Bucket,\n    },\n  };\n}'
+  },
+  {
+    id: 'js-707-boss-prod-readiness',
     title: 'Босс: Аудитор инфраструктуры (AWS S3 + Vercel + Docker + Sentry)',
     track: 'logic',
     level: 7,
@@ -1734,6 +2159,18 @@ const logicDir = path.resolve('content/logic');
 fs.mkdirSync(layoutDir, { recursive: true });
 fs.mkdirSync(logicDir, { recursive: true });
 
+// Очищаем старые сгенерированные файлы 200+ перед записью актуального набора
+for (const file of fs.readdirSync(layoutDir)) {
+  if (/^layout-[2-7]/.test(file)) {
+    fs.unlinkSync(path.join(layoutDir, file));
+  }
+}
+for (const file of fs.readdirSync(logicDir)) {
+  if (/^js-(06|07|[2-7])/.test(file)) {
+    fs.unlinkSync(path.join(logicDir, file));
+  }
+}
+
 for (const task of layoutTasks) {
   fs.writeFileSync(
     path.join(layoutDir, `${task.id}.json`),
@@ -1751,5 +2188,5 @@ for (const task of logicTasks) {
 }
 
 console.log(
-  `✅ Готово! Обновлено ${layoutTasks.length} Tailwind-задач и ${logicTasks.length} задач реального стека (Уровни 2–7).`,
+  `✅ Готово! В базе теперь 35 задач вёрстки и 43 задачи логики (все 39 технологий стека охвачены).`,
 );

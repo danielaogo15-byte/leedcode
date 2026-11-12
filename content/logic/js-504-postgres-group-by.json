@@ -1,6 +1,6 @@
 {
   "id": "js-504-postgres-group-by",
-  "title": "PostgreSQL: SQL-запрос с GROUP BY, COUNT и HAVING",
+  "title": "PostgreSQL (PGlite): живой SQL-запрос с GROUP BY, COUNT и SUM",
   "track": "logic",
   "level": 5,
   "isBoss": false,
@@ -9,15 +9,15 @@
     "PostgreSQL",
     "SQL"
   ],
-  "learn": "Написание аналитического SQL-запроса с фильтрацией WHERE, группировкой GROUP BY и агрегацией COUNT / SUM.",
+  "learn": "Написание аналитического SQL-запроса, который реально исполняется движком PostgreSQL (PGlite) на таблице orders.",
   "needsDom": false,
   "codeLanguage": "sql",
   "prompt": "Напиши SQL-запрос для PostgreSQL: выбери `status`, `COUNT(*) AS total_count` и `SUM(amount) AS total_amount` из таблицы `orders`, где `amount > 0`, сгруппируй по `status` (`GROUP BY status`) и отсортируй по `total_amount DESC`.",
   "specs": [
-    "Используй SELECT status, COUNT(*) AS total_count, SUM(amount) AS total_amount",
-    "Укажи FROM orders, WHERE amount > 0, GROUP BY status и ORDER BY total_amount DESC"
+    "Запрос реально выполняется в движке PostgreSQL (PGlite) на таблице orders(id, status, amount)",
+    "Используй SELECT status, COUNT(*) AS total_count, SUM(amount) AS total_amount FROM orders WHERE amount > 0 GROUP BY status ORDER BY total_amount DESC;"
   ],
-  "starterJs": "-- Напиши SQL-запрос для PostgreSQL\nSELECT \n",
+  "starterJs": "-- Таблица: orders (id SERIAL, status TEXT, amount INTEGER)\nSELECT \n",
   "hints": [
     {
       "tier": 1,
@@ -40,22 +40,10 @@
       "expectedHint": "COUNT(*) AS total_count, SUM(amount) AS total_amount"
     },
     {
-      "name": "Фильтрация FROM orders WHERE amount > 0",
-      "pattern": "FROM\\s+orders\\s+WHERE\\s+amount\\s*>\\s*0",
-      "flags": "is",
-      "expectedHint": "FROM orders WHERE amount > 0"
-    },
-    {
       "name": "Группировка GROUP BY status",
       "pattern": "GROUP\\s+BY\\s+status",
       "flags": "is",
       "expectedHint": "GROUP BY status"
-    },
-    {
-      "name": "Сортировка ORDER BY total_amount DESC",
-      "pattern": "ORDER\\s+BY\\s+total_amount\\s+DESC",
-      "flags": "is",
-      "expectedHint": "ORDER BY total_amount DESC"
     }
   ],
   "tests": [],

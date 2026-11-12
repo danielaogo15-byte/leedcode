@@ -1,0 +1,49 @@
+{
+  "id": "js-605-python-comprehension",
+  "title": "Python Typing & List Comprehension: фильтрация и нормализация",
+  "track": "logic",
+  "level": 6,
+  "isBoss": false,
+  "topic": "python-core",
+  "mapTopics": [
+    "Python",
+    "FastAPI"
+  ],
+  "learn": "Идиоматичный Python 3.12+: аннотации типов list[str] -> list[str] и списковые включения (list comprehension).",
+  "needsDom": false,
+  "codeLanguage": "python",
+  "prompt": "Напиши на Python функцию с аннотациями типов `def normalize_tags(tags: list[str]) -> list[str]:`, которая возвращает списковое включение `[t.strip().lower() for t in tags if t.strip()]`.",
+  "specs": [
+    "Типизируй сигнатуру: def normalize_tags(tags: list[str]) -> list[str]:",
+    "Используй list comprehension [t.strip().lower() for t in tags if t.strip()]"
+  ],
+  "starterJs": "def normalize_tags(tags: list[str]) -> list[str]:\n    \n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Python 3.10+ списки аннотируются встроенным типом list[str]."
+    },
+    {
+      "tier": 2,
+      "text": "Метод .strip() в Python — это аналог .trim() из JS."
+    },
+    {
+      "tier": 3,
+      "text": "return [t.strip().lower() for t in tags if t.strip()]"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Сигнатура с типами def normalize_tags(tags: list[str]) -> list[str]:",
+      "pattern": "def\\s+normalize_tags\\(\\s*tags\\s*:\\s*list\\[str\\]\\s*\\)\\s*->\\s*list\\[str\\]\\s*:",
+      "expectedHint": "def normalize_tags(tags: list[str]) -> list[str]:"
+    },
+    {
+      "name": "Списковое включение [t.strip().lower() for t in tags if t.strip()]",
+      "pattern": "\\[\\s*t\\.strip\\(\\)\\.lower\\(\\)\\s+for\\s+t\\s+in\\s+tags\\s+if\\s+t\\.strip\\(\\)\\s*\\]",
+      "expectedHint": "[t.strip().lower() for t in tags if t.strip()]"
+    }
+  ],
+  "tests": [],
+  "solution": "def normalize_tags(tags: list[str]) -> list[str]:\n    return [t.strip().lower() for t in tags if t.strip()]"
+}

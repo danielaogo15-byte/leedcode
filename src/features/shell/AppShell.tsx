@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import { DrillsView } from '@/features/drills/DrillsView';
 import { EditorPane } from '@/features/editor/EditorPane';
 import { PreviewPane } from '@/features/editor/PreviewPane';
 import {
@@ -43,10 +44,11 @@ import {
   Timer,
   Trophy,
   X,
+  Zap,
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-type ActiveScreen = 'trainer' | 'today' | 'terminal' | 'profile';
+type ActiveScreen = 'trainer' | 'drills' | 'today' | 'terminal' | 'profile';
 
 export function AppShell() {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
@@ -82,11 +84,9 @@ export function AppShell() {
   const [attemptsOnRun, setAttemptsOnRun] = useState(0);
   const [memoryMode, setMemoryMode] = useState(false);
 
-  // Режим «Почини баг» (Bug Hunt)
   const [bugHuntMode, setBugHuntMode] = useState(false);
   const [bugHintText, setBugHintText] = useState<string | null>(null);
 
-  // Режим «Мок-собеседование» (30 минут, 3 задачи)
   const [mockTasks, setMockTasks] = useState<Task[] | null>(null);
   const [mockSolvedIds, setMockSolvedIds] = useState<string[]>([]);
   const [mockRemainingSec, setMockRemainingSec] = useState(MOCK_DURATION_SEC);
@@ -116,7 +116,6 @@ export function AppShell() {
     }
   }, [hydrated, ensureDailySession]);
 
-  // Таймер мок-собеседования
   useEffect(() => {
     if (!mockTasks) return;
     const timer = window.setInterval(() => {
@@ -271,7 +270,7 @@ export function AppShell() {
             js,
             task.codeChecks,
             task.tests,
-            task.codeLanguage === 'typescript',
+            task.codeLanguage,
           )
         : await runDomTask({
             html: task.track === 'logic' ? task.htmlFixture : html,
@@ -468,6 +467,18 @@ export function AppShell() {
           </button>
           <button
             type="button"
+            onClick={() => setScreen('drills')}
+            className={
+              screen === 'drills'
+                ? 'flex items-center gap-1 rounded-md bg-background px-3 py-1 font-medium text-amber-400 shadow-sm'
+                : 'flex items-center gap-1 px-3 py-1 text-muted-foreground hover:text-foreground'
+            }
+          >
+            <Zap className="size-3.5 text-amber-400" />
+            <span>Рефлексы</span>
+          </button>
+          <button
+            type="button"
             onClick={() => setScreen('today')}
             className={
               screen === 'today'
@@ -587,6 +598,8 @@ export function AppShell() {
         />
       ) : screen === 'terminal' ? (
         <TerminalView />
+      ) : screen === 'drills' ? (
+        <DrillsView />
       ) : (
         <>
           <Sidebar

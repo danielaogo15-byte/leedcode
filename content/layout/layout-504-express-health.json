@@ -1,0 +1,63 @@
+{
+  "id": "layout-504-express-health",
+  "title": "Node.js & Express: виджет Healthcheck сервисов",
+  "track": "layout",
+  "level": 5,
+  "isBoss": false,
+  "topic": "node-health",
+  "mapTopics": [
+    "Node.js",
+    "Express",
+    "PostgreSQL",
+    "Redis"
+  ],
+  "learn": "Двухколоночная сетка статусов сервисов grid grid-cols-2 gap-3 p-3.5.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи блок статусов микросервисов .health-grid в 2 равные колонки с отступом 12px и паддингом 14px.",
+  "specs": [
+    "Добавь на .health-grid классы: grid grid-cols-2 gap-3 p-3.5"
+  ],
+  "starterHtml": "<div class=\"health-grid bg-slate-900 text-slate-50 rounded-xl\">\n  <div class=\"bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400\">Postgres · 2ms</div>\n  <div class=\"bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400\">Redis · 1ms</div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"health-grid grid grid-cols-2 gap-3 p-3.5 bg-slate-900 text-slate-50 rounded-xl\">\n  <div class=\"bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400\">Postgres · 2ms</div>\n  <div class=\"bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400\">Redis · 1ms</div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Две равные колонки — grid grid-cols-2."
+    },
+    {
+      "tier": 2,
+      "text": "gap-3 = 12px, p-3.5 = 14px."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .health-grid: grid grid-cols-2 gap-3 p-3.5."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".health-grid использует grid",
+      "selector": ".health-grid",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Отступ gap-3 равен 12px",
+      "selector": ".health-grid",
+      "property": "columnGap",
+      "expected": "12px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Паддинг p-3.5 равен 14px",
+      "selector": ".health-grid",
+      "property": "paddingTop",
+      "expected": "14px"
+    }
+  ],
+  "solution": "<div class=\"health-grid grid grid-cols-2 gap-3 p-3.5 bg-slate-900 text-slate-50 rounded-xl\">\n  <div class=\"bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400\">Postgres · 2ms</div>\n  <div class=\"bg-slate-800 p-2.5 rounded-lg text-xs font-semibold text-emerald-400\">Redis · 1ms</div>\n</div>"
+}

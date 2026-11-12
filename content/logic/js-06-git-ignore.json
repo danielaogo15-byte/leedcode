@@ -1,0 +1,53 @@
+{
+  "id": "js-06-git-ignore",
+  "title": "Git & GitHub: правила .gitignore и проверка секретов",
+  "track": "logic",
+  "level": 1,
+  "isBoss": false,
+  "topic": "git-workflow",
+  "mapTopics": [
+    "Git",
+    "GitHub"
+  ],
+  "learn": "Стандартный набор правил .gitignore (node_modules, dist, .env) для защиты репозитория от мусора и утечки ключей.",
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "prompt": "Напиши функцию `shouldGitIgnore(filePath)`, которая возвращает `true`, если путь начинается с `\"node_modules/\"`, `\"dist/\"` или равен `\".env\"` либо `\".env.local\"`, иначе `false`.",
+  "specs": [
+    "Секреты .env и .env.local никогда не должны попадать в Git",
+    "Папки сборки dist/ и зависимостей node_modules/ игнорируются"
+  ],
+  "starterJs": "function shouldGitIgnore(filePath) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Используй методы строки startsWith(\"node_modules/\") и startsWith(\"dist/\")."
+    },
+    {
+      "tier": 2,
+      "text": "Документация gitignore: https://git-scm.com/docs/gitignore"
+    },
+    {
+      "tier": 3,
+      "text": "return filePath.startsWith(\"node_modules/\") || filePath.startsWith(\"dist/\") || filePath === \".env\" || filePath === \".env.local\";"
+    }
+  ],
+  "tests": [
+    {
+      "name": "игнорирует .env",
+      "call": "shouldGitIgnore(\".env\")",
+      "expected": true
+    },
+    {
+      "name": "игнорирует node_modules",
+      "call": "shouldGitIgnore(\"node_modules/react/index.js\")",
+      "expected": true
+    },
+    {
+      "name": "пропускает исходники src/",
+      "call": "shouldGitIgnore(\"src/App.tsx\")",
+      "expected": false
+    }
+  ],
+  "solution": "function shouldGitIgnore(filePath) {\n  return (\n    filePath.startsWith(\"node_modules/\") ||\n    filePath.startsWith(\"dist/\") ||\n    filePath === \".env\" ||\n    filePath === \".env.local\"\n  );\n}"
+}

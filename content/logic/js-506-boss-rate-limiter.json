@@ -1,5 +1,5 @@
 {
-  "id": "js-505-boss-rate-limiter",
+  "id": "js-506-boss-rate-limiter",
   "title": "Босс: Sliding Window Rate Limiter для Express + Redis",
   "track": "logic",
   "level": 5,

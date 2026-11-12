@@ -1,0 +1,52 @@
+{
+  "id": "js-07-pnpm-scripts",
+  "title": "pnpm: генератор package.json со скриптами и packageManager",
+  "track": "logic",
+  "level": 1,
+  "isBoss": false,
+  "topic": "pnpm-config",
+  "mapTopics": [
+    "pnpm",
+    "JavaScript"
+  ],
+  "learn": "Фиксация версии пакетного менеджера через поле packageManager и стандартные скрипты dev/build/test в package.json.",
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "prompt": "Напиши функцию `createPnpmPackageJson(name)`, которая возвращает объект `package.json`: `{ name, private: true, packageManager: \"pnpm@10.0.0\", scripts: { dev: \"vite\", build: \"tsc -b && vite build\", test: \"vitest run\" } }`.",
+  "specs": [
+    "Поле packageManager должно быть равно \"pnpm@10.0.0\" (для Corepack)",
+    "Внутри scripts задай ключи dev, build и test"
+  ],
+  "starterJs": "function createPnpmPackageJson(name) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Corepack читает поле packageManager: \"pnpm@10.0.0\" для автоматического выбора версии pnpm."
+    },
+    {
+      "tier": 2,
+      "text": "Документация pnpm: https://pnpm.io/package_json"
+    },
+    {
+      "tier": 3,
+      "text": "Верни объект с полями name, private: true, packageManager: \"pnpm@10.0.0\" и объектом scripts."
+    }
+  ],
+  "tests": [
+    {
+      "name": "создаёт манифест для pnpm",
+      "call": "createPnpmPackageJson(\"vibe-dojo\")",
+      "expected": {
+        "name": "vibe-dojo",
+        "private": true,
+        "packageManager": "pnpm@10.0.0",
+        "scripts": {
+          "dev": "vite",
+          "build": "tsc -b && vite build",
+          "test": "vitest run"
+        }
+      }
+    }
+  ],
+  "solution": "function createPnpmPackageJson(name) {\n  return {\n    name,\n    private: true,\n    packageManager: \"pnpm@10.0.0\",\n    scripts: {\n      dev: \"vite\",\n      build: \"tsc -b && vite build\",\n      test: \"vitest run\",\n    },\n  };\n}"
+}

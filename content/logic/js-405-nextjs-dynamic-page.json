@@ -1,0 +1,55 @@
+{
+  "id": "js-405-nextjs-dynamic-page",
+  "title": "Next.js 15 Server Component: асинхронный params в page.tsx",
+  "track": "logic",
+  "level": 4,
+  "isBoss": false,
+  "topic": "nextjs-server-page",
+  "mapTopics": [
+    "Next.js",
+    "React",
+    "TypeScript"
+  ],
+  "learn": "В Next.js 15 проп params в page.tsx является Promise<{ slug: string }>, который нужно распаковать через await params.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши асинхронный серверный компонент `export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> })`: распакуй `const { slug } = await params;` и верни JSX `<h1>{slug}</h1>`.",
+  "specs": [
+    "Типизируй проп params как Promise<{ slug: string }>",
+    "Распакуй const { slug } = await params и верни <h1>{slug}</h1>"
+  ],
+  "starterJs": "export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Next.js 15 динамические параметры асинхронные: const { slug } = await params;"
+    },
+    {
+      "tier": 2,
+      "text": "Документация Next.js 15 Dynamic APIs: https://nextjs.org/docs/app/building-your-application/upgrading/version-15"
+    },
+    {
+      "tier": 3,
+      "text": "const { slug } = await params;\nreturn <h1>{slug}</h1>;"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Тип params: Promise<{ slug: string }>",
+      "pattern": "params\\s*:\\s*Promise<\\{\\s*slug\\s*:\\s*string\\s*\\}>",
+      "expectedHint": "params: Promise<{ slug: string }>"
+    },
+    {
+      "name": "Асинхронное чтение const { slug } = await params",
+      "pattern": "const\\s*\\{\\s*slug\\s*\\}\\s*=\\s*await\\s+params",
+      "expectedHint": "const { slug } = await params"
+    },
+    {
+      "name": "Рендер заголовка <h1>{slug}</h1>",
+      "pattern": "<h1>\\{slug\\}<\\/h1>",
+      "expectedHint": "return <h1>{slug}</h1>"
+    }
+  ],
+  "tests": [],
+  "solution": "export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {\n  const { slug } = await params;\n  return <h1>{slug}</h1>;\n}"
+}

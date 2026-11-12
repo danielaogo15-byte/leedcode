@@ -1,0 +1,63 @@
+{
+  "id": "layout-604-pytest-matrix",
+  "title": "pytest Report: строка параметризованного прогона",
+  "track": "layout",
+  "level": 6,
+  "isBoss": false,
+  "topic": "pytest-ui",
+  "mapTopics": [
+    "pytest",
+    "Python",
+    "Tailwind CSS"
+  ],
+  "learn": "Выравнивание имени теста, параметров и бейджа PASSED через h-10 px-3 flex justify-between items-center.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи строку отчёта pytest .pytest-row высотой 40px с горизонтальным паддингом 12px, флекс-раскладкой со space-between и центрированием.",
+  "specs": [
+    "Добавь на .pytest-row классы: h-10 px-3 flex justify-between items-center"
+  ],
+  "starterHtml": "<div class=\"pytest-row bg-slate-800 text-slate-50 rounded-lg font-mono text-xs\">\n  <span>test_discount[100-90]</span>\n  <span class=\"text-emerald-400 font-bold\">PASSED</span>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"pytest-row h-10 px-3 flex justify-between items-center bg-slate-800 text-slate-50 rounded-lg font-mono text-xs\">\n  <span>test_discount[100-90]</span>\n  <span class=\"text-emerald-400 font-bold\">PASSED</span>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Высота 40px — это h-10, горизонтальный отступ 12px — px-3."
+    },
+    {
+      "tier": 2,
+      "text": "Разнос по краям: flex justify-between items-center."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .pytest-row: h-10 px-3 flex justify-between items-center."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Высота строки 40px (h-10)",
+      "selector": ".pytest-row",
+      "property": "height",
+      "expected": 40,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": "Разнос justify-between",
+      "selector": ".pytest-row",
+      "property": "justifyContent",
+      "expected": "space-between"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Паддинг слева 12px (px-3)",
+      "selector": ".pytest-row",
+      "property": "paddingLeft",
+      "expected": "12px"
+    }
+  ],
+  "solution": "<div class=\"pytest-row h-10 px-3 flex justify-between items-center bg-slate-800 text-slate-50 rounded-lg font-mono text-xs\">\n  <span>test_discount[100-90]</span>\n  <span class=\"text-emerald-400 font-bold\">PASSED</span>\n</div>"
+}

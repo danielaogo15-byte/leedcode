@@ -1,0 +1,63 @@
+{
+  "id": "layout-704-vercel-deployments",
+  "title": "Vercel & GitHub: карточка Preview Deployment",
+  "track": "layout",
+  "level": 7,
+  "isBoss": false,
+  "topic": "vercel-ui",
+  "mapTopics": [
+    "Vercel",
+    "GitHub",
+    "Git",
+    "Tailwind CSS"
+  ],
+  "learn": "Оформление строки деплоя ветки с бейджем Ready и таймингом сборки.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи карточку деплоя .deploy-card классами Tailwind: паддинг 14px, скругление 12px, флекс с разносом по краям и центрированием по вертикали.",
+  "specs": [
+    "Добавь на .deploy-card классы: p-3.5 rounded-xl flex justify-between items-center"
+  ],
+  "starterHtml": "<div class=\"deploy-card bg-slate-900 text-slate-50 border border-slate-700\">\n  <div>\n    <strong class=\"text-xs\">vibedojo-git-feat-ui.vercel.app</strong>\n    <div class=\"text-xs text-slate-400 font-mono mt-1\">branch: feat/ui · 4a9c12e</div>\n  </div>\n  <span class=\"bg-emerald-500 text-emerald-950 px-2.5 py-1 rounded-full text-xs font-bold\">Ready</span>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"deploy-card p-3.5 rounded-xl flex justify-between items-center bg-slate-900 text-slate-50 border border-slate-700\">\n  <div>\n    <strong class=\"text-xs\">vibedojo-git-feat-ui.vercel.app</strong>\n    <div class=\"text-xs text-slate-400 font-mono mt-1\">branch: feat/ui · 4a9c12e</div>\n  </div>\n  <span class=\"bg-emerald-500 text-emerald-950 px-2.5 py-1 rounded-full text-xs font-bold\">Ready</span>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "p-3.5 = 14px, rounded-xl = 12px."
+    },
+    {
+      "tier": 2,
+      "text": "Разнос по краям: flex justify-between items-center."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .deploy-card: p-3.5 rounded-xl flex justify-between items-center."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Разнос justify-between",
+      "selector": ".deploy-card",
+      "property": "justifyContent",
+      "expected": "space-between"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Скругление 12px (rounded-xl)",
+      "selector": ".deploy-card",
+      "property": "borderTopLeftRadius",
+      "expected": "12px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Паддинг 14px (p-3.5)",
+      "selector": ".deploy-card",
+      "property": "paddingTop",
+      "expected": "14px"
+    }
+  ],
+  "solution": "<div class=\"deploy-card p-3.5 rounded-xl flex justify-between items-center bg-slate-900 text-slate-50 border border-slate-700\">\n  <div>\n    <strong class=\"text-xs\">vibedojo-git-feat-ui.vercel.app</strong>\n    <div class=\"text-xs text-slate-400 font-mono mt-1\">branch: feat/ui · 4a9c12e</div>\n  </div>\n  <span class=\"bg-emerald-500 text-emerald-950 px-2.5 py-1 rounded-full text-xs font-bold\">Ready</span>\n</div>"
+}

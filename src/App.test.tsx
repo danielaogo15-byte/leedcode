@@ -6,12 +6,16 @@ describe('App', () => {
   it('renders VibeCode Dojo shell and switches tracks', () => {
     render(<App />);
 
-    expect(screen.getByText('VibeCode Dojo')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'VibeCode Dojo' }),
+    ).toBeInTheDocument();
 
     const logicBtn = screen.getByRole('button', { name: /Код \/ Логика/i });
     fireEvent.click(logicBtn);
 
-    expect(screen.getByText(/Сумма чётных чисел/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: /Сумма чётных чисел/i }),
+    ).toBeInTheDocument();
   });
 
   it('toggles Hardcore mode switch', () => {

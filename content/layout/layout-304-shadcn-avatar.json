@@ -1,0 +1,64 @@
+{
+  "id": "layout-304-shadcn-avatar",
+  "title": "shadcn/ui Avatar Profile: карточка профиля с инициалами",
+  "track": "layout",
+  "level": 3,
+  "isBoss": false,
+  "topic": "shadcn-avatar",
+  "mapTopics": [
+    "shadcn/ui",
+    "React",
+    "Tailwind CSS"
+  ],
+  "learn": "Центрирование инициалов внутри круглого AvatarFallback через flex items-center justify-center w-10 h-10 rounded-full.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи карточку .user-row (флекс по центру с gap 12px и паддингом 12px) и круглый аватар .avatar-fallback (40×40px, идеально отцентрированный текст).",
+  "specs": [
+    "Добавь на .user-row классы: flex items-center gap-3 p-3",
+    "Добавь на .avatar-fallback классы: w-10 h-10 rounded-full flex items-center justify-center"
+  ],
+  "starterHtml": "<div class=\"user-row bg-slate-800 text-slate-50 rounded-xl\">\n  <div class=\"avatar-fallback bg-sky-500 text-slate-950 font-bold text-xs\">DU</div>\n  <div>\n    <div class=\"text-sm font-bold\">Daniela</div>\n    <div class=\"text-xs text-slate-400\">Full-Stack Engineer</div>\n  </div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"user-row flex items-center gap-3 p-3 bg-slate-800 text-slate-50 rounded-xl\">\n  <div class=\"avatar-fallback w-10 h-10 rounded-full flex items-center justify-center bg-sky-500 text-slate-950 font-bold text-xs\">DU</div>\n  <div>\n    <div class=\"text-sm font-bold\">Daniela</div>\n    <div class=\"text-xs text-slate-400\">Full-Stack Engineer</div>\n  </div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "40px в Tailwind — это 10 (w-10 h-10)."
+    },
+    {
+      "tier": 2,
+      "text": "Центрирование инициалов: flex items-center justify-center."
+    },
+    {
+      "tier": 3,
+      "text": "На .user-row добавь flex items-center gap-3 p-3, на .avatar-fallback — w-10 h-10 rounded-full flex items-center justify-center."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Размер .avatar-fallback 40px (w-10)",
+      "selector": ".avatar-fallback",
+      "property": "width",
+      "expected": 40,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": "Центрирование инициалов по горизонтали",
+      "selector": ".avatar-fallback",
+      "property": "justifyContent",
+      "expected": "center"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Отступ в .user-row равен 12px (gap-3)",
+      "selector": ".user-row",
+      "property": "columnGap",
+      "expected": "12px"
+    }
+  ],
+  "solution": "<div class=\"user-row flex items-center gap-3 p-3 bg-slate-800 text-slate-50 rounded-xl\">\n  <div class=\"avatar-fallback w-10 h-10 rounded-full flex items-center justify-center bg-sky-500 text-slate-950 font-bold text-xs\">DU</div>\n  <div>\n    <div class=\"text-sm font-bold\">Daniela</div>\n    <div class=\"text-xs text-slate-400\">Full-Stack Engineer</div>\n  </div>\n</div>"
+}

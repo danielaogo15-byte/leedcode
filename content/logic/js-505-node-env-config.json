@@ -1,0 +1,62 @@
+{
+  "id": "js-505-node-env-config",
+  "title": "Node.js Runtime: чтение и валидация переменных окружения",
+  "track": "logic",
+  "level": 5,
+  "isBoss": false,
+  "topic": "node-env",
+  "mapTopics": [
+    "Node.js",
+    "TypeScript",
+    "PostgreSQL"
+  ],
+  "learn": "Fail-fast проверка обязательных переменных окружения (DATABASE_URL, PORT) при старте сервера Node.js.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function loadServerEnv(env: Record<string, string | undefined>)`: если `env.DATABASE_URL` пуст, выброси `throw new Error(\"Missing DATABASE_URL\")`. Иначе верни `{ dbUrl: env.DATABASE_URL, port: Number(env.PORT || 3000) }`.",
+  "specs": [
+    "При отсутствии DATABASE_URL выбрасывай new Error(\"Missing DATABASE_URL\")",
+    "Поле port приводится к числу Number(env.PORT || 3000)"
+  ],
+  "starterJs": "function loadServerEnv(env: Record<string, string | undefined>) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Проверь if (!env.DATABASE_URL) throw new Error(\"Missing DATABASE_URL\");"
+    },
+    {
+      "tier": 2,
+      "text": "Документация Node.js process.env: https://nodejs.org/api/process.html#processenv"
+    },
+    {
+      "tier": 3,
+      "text": "if (!env.DATABASE_URL) throw new Error(\"Missing DATABASE_URL\");\nreturn { dbUrl: env.DATABASE_URL, port: Number(env.PORT || 3000) };"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Выброс ошибки throw new Error(\"Missing DATABASE_URL\")",
+      "pattern": "throw\\s+new\\s+Error\\(\\s*[\"']Missing DATABASE_URL[\"']\\s*\\)",
+      "expectedHint": "throw new Error(\"Missing DATABASE_URL\")"
+    }
+  ],
+  "tests": [
+    {
+      "name": "валидный env с дефолтным портом 3000",
+      "call": "loadServerEnv({ DATABASE_URL: \"postgres://localhost/db\" })",
+      "expected": {
+        "dbUrl": "postgres://localhost/db",
+        "port": 3000
+      }
+    },
+    {
+      "name": "кастомный порт 8080",
+      "call": "loadServerEnv({ DATABASE_URL: \"postgres://localhost/db\", PORT: \"8080\" })",
+      "expected": {
+        "dbUrl": "postgres://localhost/db",
+        "port": 8080
+      }
+    }
+  ],
+  "solution": "function loadServerEnv(env: Record<string, string | undefined>) {\n  if (!env.DATABASE_URL) {\n    throw new Error(\"Missing DATABASE_URL\");\n  }\n  return {\n    dbUrl: env.DATABASE_URL,\n    port: Number(env.PORT || 3000),\n  };\n}"
+}

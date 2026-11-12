@@ -1,5 +1,5 @@
 {
-  "id": "js-605-boss-fastapi-endpoint",
+  "id": "js-606-boss-fastapi-endpoint",
   "title": "Босс: Эндпоинт FastAPI с response_model, status_code=201 и HTTPException",
   "track": "logic",
   "level": 6,

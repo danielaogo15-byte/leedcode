@@ -1,0 +1,55 @@
+{
+  "id": "js-305-react-tsx-card",
+  "title": "React + shadcn/ui: типизированный TSX-компонент UserBadge",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "react-tsx",
+  "mapTopics": [
+    "React",
+    "shadcn/ui",
+    "TypeScript"
+  ],
+  "learn": "Объявление типа Props и написание функционального React-компонента с деструктуризацией пропсов и JSX.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Объяви `type Props = { name: string; pro?: boolean };` и напиши React-компонент `export function UserBadge({ name, pro = false }: Props)`, который возвращает JSX `<Badge variant={pro ? \"default\" : \"secondary\"}>{name}</Badge>`.",
+  "specs": [
+    "Объяви type Props = { name: string; pro?: boolean }",
+    "Деструктурируй { name, pro = false }: Props и верни <Badge ...>{name}</Badge>"
+  ],
+  "starterJs": "type Props = {\n  name: string;\n  pro?: boolean;\n};\n\nexport function UserBadge({ name, pro = false }: Props) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Передай проп variant={pro ? \"default\" : \"secondary\"} внутрь тега <Badge>."
+    },
+    {
+      "tier": 2,
+      "text": "Документация React TypeScript: https://react.dev/learn/typescript"
+    },
+    {
+      "tier": 3,
+      "text": "return <Badge variant={pro ? \"default\" : \"secondary\"}>{name}</Badge>;"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Объявлен тип пропсов type Props",
+      "pattern": "type\\s+Props\\s*=\\s*\\{",
+      "expectedHint": "type Props = { name: string; pro?: boolean }"
+    },
+    {
+      "name": "Сигнатура export function UserBadge({ name, pro = false }: Props)",
+      "pattern": "function\\s+UserBadge\\(\\s*\\{\\s*name\\s*,\\s*pro\\s*=\\s*false\\s*\\}\\s*:\\s*Props\\s*\\)",
+      "expectedHint": "function UserBadge({ name, pro = false }: Props)"
+    },
+    {
+      "name": "Возврат JSX <Badge variant={pro ? \"default\" : \"secondary\"}>{name}</Badge>",
+      "pattern": "<Badge\\s+variant=\\{pro\\s*\\?\\s*[\"']default[\"']\\s*:\\s*[\"']secondary[\"']\\}>\\{name\\}<\\/Badge>",
+      "expectedHint": "<Badge variant={pro ? \"default\" : \"secondary\"}>{name}</Badge>"
+    }
+  ],
+  "tests": [],
+  "solution": "type Props = {\n  name: string;\n  pro?: boolean;\n};\n\nexport function UserBadge({ name, pro = false }: Props) {\n  return <Badge variant={pro ? \"default\" : \"secondary\"}>{name}</Badge>;\n}"
+}

@@ -1,0 +1,61 @@
+{
+  "id": "js-706-vercel-aws-config",
+  "title": "Vercel & AWS S3: генератор конфига реврайтов и кэш-заголовков",
+  "track": "logic",
+  "level": 7,
+  "isBoss": false,
+  "topic": "vercel-config",
+  "mapTopics": [
+    "Vercel",
+    "AWS",
+    "TypeScript"
+  ],
+  "learn": "Настройка rewrites в vercel.json для проксирования /api/* и привязка бакета AWS S3.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function buildVercelConfig(apiOrigin: string, s3Bucket: string)`, которая возвращает `{ rewrites: [{ source: \"/api/:path*\", destination: `${apiOrigin}/api/:path*` }], env: { S3_BUCKET: s3Bucket } }`.",
+  "specs": [
+    "В массиве rewrites один маршрут с source: \"/api/:path*\"",
+    "Поле destination равно `${apiOrigin}/api/:path*`, а env.S3_BUCKET равен s3Bucket"
+  ],
+  "starterJs": "function buildVercelConfig(apiOrigin: string, s3Bucket: string) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Vercel подстановка пути задаётся шаблоном /api/:path*."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Vercel Rewrites: https://vercel.com/docs/projects/project-configuration#rewrites"
+    },
+    {
+      "tier": 3,
+      "text": "return { rewrites: [{ source: \"/api/:path*\", destination: `${apiOrigin}/api/:path*` }], env: { S3_BUCKET: s3Bucket } };"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Шаблон маршрута \"/api/:path*\"",
+      "pattern": "/api/:path\\*",
+      "expectedHint": "source: \"/api/:path*\""
+    }
+  ],
+  "tests": [
+    {
+      "name": "формирует конфиг Vercel + S3",
+      "call": "buildVercelConfig(\"https://api.dojo.dev\", \"dojo-assets-eu\")",
+      "expected": {
+        "rewrites": [
+          {
+            "source": "/api/:path*",
+            "destination": "https://api.dojo.dev/api/:path*"
+          }
+        ],
+        "env": {
+          "S3_BUCKET": "dojo-assets-eu"
+        }
+      }
+    }
+  ],
+  "solution": "function buildVercelConfig(apiOrigin: string, s3Bucket: string) {\n  return {\n    rewrites: [\n      {\n        source: \"/api/:path*\",\n        destination: `${apiOrigin}/api/:path*`,\n      },\n    ],\n    env: {\n      S3_BUCKET: s3Bucket,\n    },\n  };\n}"
+}

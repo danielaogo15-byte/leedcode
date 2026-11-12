@@ -2,10 +2,10 @@ import { ALL_TASKS, tasksFor } from '@/features/tasks/loadTasks';
 import { describe, expect, it } from 'vitest';
 
 describe('loadTasks', () => {
-  it('loads starter tasks across layout and logic tracks', () => {
-    expect(ALL_TASKS.length).toBeGreaterThanOrEqual(10);
-    expect(tasksFor('layout', 1)).toHaveLength(5);
-    expect(tasksFor('logic', 1)).toHaveLength(5);
+  it('loads all tasks across layout and logic tracks (levels 1-7)', () => {
+    expect(ALL_TASKS.length).toBeGreaterThanOrEqual(75);
+    expect(tasksFor('layout', 1).length).toBeGreaterThanOrEqual(5);
+    expect(tasksFor('logic', 1).length).toBeGreaterThanOrEqual(5);
   });
 
   it('validates that every task has 3 tiered hints and tests or checks', () => {

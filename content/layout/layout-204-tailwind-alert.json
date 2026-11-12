@@ -1,0 +1,62 @@
+{
+  "id": "layout-204-tailwind-alert",
+  "title": "Tailwind Callout: информационный блок с акцентной полосой слева",
+  "track": "layout",
+  "level": 2,
+  "isBoss": false,
+  "topic": "tailwind-borders",
+  "mapTopics": [
+    "Tailwind CSS",
+    "Vite",
+    "ESLint"
+  ],
+  "learn": "Боковой акцент border-l-4 border-sky-400 и внутренние отступы p-4 rounded-lg.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи блок предупреждения линтера .callout классами Tailwind: левая рамка 4px цвета sky-400, паддинг 16px, скругление 8px и флекс-колонка с шагом 4px.",
+  "specs": [
+    "Добавь на .callout классы: border-l-4 border-sky-400 p-4 rounded-lg flex flex-col gap-1"
+  ],
+  "starterHtml": "<div class=\"callout bg-slate-900 text-slate-50\">\n  <strong class=\"text-sm\">ESLint Flat Config</strong>\n  <span class=\"text-xs text-slate-400\">Все правила типизации активны</span>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"callout border-l-4 border-sky-400 p-4 rounded-lg flex flex-col gap-1 bg-slate-900 text-slate-50\">\n  <strong class=\"text-sm\">ESLint Flat Config</strong>\n  <span class=\"text-xs text-slate-400\">Все правила типизации активны</span>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Левая рамка шириной 4px в Tailwind — это класс border-l-4."
+    },
+    {
+      "tier": 2,
+      "text": "Паддинг 16px — p-4, шаг 4px — gap-1."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .callout: border-l-4 border-sky-400 p-4 rounded-lg flex flex-col gap-1."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Левая граница 4px (border-l-4)",
+      "selector": ".callout",
+      "property": "borderLeftWidth",
+      "expected": "4px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Паддинг 16px (p-4)",
+      "selector": ".callout",
+      "property": "paddingTop",
+      "expected": "16px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Шаг 4px (gap-1)",
+      "selector": ".callout",
+      "property": "rowGap",
+      "expected": "4px"
+    }
+  ],
+  "solution": "<div class=\"callout border-l-4 border-sky-400 p-4 rounded-lg flex flex-col gap-1 bg-slate-900 text-slate-50\">\n  <strong class=\"text-sm\">ESLint Flat Config</strong>\n  <span class=\"text-xs text-slate-400\">Все правила типизации активны</span>\n</div>"
+}

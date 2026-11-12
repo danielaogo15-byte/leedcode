@@ -1,5 +1,5 @@
 {
-  "id": "js-705-boss-prod-readiness",
+  "id": "js-707-boss-prod-readiness",
   "title": "Босс: Аудитор инфраструктуры (AWS S3 + Vercel + Docker + Sentry)",
   "track": "logic",
   "level": 7,

@@ -1,0 +1,64 @@
+{
+  "id": "js-705-linux-systemd",
+  "title": "Linux & AWS EC2: юнит-файл systemd (app.service)",
+  "track": "logic",
+  "level": 7,
+  "isBoss": false,
+  "topic": "linux-systemd",
+  "mapTopics": [
+    "Linux",
+    "AWS",
+    "FastAPI"
+  ],
+  "learn": "Конфигурация фонового демона systemd в Linux: секция [Service], User=www-data, ExecStart и Restart=always.",
+  "needsDom": false,
+  "codeLanguage": "nginx",
+  "prompt": "Допиши секцию `[Service]` для Linux-юнита `app.service`: укажи пользователя `User=www-data`, рабочую директорию `WorkingDirectory=/srv/app`, команду запуска `ExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000` и автоперезапуск `Restart=always`.",
+  "specs": [
+    "Укажи User=www-data и WorkingDirectory=/srv/app",
+    "Укажи ExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000 и Restart=always"
+  ],
+  "starterJs": "[Unit]\nDescription=FastAPI Production Service\nAfter=network.target\n\n[Service]\n\n[Install]\nWantedBy=multi-user.target\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В systemd директивы пишутся в формате Ключ=Значение без пробелов вокруг знака =."
+    },
+    {
+      "tier": 2,
+      "text": "Restart=always гарантирует, что Linux поднимет сервис при падении."
+    },
+    {
+      "tier": 3,
+      "text": "Внутри [Service] пропиши:\nUser=www-data\nWorkingDirectory=/srv/app\nExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000\nRestart=always"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Пользователь User=www-data",
+      "pattern": "^User=www-data",
+      "flags": "m",
+      "expectedHint": "User=www-data"
+    },
+    {
+      "name": "Директория WorkingDirectory=/srv/app",
+      "pattern": "^WorkingDirectory=/srv/app",
+      "flags": "m",
+      "expectedHint": "WorkingDirectory=/srv/app"
+    },
+    {
+      "name": "Команда запуска uvicorn на 0.0.0.0:8000",
+      "pattern": "^ExecStart=/usr/bin/uvicorn\\s+main:app\\s+--host\\s+0\\.0\\.0\\.0\\s+--port\\s+8000",
+      "flags": "m",
+      "expectedHint": "ExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000"
+    },
+    {
+      "name": "Политика автоперезапуска Restart=always",
+      "pattern": "^Restart=always",
+      "flags": "m",
+      "expectedHint": "Restart=always"
+    }
+  ],
+  "tests": [],
+  "solution": "[Unit]\nDescription=FastAPI Production Service\nAfter=network.target\n\n[Service]\nUser=www-data\nWorkingDirectory=/srv/app\nExecStart=/usr/bin/uvicorn main:app --host 0.0.0.0 --port 8000\nRestart=always\n\n[Install]\nWantedBy=multi-user.target"
+}

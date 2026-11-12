@@ -1,0 +1,64 @@
+{
+  "id": "layout-404-nextjs-nav",
+  "title": "Next.js App Router: верхняя панель навигации Layout",
+  "track": "layout",
+  "level": 4,
+  "isBoss": false,
+  "topic": "nextjs-layout",
+  "mapTopics": [
+    "Next.js",
+    "React",
+    "Tailwind CSS"
+  ],
+  "learn": "Шапка root layout в Next.js: h-14 (56px) px-5 flex justify-between items-center.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи корневую шапку Next.js .next-header высотой 56px с горизонтальным отступом 20px и разносом элементов по краям.",
+  "specs": [
+    "Добавь на .next-header классы: h-14 px-5 flex justify-between items-center",
+    "h-14 = 56px, px-5 = 20px"
+  ],
+  "starterHtml": "<header class=\"next-header bg-slate-900 text-slate-50 rounded-xl border border-slate-700\">\n  <strong class=\"text-sm\">▲ Next.js App</strong>\n  <nav class=\"flex gap-3 text-xs text-slate-300\">\n    <span>Docs</span>\n    <span class=\"text-sky-400 font-bold\">Playground</span>\n  </nav>\n</header>\n",
+  "starterCss": "",
+  "targetHtml": "<header class=\"next-header h-14 px-5 flex justify-between items-center bg-slate-900 text-slate-50 rounded-xl border border-slate-700\">\n  <strong class=\"text-sm\">▲ Next.js App</strong>\n  <nav class=\"flex gap-3 text-xs text-slate-300\">\n    <span>Docs</span>\n    <span class=\"text-sky-400 font-bold\">Playground</span>\n  </nav>\n</header>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "56px в шкале Tailwind — это h-14 (14 × 4px)."
+    },
+    {
+      "tier": 2,
+      "text": "Горизонтальный паддинг 20px — это px-5."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .next-header: h-14 px-5 flex justify-between items-center."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Высота шапки 56px (h-14)",
+      "selector": ".next-header",
+      "property": "height",
+      "expected": 56,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": "Разнос по краям justify-between",
+      "selector": ".next-header",
+      "property": "justifyContent",
+      "expected": "space-between"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Паддинг слева 20px (px-5)",
+      "selector": ".next-header",
+      "property": "paddingLeft",
+      "expected": "20px"
+    }
+  ],
+  "solution": "<header class=\"next-header h-14 px-5 flex justify-between items-center bg-slate-900 text-slate-50 rounded-xl border border-slate-700\">\n  <strong class=\"text-sm\">▲ Next.js App</strong>\n  <nav class=\"flex gap-3 text-xs text-slate-300\">\n    <span>Docs</span>\n    <span class=\"text-sky-400 font-bold\">Playground</span>\n  </nav>\n</header>"
+}
