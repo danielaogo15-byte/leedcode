@@ -1,0 +1,24 @@
+{
+	"id": "js-05-boss-cart-total",
+	"title": "Босс: Итог корзины со скидкой",
+	"track": "logic",
+	"level": 1,
+	"isBoss": true,
+	"topic": "objects-arrays",
+	"mapTopics": ["JS 19-23", "Objects & Arrays"],
+	"learn": "Работа с массивом объектов, вычисление суммы и применение процентной скидки с округлением Math.round.",
+	"needsDom": false,
+	"prompt": "Напиши функцию `calcCartTotal(items, discountPercent)`. Каждый элемент массива `items` имеет вид `{ price: number, qty: number }`. Посчитай общую сумму (`price * qty`), вычти скидку `discountPercent` (от 0 до 100) и округли результат через `Math.round`.",
+	"starterJs": "function calcCartTotal(items, discountPercent = 0) {\n  \n}\n",
+	"hints": [
+	  { "tier": 1, "text": "Загугли: JS reduce массив объектов, Math.round" },
+	  { "tier": 2, "text": "MDN: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce" },
+	  { "tier": 3, "text": "Сначала посчитай subtotal всех item.price * item.qty, затем умножь на (100 - discountPercent) / 100 и оберни в Math.round." }
+	],
+	"tests": [
+	  { "name": "пустая корзина", "call": "calcCartTotal([], 10)", "expected": 0 },
+	  { "name": "без скидки", "call": "calcCartTotal([{ price: 100, qty: 2 }, { price: 50, qty: 1 }], 0)", "expected": 250 },
+	  { "name": "со скидкой 15%", "call": "calcCartTotal([{ price: 1000, qty: 1 }, { price: 500, qty: 2 }], 15)", "expected": 1700 }
+	],
+	"solution": "function calcCartTotal(items, discountPercent = 0) {\n  const subtotal = items.reduce((acc, item) => acc + item.price * item.qty, 0);\n  return Math.round(subtotal * (1 - discountPercent / 100));\n}"
+ }

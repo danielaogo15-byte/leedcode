@@ -1,15 +1,16 @@
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import type { TestResultItem } from '@/types/runner';
+import {
+  ArrowRight,
+  CheckCircle2,
+  Flag,
+  Lightbulb,
+  Play,
+  XCircle,
+} from 'lucide-react';
 
-type StubResult = {
-  name: string;
-  passed: boolean;
-  expected: string;
-  received: string;
-};
-
-type ResultsPanelProps = {
-  results: StubResult[] | null;
+type Props = {
+  results: TestResultItem[] | null;
   hint: string | null;
   hintTier: number;
   solutionVisible: boolean;
@@ -30,73 +31,107 @@ export function ResultsPanel({
   onHint,
   onGiveUp,
   onNext,
-}: ResultsPanelProps) {
+}: Props) {
+  const passedCount = results?.filter((r) => r.passed).length ?? 0;
+
   return (
-    <footer className="border-t border-border bg-background/80 px-4 py-3">
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <Button type="button" onClick={onRun}>
-          Run
-        </Button>
-        <Button type="button" variant="outline" onClick={onHint}>
-          Hint {hintTier > 0 ? `(уровень ${hintTier}/3)` : ''}
-        </Button>
-        <Button type="button" variant="destructive" onClick={onGiveUp}>
-          Сдаюсь
-        </Button>
-        <Button type="button" variant="secondary" onClick={onNext}>
-          Next
-        </Button>
+    <footer className="border-t border-border bg-card/60 px-4 py-3 backdrop-blur">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            type="button"
+            size="sm"
+            onClick={onRun}
+            className="gap-1.5 bg-emerald-500 font-semibold text-slate-950 hover:bg-emerald-400"
+          >
+            <Play className="size-3.5 fill-current" />
+            Проверить (Run)
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="secondary"
+            onClick={onHint}
+            disabled={hintTier >= 3}
+            className="gap-1.5"
+          >
+            <Lightbulb className="size-3.5 text-amber-400" />
+            Подсказка ({hintTier}/3)
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="destructive"
+            onClick={onGiveUp}
+            className="gap-1.5"
+          >
+            <Flag className="size-3.5" />
+            Сдаюсь
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={onNext}
+            className="gap-1.5"
+          >
+            Следующая
+            <ArrowRight className="size-3.5" />
+          </Button>
+        </div>
+
+        {results ? (
+          <span className="text-xs font-medium text-muted-foreground">
+            Пройдено проверок:{' '}
+            <strong className="text-foreground">
+              {passedCount} из {results.length}
+            </strong>
+          </span>
+        ) : (
+          <span className="text-xs text-muted-foreground">
+            Эталон кода откроется после решения или кнопки «Сдаюсь»
+          </span>
+        )}
       </div>
 
       {hint ? (
-        <p className="mb-3 rounded-lg border border-border bg-muted/40 px-3 py-2 text-sm">
-          <span className="font-medium">Подсказка {hintTier}: </span>
-          {hint}
-        </p>
+        <div className="mt-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
+          💡 {hint}
+        </div>
       ) : null}
 
       {solutionVisible ? (
-        <p className="mb-3 rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm">
-          <span className="font-medium">Решение: </span>
+        <pre className="mt-2.5 overflow-x-auto rounded-lg border border-sky-500/30 bg-sky-500/10 p-3 font-mono text-xs text-sky-100">
           {solution}
-        </p>
-      ) : (
-        <p className="mb-3 text-xs text-muted-foreground">
-          Эталон скрыт, пока задача не решена или не нажато «Сдаюсь».
-        </p>
-      )}
+        </pre>
+      ) : null}
 
       {results ? (
-        <ul className="grid gap-2 sm:grid-cols-2">
-          {results.map((result) => (
+        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+          {results.map((item) => (
             <li
-              key={result.name}
-              className={`rounded-lg border px-3 py-2 text-sm ${
-                result.passed
-                  ? 'border-emerald-500/40 bg-emerald-500/10'
-                  : 'border-destructive/40 bg-destructive/10'
-              }`}
+              key={item.name}
+              className={
+                item.passed
+                  ? 'flex items-start justify-between gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs'
+                  : 'flex items-start justify-between gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-xs'
+              }
             >
-              <div className="mb-1 flex items-center justify-between gap-2">
-                <span className="font-medium">{result.name}</span>
-                <Badge variant={result.passed ? 'default' : 'destructive'}>
-                  {result.passed ? 'ок' : 'ошибка'}
-                </Badge>
+              <div>
+                <p className="font-semibold text-foreground">{item.name}</p>
+                <p className="mt-0.5 font-mono text-[11px] text-muted-foreground">
+                  ожидали: {item.expected} · получили: {item.received}
+                </p>
               </div>
-              <p className="text-xs text-muted-foreground">
-                ждали: {result.expected}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                получили: {result.received}
-              </p>
+              {item.passed ? (
+                <CheckCircle2 className="size-4 shrink-0 text-emerald-400" />
+              ) : (
+                <XCircle className="size-4 shrink-0 text-destructive" />
+              )}
             </li>
           ))}
         </ul>
-      ) : (
-        <p className="text-sm text-muted-foreground">
-          Нажми Run — здесь появятся результаты тестов (пока это заглушка).
-        </p>
-      )}
+      ) : null}
     </footer>
   );
 }

@@ -1,0 +1,24 @@
+{
+	"id": "js-02-clamp",
+	"title": "Ограничение числа в диапазоне (clamp)",
+	"track": "logic",
+	"level": 1,
+	"isBoss": false,
+	"topic": "conditions",
+	"mapTopics": ["JS 5-9", "Math & Conditions"],
+	"learn": "Условные операторы if/else и методы Math.min / Math.max.",
+	"needsDom": false,
+	"prompt": "Напиши функцию `clamp(value, min, max)`, которая возвращает `min`, если `value < min`, возвращает `max`, если `value > max`, и само `value`, если оно внутри диапазона.",
+	"starterJs": "function clamp(value, min, max) {\n  \n}\n",
+	"hints": [
+	  { "tier": 1, "text": "Загугли: JS Math.min Math.max" },
+	  { "tier": 2, "text": "MDN: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/min" },
+	  { "tier": 3, "text": "Проверь через if (value < min) return min; if (value > max) return max; иначе верни value." }
+	],
+	"tests": [
+	  { "name": "внутри диапазона", "call": "clamp(5, 0, 10)", "expected": 5 },
+	  { "name": "меньше минимума", "call": "clamp(-3, 0, 10)", "expected": 0 },
+	  { "name": "больше максимума", "call": "clamp(25, 0, 10)", "expected": 10 }
+	],
+	"solution": "function clamp(value, min, max) {\n  return Math.min(Math.max(value, min), max);\n}"
+ }

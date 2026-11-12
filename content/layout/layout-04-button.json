@@ -1,0 +1,31 @@
+{
+	"id": "layout-04-button",
+	"title": "Кнопка точного размера",
+	"track": "layout",
+	"level": 1,
+	"isBoss": false,
+	"topic": "sizing",
+	"mapTopics": ["CSS Sizing", "Buttons"],
+	"learn": "Управление внешними габаритами интерактивных элементов.",
+	"needsDom": true,
+	"prompt": "Сделай кнопку точно такого же размера, как на образце справа.",
+	"specs": [
+	  "Селектор: кнопка с классом .btn",
+	  "Размер кнопки: 160 × 44 px"
+	],
+	"starterHtml": "<button class=\"btn\" type=\"button\">Запустить</button>\n",
+	"starterCss": ".btn {\n  box-sizing: border-box;\n  background: #6366f1;\n  color: #ffffff;\n  border: none;\n  border-radius: 8px;\n  font-weight: 600;\n  font-size: 14px;\n  \n}\n",
+	"targetHtml": "<button class=\"btn\" type=\"button\">Запустить</button>",
+	"targetCss": ".btn {\n  box-sizing: border-box;\n  background: #6366f1;\n  color: #ffffff;\n  border: none;\n  border-radius: 8px;\n  font-weight: 600;\n  font-size: 14px;\n  width: 160px;\n  height: 44px;\n}",
+	"hints": [
+	  { "tier": 1, "text": "Загугли: CSS задание ширины и высоты элемента" },
+	  { "tier": 2, "text": "MDN: https://developer.mozilla.org/ru/docs/Web/CSS/box-sizing" },
+	  { "tier": 3, "text": "Пропиши для .btn ширину 160px и высоту 44px." }
+	],
+	"checks": [
+	  { "type": "selector", "name": "Есть кнопка .btn", "selector": "button.btn", "minCount": 1 },
+	  { "type": "boundingRect", "name": "Ширина кнопки 160px (±2px)", "selector": ".btn", "property": "width", "expected": 160, "tolerance": 2 },
+	  { "type": "boundingRect", "name": "Высота кнопки 44px (±2px)", "selector": ".btn", "property": "height", "expected": 44, "tolerance": 2 }
+	],
+	"solution": ".btn {\n  box-sizing: border-box;\n  width: 160px;\n  height: 44px;\n}"
+ }

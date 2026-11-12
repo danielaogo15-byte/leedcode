@@ -1,0 +1,34 @@
+{
+	"id": "layout-05-boss-header",
+	"title": "Босс: Шапка сайта с логотипом и действиями",
+	"track": "layout",
+	"level": 1,
+	"isBoss": true,
+	"topic": "flexbox-boss",
+	"mapTopics": ["HTML Semantic", "CSS Flexbox", "CSS Box Model"],
+	"learn": "Комбинация семантической разметки шапки, распределения блоков по краям и фиксированной высоты.",
+	"needsDom": true,
+	"prompt": "Сверстай шапку сайта по образцу: логотип слева, кнопка справа, оба элемента выровнены по одной горизонтальной линии.",
+	"specs": [
+	  "Селекторы: шапка .topbar, внутри .logo и блок .actions с кнопкой .cta",
+	  "Высота шапки: 64px",
+	  "Внутренний отступ шапки: 16px со всех сторон",
+	  "Расположение: логотип и кнопка разнесены по противоположным краям и выровнены по центру по вертикали"
+	],
+	"starterHtml": "<header class=\"topbar\">\n  <div class=\"logo\">⚡ VibeDojo</div>\n  <div class=\"actions\">\n    <button class=\"cta\" type=\"button\">Начать</button>\n  </div>\n</header>\n",
+	"starterCss": ".topbar {\n  box-sizing: border-box;\n  background: #0f172a;\n  color: #f8fafc;\n  border-radius: 10px;\n  \n}\n\n.logo {\n  font-weight: 700;\n  font-size: 16px;\n}\n\n.cta {\n  background: #10b981;\n  color: #052e16;\n  border: none;\n  padding: 8px 14px;\n  border-radius: 6px;\n  font-weight: 600;\n}\n",
+	"targetHtml": "<header class=\"topbar\">\n  <div class=\"logo\">⚡ VibeDojo</div>\n  <div class=\"actions\">\n    <button class=\"cta\" type=\"button\">Начать</button>\n  </div>\n</header>",
+	"targetCss": ".topbar {\n  box-sizing: border-box;\n  background: #0f172a;\n  color: #f8fafc;\n  border-radius: 10px;\n  height: 64px;\n  padding: 16px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.logo {\n  font-weight: 700;\n  font-size: 16px;\n}\n.cta {\n  background: #10b981;\n  color: #052e16;\n  border: none;\n  padding: 8px 14px;\n  border-radius: 6px;\n  font-weight: 600;\n}",
+	"hints": [
+	  { "tier": 1, "text": "Загугли: flexbox распределение элементов по краям" },
+	  { "tier": 2, "text": "MDN: https://developer.mozilla.org/ru/docs/Web/CSS/justify-content" },
+	  { "tier": 3, "text": "Задай шапке высоту 64px, отступы 16px, флекс-раскладку, распределение по краям и центрирование по вертикали." }
+	],
+	"checks": [
+	  { "type": "selector", "name": "Внутри .topbar есть .logo и .actions .cta", "selector": ".topbar .actions .cta", "minCount": 1 },
+	  { "type": "computedStyle", "name": "Элементы разнесены по краям", "selector": ".topbar", "property": "justifyContent", "expected": "space-between" },
+	  { "type": "computedStyle", "name": "Элементы выровнены по вертикали", "selector": ".topbar", "property": "alignItems", "expected": "center" },
+	  { "type": "boundingRect", "name": "Высота шапки 64px (±2px)", "selector": ".topbar", "property": "height", "expected": 64, "tolerance": 2 }
+	],
+	"solution": ".topbar {\n  box-sizing: border-box;\n  height: 64px;\n  padding: 16px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}"
+ }

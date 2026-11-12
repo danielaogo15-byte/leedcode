@@ -1,0 +1,24 @@
+{
+	"id": "js-03-count-vowels",
+	"title": "Подсчёт гласных в строке",
+	"track": "logic",
+	"level": 1,
+	"isBoss": false,
+	"topic": "strings",
+	"mapTopics": ["JS 15-18", "Strings"],
+	"learn": "Приведение строки к нижнему регистру toLowerCase() и метод includes().",
+	"needsDom": false,
+	"prompt": "Напиши функцию `countVowels(str)`, которая считает количество английских гласных (`a, e, i, o, u`) в строке без учёта регистра.",
+	"starterJs": "function countVowels(str) {\n  \n}\n",
+	"hints": [
+	  { "tier": 1, "text": "Загугли: JS string toLowerCase, string includes" },
+	  { "tier": 2, "text": "MDN: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String/includes" },
+	  { "tier": 3, "text": "Переведи строку в нижний регистр, перебери символы и проверяй, входит ли символ в строку 'aeiou'." }
+	],
+	"tests": [
+	  { "name": "пустая строка", "call": "countVowels('')", "expected": 0 },
+	  { "name": "разный регистр", "call": "countVowels('Hello Dojo')", "expected": 4 },
+	  { "name": "без гласных", "call": "countVowels('rhythm')", "expected": 0 }
+	],
+	"solution": "function countVowels(str) {\n  const vowels = 'aeiou';\n  let count = 0;\n  for (const ch of str.toLowerCase()) {\n    if (vowels.includes(ch)) count += 1;\n  }\n  return count;\n}"
+ }

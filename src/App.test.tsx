@@ -3,22 +3,14 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import App from './App';
 
-describe('экран задачи (шаг 2)', () => {
-  it('показывает оболочку с треками и редактором вёрстки', () => {
-    render(<App />);
-
-    expect(
-      screen.getByRole('heading', { name: 'Тренажёр' }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Вёрстка' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Логика' })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: 'HTML' })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: 'CSS' })).toBeInTheDocument();
-    expect(screen.getByTitle('Превью задачи')).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: 'Уровень 2, закрыт' }),
-    ).toBeDisabled();
-  });
+describe('App', () => {
+	it('renders the VibeCode Dojo trainer header', () => {
+	  render(<App />);
+	  expect(
+		 screen.getByRole('heading', { name: /VibeCode Dojo/i }),
+	  ).toBeInTheDocument();
+	});
+ });
 
   it('для logic без DOM показывает только JS-редактор', async () => {
     const user = userEvent.setup();

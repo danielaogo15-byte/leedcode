@@ -1,0 +1,31 @@
+{
+	"id": "layout-03-center",
+	"title": "Идеальное центрирование",
+	"track": "layout",
+	"level": 1,
+	"isBoss": false,
+	"topic": "flexbox",
+	"mapTopics": ["CSS Flexbox 2"],
+	"learn": "Выравнивание элементов по главной и поперечной осям.",
+	"needsDom": true,
+	"prompt": "Помести бейдж «Level 1» строго по центру тёмного блока, как на образце.",
+	"specs": [
+	  "Селекторы: родительский блок .hero (высота 140px), внутри .badge",
+	  "Позиция .badge: ровно по центру по горизонтали и по вертикали"
+	],
+	"starterHtml": "<section class=\"hero\">\n  <span class=\"badge\">Level 1</span>\n</section>\n",
+	"starterCss": ".hero {\n  height: 140px;\n  background: #0f172a;\n  border-radius: 12px;\n  \n}\n\n.badge {\n  padding: 6px 14px;\n  border-radius: 999px;\n  background: #38bdf8;\n  color: #0f172a;\n  font-weight: 700;\n  font-size: 13px;\n}\n",
+	"targetHtml": "<section class=\"hero\">\n  <span class=\"badge\">Level 1</span>\n</section>",
+	"targetCss": ".hero {\n  height: 140px;\n  background: #0f172a;\n  border-radius: 12px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.badge {\n  padding: 6px 14px;\n  border-radius: 999px;\n  background: #38bdf8;\n  color: #0f172a;\n  font-weight: 700;\n  font-size: 13px;\n}",
+	"hints": [
+	  { "tier": 1, "text": "Загугли: как отцентрировать блок по вертикали и горизонтали через flexbox" },
+	  { "tier": 2, "text": "MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Aligning_items_in_a_flex_container" },
+	  { "tier": 3, "text": "Включи флекс-раскладку на родителе .hero и выровняй контент по центру вдоль обеих осей." }
+	],
+	"checks": [
+	  { "type": "computedStyle", "name": "Блок .hero использует flex-раскладку", "selector": ".hero", "property": "display", "expected": "flex" },
+	  { "type": "computedStyle", "name": "Центрирование по горизонтали", "selector": ".hero", "property": "justifyContent", "expected": "center" },
+	  { "type": "computedStyle", "name": "Центрирование по вертикали", "selector": ".hero", "property": "alignItems", "expected": "center" }
+	],
+	"solution": ".hero {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}"
+ }

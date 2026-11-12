@@ -1,0 +1,31 @@
+{
+	"id": "layout-02-nav",
+	"title": "Горизонтальное меню",
+	"track": "layout",
+	"level": 1,
+	"isBoss": false,
+	"topic": "flexbox",
+	"mapTopics": ["CSS Flexbox 1"],
+	"learn": "Горизонтальный поток элементов и задание одинаковых промежутков между ними.",
+	"needsDom": true,
+	"prompt": "Выстрой пункты навигации в одну линию с отступами между ними, как на образце.",
+	"specs": [
+	  "Селекторы: контейнер .menu, внутри 3 ссылки",
+	  "Промежуток между соседними ссылками: 16px"
+	],
+	"starterHtml": "<nav class=\"menu\">\n  <a href=\"#\">Задачи</a>\n  <a href=\"#\">Сегодня</a>\n  <a href=\"#\">Профиль</a>\n</nav>\n",
+	"starterCss": ".menu {\n  background: #0f172a;\n  padding: 12px 16px;\n  border-radius: 10px;\n  \n}\n\n.menu a {\n  color: #e2e8f0;\n  text-decoration: none;\n  font-weight: 500;\n  font-size: 14px;\n}\n",
+	"targetHtml": "<nav class=\"menu\">\n  <a href=\"#\">Задачи</a>\n  <a href=\"#\">Сегодня</a>\n  <a href=\"#\">Профиль</a>\n</nav>",
+	"targetCss": ".menu {\n  background: #0f172a;\n  padding: 12px 16px;\n  border-radius: 10px;\n  display: flex;\n  gap: 16px;\n}\n.menu a {\n  color: #e2e8f0;\n  text-decoration: none;\n  font-weight: 500;\n  font-size: 14px;\n}",
+	"hints": [
+	  { "tier": 1, "text": "Загугли: CSS флекс-контейнер и отступ между флекс-элементами" },
+	  { "tier": 2, "text": "MDN: https://developer.mozilla.org/ru/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox" },
+	  { "tier": 3, "text": "Преврати .menu во флекс-контейнер и задай промежуток между элементами 16px." }
+	],
+	"checks": [
+	  { "type": "selector", "name": "Внутри .menu минимум 3 ссылки", "selector": ".menu a", "minCount": 3 },
+	  { "type": "computedStyle", "name": "Контейнер .menu выстроен через flex", "selector": ".menu", "property": "display", "expected": "flex" },
+	  { "type": "computedStyle", "name": "Промежуток между пунктами равен 16px", "selector": ".menu", "property": "columnGap", "expected": "16px" }
+	],
+	"solution": ".menu {\n  display: flex;\n  gap: 16px;\n}"
+ }

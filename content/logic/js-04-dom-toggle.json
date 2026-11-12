@@ -1,0 +1,29 @@
+{
+	"id": "js-04-dom-toggle",
+	"title": "Переключить класс по клику",
+	"track": "logic",
+	"level": 1,
+	"isBoss": false,
+	"topic": "dom",
+	"mapTopics": ["JS 24-26", "DOM Events"],
+	"learn": "Поиск элемента через querySelector, подписка addEventListener('click') и classList.toggle.",
+	"needsDom": true,
+	"prompt": "По клику на кнопку `#toggle` переключай на ней CSS-класс `active`. HTML-разметка фиксирована.",
+	"starterJs": "const button = document.querySelector('#toggle');\n",
+	"htmlFixture": "<button type=\"button\" id=\"toggle\">Нажми</button>\n",
+	"hints": [
+	  { "tier": 1, "text": "Загугли: element classList toggle, addEventListener click" },
+	  { "tier": 2, "text": "MDN: https://developer.mozilla.org/ru/docs/Web/API/Element/classList" },
+	  { "tier": 3, "text": "Вызови button.addEventListener('click', () => button.classList.toggle('active'))." }
+	],
+	"checks": [
+	  {
+		 "type": "domAction",
+		 "name": "Клик по #toggle добавляет класс active",
+		 "clickSelector": "#toggle",
+		 "targetSelector": "#toggle",
+		 "expectHasClass": "active"
+	  }
+	],
+	"solution": "const button = document.querySelector('#toggle');\nbutton?.addEventListener('click', () => {\n  button.classList.toggle('active');\n});"
+ }

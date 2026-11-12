@@ -1,8 +1,16 @@
+import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import type { StubTask } from '@/features/tasks/stubTasks';
+import { LazyMonaco } from '@/features/editor/LazyMonaco';
+import {
+  createPasteGuardState,
+  type PasteGuardState,
+} from '@/features/editor/pasteGuard';
+import type { Task } from '@/types/task';
+import { RotateCcw } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-type EditorPaneProps = {
-  task: StubTask;
+type Props = {
+  task: Task;
   html: string;
   css: string;
   js: string;
@@ -10,10 +18,9 @@ type EditorPaneProps = {
   onHtmlChange: (value: string) => void;
   onCssChange: (value: string) => void;
   onJsChange: (value: string) => void;
+  onResetCode?: () => void;
+  onSuspiciousSpeedChange?: (suspicious: boolean) => void;
 };
-
-const editorClassName =
-  'min-h-48 w-full flex-1 resize-none rounded-lg border border-input bg-zinc-950 p-3 font-mono text-sm text-zinc-100 outline-none focus-visible:ring-3 focus-visible:ring-ring/50';
 
 export function EditorPane({
   task,
@@ -24,74 +31,111 @@ export function EditorPane({
   onHtmlChange,
   onCssChange,
   onJsChange,
-}: EditorPaneProps) {
+  onResetCode,
+  onSuspiciousSpeedChange,
+}: Props) {
+  const [guardState, setGuardState] = useState<PasteGuardState>(() =>
+    createPasteGuardState(),
+  );
+
+  useEffect(() => {
+    const fresh = createPasteGuardState();
+    setGuardState(fresh);
+    onSuspiciousSpeedChange?.(false);
+  }, [task.id, onSuspiciousSpeedChange]);
+
+  const handleGuardUpdate = (next: PasteGuardState) => {
+    setGuardState(next);
+    onSuspiciousSpeedChange?.(next.suspiciousSpeed);
+  };
+
   return (
-    <section className="flex min-h-0 flex-1 flex-col gap-2">
+    <section className="mt-2 flex min-h-0 flex-1 flex-col gap-3">
       <div className="flex items-center justify-between gap-2">
-        <h2 className="text-sm font-medium">Редактор</h2>
-        {hardcore ? (
-          <p className="text-xs text-amber-400">
-            Hardcore: без автодополнения и подсказок редактора
-          </p>
-        ) : (
-          <p className="text-xs text-muted-foreground">
-            Пока textarea. Monaco подключим вместе с запуском кода.
-          </p>
-        )}
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-medium">Редактор</h3>
+          <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-400">
+            Автосохранение включено
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-xs text-muted-foreground">
+            {hardcore
+              ? 'Hardcore: без подсказок'
+              : 'Monaco · внешняя вставка заблокирована'}
+          </span>
+          {onResetCode ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={onResetCode}
+              className="h-7 gap-1 px-2 text-xs text-muted-foreground hover:text-foreground"
+              title="Вернуть стартовый код задачи"
+            >
+              <RotateCcw className="size-3.5" />
+              Сбросить код
+            </Button>
+          ) : null}
+        </div>
       </div>
 
+      {guardState.blockedAttemptMessage ? (
+        <p className="rounded border border-destructive/50 bg-destructive/10 px-3 py-1.5 text-xs text-destructive">
+          {guardState.blockedAttemptMessage}
+        </p>
+      ) : null}
+
+      {guardState.suspiciousSpeed ? (
+        <p className="rounded border border-amber-500/50 bg-amber-500/10 px-3 py-1.5 text-xs text-amber-300">
+          Подозрительно высокая скорость ввода — XP за эту попытку не начислится.
+        </p>
+      ) : null}
+
       {task.track === 'layout' ? (
-        <Tabs defaultValue="html" className="flex min-h-0 flex-1">
-          <TabsList>
+        <Tabs defaultValue="html" className="flex min-h-0 flex-1 flex-col">
+          <TabsList className="w-fit">
             <TabsTrigger value="html">HTML</TabsTrigger>
             <TabsTrigger value="css">CSS</TabsTrigger>
           </TabsList>
-          <TabsContent value="html" className="flex min-h-0 flex-col">
-            <label className="sr-only" htmlFor="editor-html">
-              HTML
-            </label>
-            <textarea
-              id="editor-html"
-              className={editorClassName}
-              spellCheck={false}
+          <TabsContent value="html" className="mt-3.5 flex min-h-0 flex-1">
+            <LazyMonaco
+              language="html"
               value={html}
-              onChange={(event) => onHtmlChange(event.target.value)}
+              hardcore={hardcore}
+              guardState={guardState}
+              onGuardStateChange={handleGuardUpdate}
+              onChange={onHtmlChange}
             />
           </TabsContent>
-          <TabsContent value="css" className="flex min-h-0 flex-col">
-            <label className="sr-only" htmlFor="editor-css">
-              CSS
-            </label>
-            <textarea
-              id="editor-css"
-              className={editorClassName}
-              spellCheck={false}
+          <TabsContent value="css" className="mt-3.5 flex min-h-0 flex-1">
+            <LazyMonaco
+              language="css"
               value={css}
-              onChange={(event) => onCssChange(event.target.value)}
+              hardcore={hardcore}
+              guardState={guardState}
+              onGuardStateChange={handleGuardUpdate}
+              onChange={onCssChange}
             />
           </TabsContent>
         </Tabs>
       ) : (
-        <div className="flex min-h-0 flex-1 flex-col gap-3">
-          {task.needsDom ? (
-            <div>
-              <p className="mb-1 text-xs font-medium text-muted-foreground">
-                HTML-заготовка · только чтение
-              </p>
-              <pre className="max-h-28 overflow-auto rounded-lg border border-border bg-muted/40 p-3 font-mono text-xs">
-                {task.htmlFixture}
-              </pre>
+        <div className="mt-2 flex min-h-0 flex-1 flex-col gap-3">
+          {task.needsDom && task.htmlFixture ? (
+            <div className="rounded border border-border bg-muted/30 p-2 font-mono text-xs text-muted-foreground">
+              <span className="mb-1 block font-sans text-[11px] uppercase">
+                Фиксированный HTML (только для чтения):
+              </span>
+              {task.htmlFixture.trim()}
             </div>
           ) : null}
-          <label className="sr-only" htmlFor="editor-js">
-            JavaScript
-          </label>
-          <textarea
-            id="editor-js"
-            className={editorClassName}
-            spellCheck={false}
+          <LazyMonaco
+            language="javascript"
             value={js}
-            onChange={(event) => onJsChange(event.target.value)}
+            hardcore={hardcore}
+            guardState={guardState}
+            onGuardStateChange={handleGuardUpdate}
+            onChange={onJsChange}
           />
         </div>
       )}
