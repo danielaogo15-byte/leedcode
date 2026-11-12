@@ -1,0 +1,33 @@
+{
+	"id": "ritual-02-docker-backend",
+	"title": "Ритуал: Поднятие PostgreSQL + Redis в Docker и миграции Alembic + pytest",
+	"level": 1,
+	"description": "Отработай команды бэкенд-разработчика: запуск контейнеров базы данных в фоне, генерация и накат миграций Alembic и прогон тестов pytest.",
+	"stack": ["Docker", "PostgreSQL", "Redis", "FastAPI", "Alembic", "pytest"],
+	"steps": [
+	  {
+		 "expect": "^docker compose up -d$",
+		 "output": "[+] Running 2/2\n ✔ Container dojo-postgres-1  Started   0.4s\n ✔ Container dojo-redis-1     Started   0.3s",
+		 "hint": "Запусти контейнеры в фоновом режиме: docker compose up -d",
+		 "promptDir": "~/backend"
+	  },
+	  {
+		 "expect": "^docker ps$",
+		 "output": "CONTAINER ID   IMAGE         STATUS         PORTS\n91f4a20e1c     postgres:16   Up 4 seconds   0.0.0.0:5432->5432/tcp\n82b1c04a7d     redis:7       Up 4 seconds   0.0.0.0:6379->6379/tcp",
+		 "hint": "Проверь список запущенных контейнеров: docker ps",
+		 "promptDir": "~/backend"
+	  },
+	  {
+		 "expect": "^alembic upgrade head$",
+		 "output": "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Running upgrade  -> 8f1a2b3c, create users table",
+		 "hint": "Накати все миграции БД до последней: alembic upgrade head",
+		 "promptDir": "~/backend"
+	  },
+	  {
+		 "expect": "^pytest$",
+		 "output": "============================= test session starts ==============================\ncollected 8 items\ntests/test_api.py ........                                                [100%]\n============================== 8 passed in 0.42s ===============================",
+		 "hint": "Запусти тесты Python: pytest",
+		 "promptDir": "~/backend"
+	  }
+	]
+ }

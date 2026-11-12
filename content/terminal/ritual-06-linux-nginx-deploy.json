@@ -1,0 +1,39 @@
+{
+	"id": "ritual-06-linux-nginx-deploy",
+	"title": "Ритуал: Продакшен (Playwright E2E → Docker Build → Nginx → Vercel)",
+	"level": 4,
+	"description": "Финальный чек-лист перед выкаткой в прод: прогон браузерных E2E-тестов Playwright, сборка Docker-образа, проверка синтаксиса Nginx в Linux и деплой.",
+	"stack": ["Playwright", "Docker", "Linux", "Nginx", "Vercel"],
+	"steps": [
+	  {
+		 "expect": "^pnpm exec playwright test$",
+		 "output": "Running 6 tests using 3 workers\n  6 passed (3.2s)",
+		 "hint": "Запусти E2E-тесты Playwright: pnpm exec playwright test",
+		 "promptDir": "~/prod-app"
+	  },
+	  {
+		 "expect": "^docker build -t [\\w/-]+(:[\\w.-]+)? \\.$",
+		 "output": "[+] Building 2.8s (12/12) FINISHED\n => naming to docker.io/library/dojo-app:latest",
+		 "hint": "Собери Docker-образ из текущей папки (не забудь точку в конце): docker build -t dojo-app .",
+		 "promptDir": "~/prod-app"
+	  },
+	  {
+		 "expect": "^sudo nginx -t$",
+		 "output": "nginx: the configuration file /etc/nginx/nginx.conf syntax is ok\nnginx: configuration file /etc/nginx/nginx.conf test is successful",
+		 "hint": "Проверь конфиг Nginx на ошибки перед перезапуском: sudo nginx -t",
+		 "promptDir": "ubuntu@aws-ec2:~"
+	  },
+	  {
+		 "expect": "^sudo systemctl reload nginx$",
+		 "output": "",
+		 "hint": "Бесшовно перезагрузи Nginx через systemd: sudo systemctl reload nginx",
+		 "promptDir": "ubuntu@aws-ec2:~"
+	  },
+	  {
+		 "expect": "^vercel --prod$",
+		 "output": "Vercel CLI 41.1.0\n🔍  Inspect: https://vercel.com/daniela/dojo-app\n✅  Production: https://dojo-app.vercel.app [1s]",
+		 "hint": "Выкати фронтенд в продакшен через CLI: vercel --prod",
+		 "promptDir": "~/prod-app"
+	  }
+	]
+ }

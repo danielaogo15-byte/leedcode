@@ -1,0 +1,33 @@
+{
+	"id": "ritual-04-frontend-shadcn-stack",
+	"title": "Ритуал: Подключение shadcn/ui, Zustand, Query и RHF + Zod",
+	"level": 2,
+	"description": "Быстрое разворачивание боевого фронтенд-стека в новом React-проекте: инициализация shadcn/ui, генерация UI-компонентов, установка стейт-менеджера и валидации форм.",
+	"stack": ["shadcn/ui", "Tailwind CSS", "Zustand", "TanStack Query", "React Hook Form", "Zod", "pnpm"],
+	"steps": [
+	  {
+		 "expect": "^pnpm dlx shadcn(@latest)? init$",
+		 "output": "✔ Preflight checks.\n✔ Verifying framework. Found Vite.\n✔ Writing components.json.",
+		 "hint": "Инициализируй shadcn/ui: pnpm dlx shadcn@latest init",
+		 "promptDir": "~/frontend"
+	  },
+	  {
+		 "expect": "^pnpm dlx shadcn(@latest)? add button input dialog$",
+		 "output": "✔ Created 3 files:\n  - src/components/ui/button.tsx\n  - src/components/ui/input.tsx\n  - src/components/ui/dialog.tsx",
+		 "hint": "Добавь базовые компоненты одной командой: pnpm dlx shadcn@latest add button input dialog",
+		 "promptDir": "~/frontend"
+	  },
+	  {
+		 "expect": "^pnpm add zustand @tanstack/react-query$",
+		 "output": "Packages: +4\n+ @tanstack/react-query 5.66.0\n+ zustand 5.0.3",
+		 "hint": "Установи стор и серверный стейт: pnpm add zustand @tanstack/react-query",
+		 "promptDir": "~/frontend"
+	  },
+	  {
+		 "expect": "^pnpm add react-hook-form zod @hookform/resolvers$",
+		 "output": "Packages: +3\n+ @hookform/resolvers 4.1.0\n+ react-hook-form 7.54.2\n+ zod 3.24.2",
+		 "hint": "Установи связку для форм и схем: pnpm add react-hook-form zod @hookform/resolvers",
+		 "promptDir": "~/frontend"
+	  }
+	]
+ }

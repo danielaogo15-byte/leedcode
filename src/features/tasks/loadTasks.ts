@@ -2,7 +2,7 @@ import type { Task, TaskJson } from '@/types/task';
 import type { Level, TrackId } from '@/types/track';
 
 const rawModules = import.meta.glob<{ default: TaskJson }>(
-  '/content/**/*.json',
+  ['/content/layout/*.json', '/content/logic/*.json'],
   { eager: true },
 );
 

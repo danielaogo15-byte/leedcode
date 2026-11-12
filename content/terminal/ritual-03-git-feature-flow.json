@@ -1,0 +1,51 @@
+{
+	"id": "ritual-03-git-feature-flow",
+	"title": "Ритуал: Ветка под фичу + Линтер и Тесты + Push",
+	"level": 1,
+	"description": "Главный ежедневный цикл разработчика: создать отдельную ветку под задачу, прогнать ESLint, Prettier и Vitest перед коммитом и запушить ветку для Pull Request.",
+	"stack": ["Git", "GitHub", "ESLint", "Prettier", "Vitest", "pnpm"],
+	"steps": [
+	  {
+		 "expect": "^git (switch -c|checkout -b) [\\w/-]+$",
+		 "output": "Switched to a new branch 'feat/auth'",
+		 "hint": "Создай и переключись на новую ветку: git switch -c feat/auth (или git checkout -b feat/auth)",
+		 "promptDir": "~/app (main)"
+	  },
+	  {
+		 "expect": "^pnpm\\s+(run\\s+)?lint$",
+		 "output": "> app@0.0.0 lint\n> eslint .\n✔ 0 problems (0 errors, 0 warnings)",
+		 "hint": "Проверь код линтером: pnpm lint",
+		 "promptDir": "~/app (feat/auth)"
+	  },
+	  {
+		 "expect": "^pnpm\\s+(run\\s+)?test:run$",
+		 "output": " RUN  v5.1.0\n ✓ src/auth.test.ts (4 tests) 18ms\n Test Files  1 passed (1)",
+		 "hint": "Прогони юнит-тесты Vitest: pnpm test:run",
+		 "promptDir": "~/app (feat/auth)"
+	  },
+	  {
+		 "expect": "^git status$",
+		 "output": "On branch feat/auth\nChanges not staged for commit:\n  modified:   src/App.tsx",
+		 "hint": "Проверь список изменённых файлов: git status",
+		 "promptDir": "~/app (feat/auth)"
+	  },
+	  {
+		 "expect": "^git add (\\.|--all|-A)$",
+		 "output": "",
+		 "hint": "Добавь изменения в индекс: git add .",
+		 "promptDir": "~/app (feat/auth)"
+	  },
+	  {
+		 "expect": "^git commit -m [\"'].+[\"']$",
+		 "output": "[feat/auth 9c4b1d2] feat: add login form\n 2 files changed, 58 insertions(+)",
+		 "hint": "Сделай коммит: git commit -m \"feat: add login\"",
+		 "promptDir": "~/app (feat/auth)"
+	  },
+	  {
+		 "expect": "^git push (-u|--set-upstream) origin [\\w/-]+$",
+		 "output": "To https://github.com/user/app.git\n * [new branch]      feat/auth -> feat/auth",
+		 "hint": "Отправь свою ветку на GitHub: git push -u origin feat/auth",
+		 "promptDir": "~/app (feat/auth)"
+	  }
+	]
+ }

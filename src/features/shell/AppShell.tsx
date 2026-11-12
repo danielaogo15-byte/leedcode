@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { EditorPane } from '@/features/editor/EditorPane';
 import { PreviewPane } from '@/features/editor/PreviewPane';
+import { TerminalView } from '@/features/terminal/TerminalView';
 import {
   clearTaskDraft,
   loadTaskDraft,
@@ -30,9 +31,24 @@ import {
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
-type ActiveScreen = 'trainer' | 'today' | 'profile';
+type ActiveScreen = 'trainer' | 'today' | 'terminal' | 'profile';
 
 export function AppShell() {
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const saved = window.localStorage.getItem('vibedojo:theme');
+    return saved === 'light' ? 'light' : 'dark';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    window.localStorage.setItem('vibedojo:theme', theme);
+  }, [theme]);
+
   const [screen, setScreen] = useState<ActiveScreen>('trainer');
   const [track, setTrack] = useState<TrackId>('layout');
   const [level, setLevel] = useState<Level>(1);
@@ -198,21 +214,6 @@ export function AppShell() {
       });
     }
   };
-  
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    const saved = window.localStorage.getItem('vibedojo:theme');
-    return saved === 'light' ? 'light' : 'dark';
-  });
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-    window.localStorage.setItem('vibedojo:theme', theme);
-  }, [theme]);
 
   const handleGiveUp = async () => {
     setGaveUp(true);
@@ -235,8 +236,8 @@ export function AppShell() {
   };
 
   return (
-    <div className="grid h-svh grid-cols-[19rem_1fr] grid-rows-[auto_1fr_auto] bg-background text-foreground">
-      <header className="col-span-2 flex items-center justify-between gap-4 border-b border-border/80 bg-card/50 px-5 py-2.5 backdrop-blur">
+    <div className="grid h-svh grid-cols-[19rem_1fr] grid-rows-[auto_1fr] overflow-hidden bg-background text-foreground">
+      <header className="col-span-2 flex items-center justify-between gap-4 border-b border-border/80 bg-card/60 px-5 py-2.5 backdrop-blur">
         <div className="flex items-center gap-3">
           <div className="flex size-8 items-center justify-center rounded-lg bg-sky-500/15 text-sky-400 ring-1 ring-sky-500/30">
             <Terminal className="size-4" />
@@ -249,7 +250,7 @@ export function AppShell() {
           </div>
         </div>
 
-        <nav className="flex items-center gap-1 rounded-lg border border-border bg-muted/30 p-1 text-xs">
+        <nav className="flex items-center gap-1 rounded-lg border border-border bg-muted/40 p-1 text-xs">
           <button
             type="button"
             onClick={() => setScreen('trainer')}
@@ -271,9 +272,20 @@ export function AppShell() {
             }
           >
             <span>Сегодня</span>
-            <span className="rounded bg-sky-500/20 px-1.5 py-0.2 text-[10px] font-bold text-sky-300">
+            <span className="rounded bg-sky-500/20 px-1.5 py-0.2 text-[10px] font-bold text-sky-400">
               {dailySolvedIds.length}/{dailySlots.length || 3}
             </span>
+          </button>
+			 <button
+            type="button"
+            onClick={() => setScreen('terminal')}
+            className={
+              screen === 'terminal'
+                ? 'rounded-md bg-background px-3 py-1 font-medium text-foreground shadow-sm'
+                : 'px-3 py-1 text-muted-foreground hover:text-foreground'
+            }
+          >
+            Терминал
           </button>
           <button
             type="button"
@@ -288,18 +300,45 @@ export function AppShell() {
           </button>
         </nav>
 
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-300">
+        <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-500 dark:text-amber-300">
             <Trophy className="size-3.5" />
             <span>{totalXp} XP</span>
           </div>
 
-          <div className="flex items-center gap-1 rounded-lg border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 text-xs font-semibold text-orange-300">
+          <div className="flex items-center gap-1 rounded-lg border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 text-xs font-semibold text-orange-500 dark:text-orange-300">
             <Flame className="size-3.5" />
             <span>{streakDays} дн.</span>
           </div>
 
-          <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-muted/20 px-3 py-1.5 text-xs font-medium">
+          <button
+            type="button"
+            onClick={() =>
+              setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+            }
+            className="flex items-center gap-1.5 rounded-lg border border-border bg-muted/40 px-2.5 py-1.5 text-xs font-medium text-foreground transition hover:bg-muted"
+            title="Переключить тему оформления"
+          >
+            {theme === 'dark' ? (
+              <>
+                <Sun className="size-3.5 text-amber-400" />
+                <span>Светлая</span>
+              </>
+            ) : (
+              <>
+                <Moon className="size-3.5 text-sky-600" />
+                <span>Графит</span>
+              </>
+            )}
+          </button>
+
+          <label
+            className={
+              hardcore
+                ? 'flex cursor-pointer items-center gap-2 rounded-lg border border-orange-500/50 bg-orange-500/15 px-3 py-1.5 text-xs font-semibold text-orange-400'
+                : 'flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-muted/30 px-3 py-1.5 text-xs font-medium text-foreground'
+            }
+          >
             <Switch
               checked={hardcore}
               onCheckedChange={(checked) => setHardcore(checked === true)}
@@ -310,7 +349,7 @@ export function AppShell() {
         </div>
       </header>
 
-      {screen === 'profile' ? (
+		{screen === 'profile' ? (
         <ProfileView
           tasks={ALL_TASKS}
           onSelectTask={openTaskFromDashboard}
@@ -320,6 +359,8 @@ export function AppShell() {
           tasks={ALL_TASKS}
           onStartTask={openTaskFromDashboard}
         />
+      ) : screen === 'terminal' ? (
+        <TerminalView />
       ) : (
         <>
           <Sidebar
@@ -343,102 +384,104 @@ export function AppShell() {
             }}
           />
 
-          <main className="flex min-h-0 flex-col overflow-y-auto">
-            {task ? (
-              <>
-                <div className="border-b border-border/80 bg-card/20 px-5 py-3.5">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="text-base font-bold">{task.title}</h2>
-                    {task.isBoss ? (
-                      <Badge variant="destructive">БОСС x3 XP</Badge>
-                    ) : null}
-                    {memoryMode ? (
-                      <Badge className="bg-sky-500 text-slate-950">
-                        Режим «По памяти» (пустой редактор)
-                      </Badge>
-                    ) : null}
-                    {task.mapTopics.map((topic) => (
-                      <Badge key={topic} variant="secondary">
-                        {topic}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  {lastXpBanner ? (
-                    <div className="mt-2 flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-300">
-                      <Sparkles className="size-3.5 shrink-0" />
-                      <span>{lastXpBanner}</span>
-                    </div>
-                  ) : null}
-
-                  <p className="mt-1.5 max-w-3xl text-sm text-foreground/90">
-                    {task.prompt}
-                  </p>
-
-                  {task.specs.length > 0 ? (
-                    <div className="mt-3 rounded-xl border border-border bg-muted/25 p-3">
-                      <p className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-sky-400">
-                        <CheckSquare className="size-3.5" />
-                        Параметры макета (размеры, селекторы, контент):
-                      </p>
-                      <ul className="grid gap-1 sm:grid-cols-2">
-                        {task.specs.map((spec) => (
-                          <li
-                            key={spec}
-                            className="flex items-start gap-2 text-xs text-muted-foreground"
-                          >
-                            <span className="mt-1 size-1.5 shrink-0 rounded-full bg-sky-400" />
-                            <span>{spec}</span>
-                          </li>
+          <div className="flex min-h-0 flex-col overflow-hidden">
+            <main className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+              {task ? (
+                <>
+                  <div className="border-b border-border/80 bg-card/20 px-5 py-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h2 className="text-base font-bold">{task.title}</h2>
+                        {task.isBoss ? (
+                          <Badge variant="destructive">БОСС x3 XP</Badge>
+                        ) : null}
+                        {memoryMode ? (
+                          <Badge className="bg-sky-500 text-slate-950">
+                            Режим «По памяти» (пустой редактор)
+                          </Badge>
+                        ) : null}
+                        {task.mapTopics.map((topic) => (
+                          <Badge key={topic} variant="secondary">
+                            {topic}
+                          </Badge>
                         ))}
-                      </ul>
+                      </div>
+
+                      {lastXpBanner ? (
+                        <div className="flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-500 dark:text-emerald-300">
+                          <Sparkles className="size-3.5 shrink-0" />
+                          <span>{lastXpBanner}</span>
+                        </div>
+                      ) : null}
                     </div>
-                  ) : null}
 
-                  <div className="mt-2.5 flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <BookOpen className="size-3.5 shrink-0 text-amber-400" />
-                    <span>
-                      <strong className="text-foreground">
-                        Тема на изучение:
-                      </strong>{' '}
-                      {task.learn}
-                    </span>
+                    <p className="mt-1 max-w-3xl text-sm text-foreground/90">
+                      {task.prompt}
+                    </p>
+
+                    {task.specs.length > 0 ? (
+                      <div className="mt-2.5 rounded-xl border border-border bg-muted/25 p-2.5">
+                        <p className="mb-1 flex items-center gap-1.5 text-xs font-semibold text-sky-500 dark:text-sky-400">
+                          <CheckSquare className="size-3.5" />
+                          Параметры макета (размеры, селекторы, контент):
+                        </p>
+                        <ul className="grid gap-1 sm:grid-cols-2">
+                          {task.specs.map((spec) => (
+                            <li
+                              key={spec}
+                              className="flex items-start gap-2 text-xs text-muted-foreground"
+                            >
+                              <span className="mt-1 size-1.5 shrink-0 rounded-full bg-sky-400" />
+                              <span>{spec}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+
+                    <div className="mt-2 flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <BookOpen className="size-3.5 shrink-0 text-amber-500 dark:text-amber-400" />
+                      <span>
+                        <strong className="text-foreground">
+                          Тема на изучение:
+                        </strong>{' '}
+                        {task.learn}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex min-h-0 flex-1 flex-col gap-4 p-5 lg:flex-row">
-                  <EditorPane
-                    task={task}
-                    html={html}
-                    css={css}
-                    js={js}
-                    hardcore={hardcore}
-                    onHtmlChange={handleHtmlChange}
-                    onCssChange={handleCssChange}
-                    onJsChange={handleJsChange}
-                    onResetCode={handleResetCode}
-                    onSuspiciousSpeedChange={setSuspiciousSpeed}
-                  />
-                  {showPreview ? (
-                    <PreviewPane
+                  <div className="flex min-h-[22rem] flex-1 flex-col gap-4 p-4 lg:flex-row">
+                    <EditorPane
+                      task={task}
                       html={html}
                       css={css}
                       js={js}
-                      fixture={task.track === 'logic' ? task.htmlFixture : ''}
-                      targetHtml={task.targetHtml}
-                      targetCss={task.targetCss}
+                      hardcore={hardcore}
+                      onHtmlChange={handleHtmlChange}
+                      onCssChange={handleCssChange}
+                      onJsChange={handleJsChange}
+                      onResetCode={handleResetCode}
+                      onSuspiciousSpeedChange={setSuspiciousSpeed}
                     />
-                  ) : null}
-                </div>
-              </>
-            ) : (
-              <p className="p-4 text-sm text-muted-foreground">
-                На этом уровне пока нет задач. Выбери другой уровень слева.
-              </p>
-            )}
-          </main>
+                    {showPreview ? (
+                      <PreviewPane
+                        html={html}
+                        css={css}
+                        js={js}
+                        fixture={task.track === 'logic' ? task.htmlFixture : ''}
+                        targetHtml={task.targetHtml}
+                        targetCss={task.targetCss}
+                      />
+                    ) : null}
+                  </div>
+                </>
+              ) : (
+                <p className="p-4 text-sm text-muted-foreground">
+                  На этом уровне пока нет задач. Выбери другой уровень слева.
+                </p>
+              )}
+            </main>
 
-          <div className="col-start-2">
             <ResultsPanel
               results={results}
               hint={currentHint}

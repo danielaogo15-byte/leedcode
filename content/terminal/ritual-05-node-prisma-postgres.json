@@ -1,0 +1,39 @@
+{
+	"id": "ritual-05-node-prisma-postgres",
+	"title": "Ритуал: Node.js + Express + Prisma ORM и миграция PostgreSQL",
+	"level": 3,
+	"description": "Полный цикл настройки TypeScript-бэкенда с базой данных: установка Express и Prisma, инициализация схемы, создание SQL-миграции и запуск Prisma Studio.",
+	"stack": ["Node.js", "Express", "TypeScript", "Prisma", "PostgreSQL", "pnpm"],
+	"steps": [
+	  {
+		 "expect": "^pnpm add express @prisma/client$",
+		 "output": "Packages: +64\n+ @prisma/client 6.3.0\n+ express 5.0.1",
+		 "hint": "Установи Express и клиент Prisma: pnpm add express @prisma/client",
+		 "promptDir": "~/api-server"
+	  },
+	  {
+		 "expect": "^pnpm add -D prisma typescript @types/node @types/express$",
+		 "output": "devDependencies:\n+ @types/express 5.0.0\n+ @types/node 22.12.0\n+ prisma 6.3.0\n+ typescript 5.9.3",
+		 "hint": "Установи dev-зависимости и типы: pnpm add -D prisma typescript @types/node @types/express",
+		 "promptDir": "~/api-server"
+	  },
+	  {
+		 "expect": "^pnpm dlx prisma init$",
+		 "output": "✔ Your Prisma schema was created at prisma/schema.prisma\nYou can now open it in your favorite editor.",
+		 "hint": "Создай папку prisma и файл .env: pnpm dlx prisma init",
+		 "promptDir": "~/api-server"
+	  },
+	  {
+		 "expect": "^pnpm dlx prisma migrate dev --name [\\w-]+$",
+		 "output": "Applying migration `20261112_init`\n✔ Generated Prisma Client (v6.3.0) to ./node_modules/@prisma/client",
+		 "hint": "Создай и примени первую миграцию: pnpm dlx prisma migrate dev --name init",
+		 "promptDir": "~/api-server"
+	  },
+	  {
+		 "expect": "^pnpm dlx prisma studio$",
+		 "output": "Environment variables loaded from .env\nPrisma Studio is up on http://localhost:5555",
+		 "hint": "Открой визуальную админку БД: pnpm dlx prisma studio",
+		 "promptDir": "~/api-server"
+	  }
+	]
+ }
