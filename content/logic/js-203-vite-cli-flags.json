@@ -1,0 +1,81 @@
+{
+  "id": "js-203-vite-cli-flags",
+  "title": "Vite Config: настройка алиаса @ и сервера в vite.config.ts",
+  "track": "logic",
+  "level": 2,
+  "isBoss": false,
+  "topic": "vite-config",
+  "mapTopics": [
+    "Vite",
+    "TypeScript",
+    "pnpm"
+  ],
+  "learn": "Написание функции генерации конфига Vite с секциями server.port и resolve.alias.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function createViteConfig(port: number = 5173)`, которая возвращает объект конфига Vite со структурой `{ server: { port, strictPort: true }, resolve: { alias: { \"@\": \"/src\" } } }`.",
+  "specs": [
+    "Параметр port типизирован как number и по умолчанию равен 5173",
+    "Внутри resolve.alias ключ \"@\" должен указывать на \"/src\""
+  ],
+  "starterJs": "function createViteConfig(port: number = 5173) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Vite алиас настраивается в секции resolve: { alias: { \"@\": \"/src\" } }."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Vite: https://vite.dev/config/shared-options.html#resolve-alias"
+    },
+    {
+      "tier": 3,
+      "text": "Верни объект { server: { port, strictPort: true }, resolve: { alias: { \"@\": \"/src\" } } }."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Типизирован аргумент port: number",
+      "pattern": "port\\s*:\\s*number",
+      "expectedHint": "port: number = 5173"
+    },
+    {
+      "name": "Настроен алиас \"@\": \"/src\"",
+      "pattern": "[\"']@[\"']\\s*:\\s*[\"']/src[\"']",
+      "expectedHint": "\"@\": \"/src\""
+    }
+  ],
+  "tests": [
+    {
+      "name": "конфиг по умолчанию (5173)",
+      "call": "createViteConfig()",
+      "expected": {
+        "server": {
+          "port": 5173,
+          "strictPort": true
+        },
+        "resolve": {
+          "alias": {
+            "@": "/src"
+          }
+        }
+      }
+    },
+    {
+      "name": "кастомный порт 3000",
+      "call": "createViteConfig(3000)",
+      "expected": {
+        "server": {
+          "port": 3000,
+          "strictPort": true
+        },
+        "resolve": {
+          "alias": {
+            "@": "/src"
+          }
+        }
+      }
+    }
+  ],
+  "solution": "function createViteConfig(port: number = 5173) {\n  return {\n    server: { port, strictPort: true },\n    resolve: { alias: { \"@\": \"/src\" } },\n  };\n}"
+}

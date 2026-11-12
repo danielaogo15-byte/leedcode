@@ -1,0 +1,60 @@
+{
+  "id": "js-601-pydantic-coercion",
+  "title": "Python + Pydantic: схема UserCreate(BaseModel) с Field",
+  "track": "logic",
+  "level": 6,
+  "isBoss": false,
+  "topic": "pydantic-models",
+  "mapTopics": [
+    "Python",
+    "Pydantic",
+    "FastAPI"
+  ],
+  "learn": "Объявление класса модели Pydantic с аннотациями типов Python и валидацией через Field().",
+  "needsDom": false,
+  "codeLanguage": "python",
+  "prompt": "Напиши на Python модель Pydantic `class UserCreate(BaseModel):` с тремя полями: `username: str = Field(min_length=3, max_length=20)`, `age: int = Field(ge=18)` и `is_active: bool = True`.",
+  "specs": [
+    "Наследуй класс от BaseModel: class UserCreate(BaseModel):",
+    "Используй Field(min_length=3, max_length=20) для username и Field(ge=18) для age"
+  ],
+  "starterJs": "from pydantic import BaseModel, Field\n\nclass UserCreate(BaseModel):\n    \n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Pydantic ограничение >= 18 задаётся через Field(ge=18)."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Pydantic Fields: https://docs.pydantic.dev/latest/concepts/fields/"
+    },
+    {
+      "tier": 3,
+      "text": "class UserCreate(BaseModel):\n    username: str = Field(min_length=3, max_length=20)\n    age: int = Field(ge=18)\n    is_active: bool = True"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Объявлен класс class UserCreate(BaseModel):",
+      "pattern": "class\\s+UserCreate\\(\\s*BaseModel\\s*\\)\\s*:",
+      "expectedHint": "class UserCreate(BaseModel):"
+    },
+    {
+      "name": "Поле username с Field(min_length=3, max_length=20)",
+      "pattern": "username\\s*:\\s*str\\s*=\\s*Field\\(.*min_length\\s*=\\s*3.*max_length\\s*=\\s*20",
+      "expectedHint": "username: str = Field(min_length=3, max_length=20)"
+    },
+    {
+      "name": "Поле age: int = Field(ge=18)",
+      "pattern": "age\\s*:\\s*int\\s*=\\s*Field\\(\\s*ge\\s*=\\s*18\\s*\\)",
+      "expectedHint": "age: int = Field(ge=18)"
+    },
+    {
+      "name": "Поле is_active: bool = True",
+      "pattern": "is_active\\s*:\\s*bool\\s*=\\s*True",
+      "expectedHint": "is_active: bool = True"
+    }
+  ],
+  "tests": [],
+  "solution": "from pydantic import BaseModel, Field\n\nclass UserCreate(BaseModel):\n    username: str = Field(min_length=3, max_length=20)\n    age: int = Field(ge=18)\n    is_active: bool = True"
+}

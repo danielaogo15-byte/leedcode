@@ -1,0 +1,75 @@
+{
+  "id": "js-303-rhf-dirty-fields",
+  "title": "React Hook Form: конфигурация useForm с defaultValues и mode",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "react-hook-form",
+  "mapTopics": [
+    "React Hook Form",
+    "React",
+    "TypeScript"
+  ],
+  "learn": "Настройка хука useForm({ mode: \"onBlur\", defaultValues }) для контролируемой валидации.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function createLoginFormConfig(initialEmail: string = \"\")`, которая возвращает конфиг для `useForm`: `{ mode: \"onBlur\", reValidateMode: \"onChange\", defaultValues: { email: initialEmail, remember: true } }`.",
+  "specs": [
+    "Поле mode должно быть \"onBlur\", а reValidateMode — \"onChange\"",
+    "Внутри defaultValues задай email и remember: true"
+  ],
+  "starterJs": "function createLoginFormConfig(initialEmail: string = \"\") {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "React Hook Form требует явных defaultValues для корректного отслеживания dirtyFields."
+    },
+    {
+      "tier": 2,
+      "text": "Документация RHF: https://react-hook-form.com/docs/useform"
+    },
+    {
+      "tier": 3,
+      "text": "Верни { mode: \"onBlur\", reValidateMode: \"onChange\", defaultValues: { email: initialEmail, remember: true } }."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Указан mode: \"onBlur\"",
+      "pattern": "mode\\s*:\\s*[\"']onBlur[\"']",
+      "expectedHint": "mode: \"onBlur\""
+    },
+    {
+      "name": "Указан объект defaultValues",
+      "pattern": "defaultValues\\s*:",
+      "expectedHint": "defaultValues: { ... }"
+    }
+  ],
+  "tests": [
+    {
+      "name": "конфиг по умолчанию",
+      "call": "createLoginFormConfig()",
+      "expected": {
+        "mode": "onBlur",
+        "reValidateMode": "onChange",
+        "defaultValues": {
+          "email": "",
+          "remember": true
+        }
+      }
+    },
+    {
+      "name": "с предзаполненным email",
+      "call": "createLoginFormConfig(\"a@b.c\")",
+      "expected": {
+        "mode": "onBlur",
+        "reValidateMode": "onChange",
+        "defaultValues": {
+          "email": "a@b.c",
+          "remember": true
+        }
+      }
+    }
+  ],
+  "solution": "function createLoginFormConfig(initialEmail: string = \"\") {\n  return {\n    mode: \"onBlur\",\n    reValidateMode: \"onChange\",\n    defaultValues: {\n      email: initialEmail,\n      remember: true,\n    },\n  };\n}"
+}

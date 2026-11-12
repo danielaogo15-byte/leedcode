@@ -1,0 +1,75 @@
+{
+  "id": "js-705-boss-prod-readiness",
+  "title": "Босс: Аудитор инфраструктуры (AWS S3 + Vercel + Docker + Sentry)",
+  "track": "logic",
+  "level": 7,
+  "isBoss": true,
+  "topic": "devops-boss",
+  "mapTopics": [
+    "AWS",
+    "Vercel",
+    "Docker",
+    "Nginx",
+    "Sentry",
+    "TypeScript"
+  ],
+  "learn": "Комплексная проверка готовности облачного деплоя: HTTPS, регион AWS, Sentry DSN и отсутствие отладочного режима.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function auditProdConfig(cfg: any = {})`, которая проверяет 4 условия: 1) `cfg.https === true` (`\"HTTPS_REQUIRED\"`), 2) `cfg.sentryDsn` начинается с `\"https://\"` (`\"MISSING_SENTRY\"`), 3) `cfg.awsRegion` — непустая строка (`\"MISSING_AWS_REGION\"`), 4) `cfg.debug !== true` (`\"DEBUG_ENABLED\"`). Верни `{ ready: issues.length === 0, issues }`.",
+  "specs": [
+    "Проверяй все 4 условия строго в порядке 1..4",
+    "Поле ready равно true только когда массив issues пуст"
+  ],
+  "starterJs": "function auditProdConfig(cfg: any = {}) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Создай массив const issues: string[] = []; и пушь коды ошибок по очереди."
+    },
+    {
+      "tier": 2,
+      "text": "Проверяй строковые поля через typeof ... === \"string\"."
+    },
+    {
+      "tier": 3,
+      "text": "Проверь все 4 правила и в конце верни { ready: issues.length === 0, issues }."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Проверка региона AWS (MISSING_AWS_REGION)",
+      "pattern": "MISSING_AWS_REGION",
+      "expectedHint": "issues.push(\"MISSING_AWS_REGION\")"
+    },
+    {
+      "name": "Проверка Sentry DSN (MISSING_SENTRY)",
+      "pattern": "MISSING_SENTRY",
+      "expectedHint": "issues.push(\"MISSING_SENTRY\")"
+    }
+  ],
+  "tests": [
+    {
+      "name": "инфраструктура полностью готова к релизу",
+      "call": "auditProdConfig({ https: true, sentryDsn: \"https://sentry.io/1\", awsRegion: \"eu-central-1\", debug: false })",
+      "expected": {
+        "ready": true,
+        "issues": []
+      }
+    },
+    {
+      "name": "обнаружены все 4 проблемы",
+      "call": "auditProdConfig({ https: false, sentryDsn: \"\", awsRegion: \"\", debug: true })",
+      "expected": {
+        "ready": false,
+        "issues": [
+          "HTTPS_REQUIRED",
+          "MISSING_SENTRY",
+          "MISSING_AWS_REGION",
+          "DEBUG_ENABLED"
+        ]
+      }
+    }
+  ],
+  "solution": "function auditProdConfig(cfg: any = {}) {\n  const issues: string[] = [];\n  if (cfg.https !== true) issues.push(\"HTTPS_REQUIRED\");\n  if (typeof cfg.sentryDsn !== \"string\" || !cfg.sentryDsn.startsWith(\"https://\")) issues.push(\"MISSING_SENTRY\");\n  if (typeof cfg.awsRegion !== \"string\" || !cfg.awsRegion.trim()) issues.push(\"MISSING_AWS_REGION\");\n  if (cfg.debug === true) issues.push(\"DEBUG_ENABLED\");\n  return { ready: issues.length === 0, issues };\n}"
+}

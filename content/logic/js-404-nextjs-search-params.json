@@ -1,0 +1,60 @@
+{
+  "id": "js-404-nextjs-search-params",
+  "title": "Next.js Metadata API: функция generateMetadata",
+  "track": "logic",
+  "level": 4,
+  "isBoss": false,
+  "topic": "nextjs-metadata",
+  "mapTopics": [
+    "Next.js",
+    "TypeScript"
+  ],
+  "learn": "Формирование динамических SEO-метатегов страницы в Next.js через generateMetadata.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function generateMetadata(slug: string)`, которая возвращает объект метаданных Next.js: `{ title: `${slug} | VibeDojo`, openGraph: { title: slug } }`.",
+  "specs": [
+    "Поле title должно иметь формат \"<slug> | VibeDojo\"",
+    "Вложенный объект openGraph должен содержать поле title: slug"
+  ],
+  "starterJs": "function generateMetadata(slug: string) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Используй шаблонную строку `${slug} | VibeDojo`."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Next.js Metadata: https://nextjs.org/docs/app/building-your-application/optimizing/metadata"
+    },
+    {
+      "tier": 3,
+      "text": "return { title: `${slug} | VibeDojo`, openGraph: { title: slug } };"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Типизирован параметр slug: string",
+      "pattern": "slug\\s*:\\s*string",
+      "expectedHint": "slug: string"
+    },
+    {
+      "name": "Задана секция openGraph",
+      "pattern": "openGraph\\s*:",
+      "expectedHint": "openGraph: { title: slug }"
+    }
+  ],
+  "tests": [
+    {
+      "name": "генерация SEO для страницы курса",
+      "call": "generateMetadata(\"nextjs-15\")",
+      "expected": {
+        "title": "nextjs-15 | VibeDojo",
+        "openGraph": {
+          "title": "nextjs-15"
+        }
+      }
+    }
+  ],
+  "solution": "function generateMetadata(slug: string) {\n  return {\n    title: `${slug} | VibeDojo`,\n    openGraph: { title: slug },\n  };\n}"
+}

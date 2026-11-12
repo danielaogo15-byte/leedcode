@@ -1,0 +1,60 @@
+{
+  "id": "js-702-nginx-location-matcher",
+  "title": "Nginx: конфиг reverse proxy (proxy_pass и заголовки)",
+  "track": "logic",
+  "level": 7,
+  "isBoss": false,
+  "topic": "nginx-config",
+  "mapTopics": [
+    "Nginx",
+    "Linux",
+    "Docker"
+  ],
+  "learn": "Конфигурация блока server и location /api/ в nginx.conf для проксирования запросов на бэкенд.",
+  "needsDom": false,
+  "codeLanguage": "nginx",
+  "prompt": "Напиши блок `server { ... }` для `nginx.conf`: слушай порт `listen 80;`, а внутри `location /api/ { ... }` пропиши `proxy_pass http://backend:8000/;` и передачу реального IP клиента `proxy_set_header X-Real-IP $remote_addr;`.",
+  "specs": [
+    "Внутри server укажи listen 80;",
+    "Внутри location /api/ укажи proxy_pass http://backend:8000/; и proxy_set_header X-Real-IP $remote_addr;"
+  ],
+  "starterJs": "server {\n    listen 80;\n\n    location /api/ {\n        \n    }\n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Каждая директива в nginx.conf заканчивается точкой с запятой (;)."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Nginx Reverse Proxy: https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/"
+    },
+    {
+      "tier": 3,
+      "text": "Внутри location /api/ напиши:\nproxy_pass http://backend:8000/;\nproxy_set_header X-Real-IP $remote_addr;"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Директива listen 80;",
+      "pattern": "listen\\s+80\\s*;",
+      "expectedHint": "listen 80;"
+    },
+    {
+      "name": "Блок location /api/",
+      "pattern": "location\\s+/api/\\s*\\{",
+      "expectedHint": "location /api/ { ... }"
+    },
+    {
+      "name": "Проксирование proxy_pass http://backend:8000/;",
+      "pattern": "proxy_pass\\s+http://backend:8000/\\s*;",
+      "expectedHint": "proxy_pass http://backend:8000/;"
+    },
+    {
+      "name": "Заголовок proxy_set_header X-Real-IP $remote_addr;",
+      "pattern": "proxy_set_header\\s+X-Real-IP\\s+\\$remote_addr\\s*;",
+      "expectedHint": "proxy_set_header X-Real-IP $remote_addr;"
+    }
+  ],
+  "tests": [],
+  "solution": "server {\n    listen 80;\n\n    location /api/ {\n        proxy_pass http://backend:8000/;\n        proxy_set_header X-Real-IP $remote_addr;\n    }\n}"
+}

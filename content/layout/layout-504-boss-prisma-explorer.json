@@ -1,0 +1,64 @@
+{
+  "id": "layout-504-boss-prisma-explorer",
+  "title": "Босс: Панель Prisma Studio (Toolbar + Data Grid)",
+  "track": "layout",
+  "level": 5,
+  "isBoss": true,
+  "topic": "prisma-boss",
+  "mapTopics": [
+    "Prisma",
+    "PostgreSQL",
+    "Tailwind CSS"
+  ],
+  "learn": "Комбинирование тулбара h-12 и трёхколоночной сетки БД grid-cols-[80px_1fr_100px].",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Собери интерфейс Prisma Studio классами Tailwind: шапка .studio-bar высотой 48px со space-between и сетка .studio-grid с колонками 80px, 1fr, 100px и шагом 8px.",
+  "specs": [
+    "Добавь на .studio-bar классы: h-12 flex justify-between items-center",
+    "Добавь на .studio-grid классы: grid grid-cols-[80px_1fr_100px] gap-2"
+  ],
+  "starterHtml": "<div class=\"studio bg-slate-900 text-slate-50 p-3.5 rounded-xl\">\n  <header class=\"studio-bar text-xs\">\n    <strong>Table: User</strong>\n    <span>Rows: 128</span>\n  </header>\n  <div class=\"studio-grid\">\n    <div class=\"bg-slate-800 p-2 rounded text-xs font-mono\">id</div>\n    <div class=\"bg-slate-800 p-2 rounded text-xs font-mono\">email</div>\n    <div class=\"bg-slate-800 p-2 rounded text-xs font-mono\">status</div>\n  </div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"studio bg-slate-900 text-slate-50 p-3.5 rounded-xl\">\n  <header class=\"studio-bar h-12 flex justify-between items-center text-xs\">\n    <strong>Table: User</strong>\n    <span>Rows: 128</span>\n  </header>\n  <div class=\"studio-grid grid grid-cols-[80px_1fr_100px] gap-2\">\n    <div class=\"bg-slate-800 p-2 rounded text-xs font-mono\">id</div>\n    <div class=\"bg-slate-800 p-2 rounded text-xs font-mono\">email</div>\n    <div class=\"bg-slate-800 p-2 rounded text-xs font-mono\">status</div>\n  </div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Высота 48px — это h-12, а шаг 8px — это gap-2."
+    },
+    {
+      "tier": 2,
+      "text": "Колонки таблицы: grid-cols-[80px_1fr_100px]."
+    },
+    {
+      "tier": 3,
+      "text": "На .studio-bar добавь h-12 flex justify-between items-center, на .studio-grid — grid grid-cols-[80px_1fr_100px] gap-2."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Высота .studio-bar 48px (h-12)",
+      "selector": ".studio-bar",
+      "property": "height",
+      "expected": 48,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": ".studio-grid использует grid",
+      "selector": ".studio-grid",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Промежуток в .studio-grid равен 8px (gap-2)",
+      "selector": ".studio-grid",
+      "property": "columnGap",
+      "expected": "8px"
+    }
+  ],
+  "solution": "<div class=\"studio bg-slate-900 text-slate-50 p-3.5 rounded-xl\">\n  <header class=\"studio-bar h-12 flex justify-between items-center text-xs\">\n    <strong>Table: User</strong>\n    <span>Rows: 128</span>\n  </header>\n  <div class=\"studio-grid grid grid-cols-[80px_1fr_100px] gap-2\">\n    <div class=\"bg-slate-800 p-2 rounded text-xs font-mono\">id</div>\n    <div class=\"bg-slate-800 p-2 rounded text-xs font-mono\">email</div>\n    <div class=\"bg-slate-800 p-2 rounded text-xs font-mono\">status</div>\n  </div>\n</div>"
+}

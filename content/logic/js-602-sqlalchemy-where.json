@@ -1,0 +1,60 @@
+{
+  "id": "js-602-sqlalchemy-where",
+  "title": "Python + SQLAlchemy 2.0: запрос select(User).where()",
+  "track": "logic",
+  "level": 6,
+  "isBoss": false,
+  "topic": "sqlalchemy-orm",
+  "mapTopics": [
+    "SQLAlchemy",
+    "Python",
+    "PostgreSQL"
+  ],
+  "learn": "Современный синтаксис SQLAlchemy 2.0: построение запроса через select(), .where() и .order_by().",
+  "needsDom": false,
+  "codeLanguage": "python",
+  "prompt": "Напиши на Python функцию `def get_active_admins_stmt():`, которая возвращает выражение SQLAlchemy 2.0: `select(User).where(User.is_active == True, User.role == \"admin\").order_by(User.id.desc())`.",
+  "specs": [
+    "Используй функцию select(User)",
+    "Добавь фильтрацию .where(User.is_active == True, User.role == \"admin\") и сортировку .order_by(User.id.desc())"
+  ],
+  "starterJs": "from sqlalchemy import select\n\ndef get_active_admins_stmt():\n    \n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В SQLAlchemy 2.0 вместо session.query() используется select(Model)."
+    },
+    {
+      "tier": 2,
+      "text": "Документация SQLAlchemy 2.0: https://docs.sqlalchemy.org/en/20/tutorial/data_select.html"
+    },
+    {
+      "tier": 3,
+      "text": "return select(User).where(User.is_active == True, User.role == \"admin\").order_by(User.id.desc())"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Объявлена функция def get_active_admins_stmt():",
+      "pattern": "def\\s+get_active_admins_stmt\\(\\)\\s*:",
+      "expectedHint": "def get_active_admins_stmt():"
+    },
+    {
+      "name": "Вызов select(User).where(...)",
+      "pattern": "select\\(\\s*User\\s*\\)\\.where\\(",
+      "expectedHint": "select(User).where(...)"
+    },
+    {
+      "name": "Условие User.role == \"admin\"",
+      "pattern": "User\\.role\\s*==\\s*[\"']admin[\"']",
+      "expectedHint": "User.role == \"admin\""
+    },
+    {
+      "name": "Сортировка .order_by(User.id.desc())",
+      "pattern": "\\.order_by\\(\\s*User\\.id\\.desc\\(\\)\\s*\\)",
+      "expectedHint": ".order_by(User.id.desc())"
+    }
+  ],
+  "tests": [],
+  "solution": "from sqlalchemy import select\n\ndef get_active_admins_stmt():\n    return select(User).where(User.is_active == True, User.role == \"admin\").order_by(User.id.desc())"
+}

@@ -1,0 +1,63 @@
+{
+  "id": "layout-502-redis-ttl-card",
+  "title": "Redis Insight: карточка кэш-ключа с TTL",
+  "track": "layout",
+  "level": 5,
+  "isBoss": false,
+  "topic": "redis-ui",
+  "mapTopics": [
+    "Redis",
+    "Node.js",
+    "Tailwind CSS"
+  ],
+  "learn": "Оформление инспектора ключей Redis через p-3.5 flex flex-col gap-2.5.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи карточку .redis-card и шапку .redis-head классами Tailwind.",
+  "specs": [
+    "Добавь на .redis-card классы: p-3.5 flex flex-col gap-2.5 (паддинг 14px, шаг 10px)",
+    "Добавь на .redis-head классы: flex justify-between items-center"
+  ],
+  "starterHtml": "<div class=\"redis-card bg-slate-900 text-slate-50 rounded-[10px]\">\n  <div class=\"redis-head text-xs\">\n    <code>session:user:42</code>\n    <span class=\"text-amber-500 font-bold\">TTL: 3600s</span>\n  </div>\n  <div class=\"bg-slate-800 p-2.5 rounded font-mono text-xs text-sky-400\">{\"role\":\"admin\",\"xp\":950}</div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"redis-card p-3.5 flex flex-col gap-2.5 bg-slate-900 text-slate-50 rounded-[10px]\">\n  <div class=\"redis-head flex justify-between items-center text-xs\">\n    <code>session:user:42</code>\n    <span class=\"text-amber-500 font-bold\">TTL: 3600s</span>\n  </div>\n  <div class=\"bg-slate-800 p-2.5 rounded font-mono text-xs text-sky-400\">{\"role\":\"admin\",\"xp\":950}</div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "10px в Tailwind — это 2.5 (gap-2.5), а 14px — это 3.5 (p-3.5)."
+    },
+    {
+      "tier": 2,
+      "text": "Для разноса в шапке используй flex justify-between items-center."
+    },
+    {
+      "tier": 3,
+      "text": "На .redis-card добавь p-3.5 flex flex-col gap-2.5, на .redis-head — flex justify-between items-center."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".redis-card выстроен колонкой",
+      "selector": ".redis-card",
+      "property": "flexDirection",
+      "expected": "column"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Шаг внутри .redis-card равен 10px (gap-2.5)",
+      "selector": ".redis-card",
+      "property": "rowGap",
+      "expected": "10px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Разнос в .redis-head",
+      "selector": ".redis-head",
+      "property": "justifyContent",
+      "expected": "space-between"
+    }
+  ],
+  "solution": "<div class=\"redis-card p-3.5 flex flex-col gap-2.5 bg-slate-900 text-slate-50 rounded-[10px]\">\n  <div class=\"redis-head flex justify-between items-center text-xs\">\n    <code>session:user:42</code>\n    <span class=\"text-amber-500 font-bold\">TTL: 3600s</span>\n  </div>\n  <div class=\"bg-slate-800 p-2.5 rounded font-mono text-xs text-sky-400\">{\"role\":\"admin\",\"xp\":950}</div>\n</div>"
+}

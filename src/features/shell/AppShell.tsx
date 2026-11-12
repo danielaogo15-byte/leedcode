@@ -1,8 +1,8 @@
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { EditorPane } from '@/features/editor/EditorPane';
 import { PreviewPane } from '@/features/editor/PreviewPane';
-import { TerminalView } from '@/features/terminal/TerminalView';
 import {
   clearTaskDraft,
   loadTaskDraft,
@@ -11,25 +11,40 @@ import {
 import { ProfileView } from '@/features/profile/ProfileView';
 import { computeUnlockedLevel } from '@/features/profile/xpCalculator';
 import { ResultsPanel } from '@/features/runner/ResultsPanel';
+import {
+  runCodeAndLogicTask,
+  runCustomTaskCall,
+} from '@/features/runner/runCodeChecks';
 import { runDomTask } from '@/features/runner/runDomTask';
-import { runLogicTask } from '@/features/runner/runLogicTask';
 import { Sidebar } from '@/features/shell/Sidebar';
+import {
+  injectBugIntoTask,
+  MOCK_BONUS_XP,
+  MOCK_DURATION_SEC,
+  pickMockAssessmentTasks,
+} from '@/features/special/specialModes';
 import { ALL_TASKS, tasksFor } from '@/features/tasks/loadTasks';
+import { TerminalView } from '@/features/terminal/TerminalView';
 import { TodayView } from '@/features/today/TodayView';
 import { useProgressStore } from '@/stores/useProgressStore';
-import type { TestResultItem } from '@/types/runner';
+import type { CustomRunOutcome, TestResultItem } from '@/types/runner';
+import type { Task } from '@/types/task';
 import type { Level, TrackId } from '@/types/track';
 import {
   BookOpen,
+  Bug,
+  CheckCircle2,
   CheckSquare,
   Flame,
   Moon,
   Sparkles,
   Sun,
   Terminal,
+  Timer,
   Trophy,
+  X,
 } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 type ActiveScreen = 'trainer' | 'today' | 'terminal' | 'profile';
 
@@ -60,9 +75,21 @@ export function AppShell() {
   const [hintTier, setHintTier] = useState(0);
   const [gaveUp, setGaveUp] = useState(false);
   const [results, setResults] = useState<TestResultItem[] | null>(null);
+  const [customOutcome, setCustomOutcome] = useState<CustomRunOutcome | null>(
+    null,
+  );
   const [suspiciousSpeed, setSuspiciousSpeed] = useState(false);
   const [attemptsOnRun, setAttemptsOnRun] = useState(0);
   const [memoryMode, setMemoryMode] = useState(false);
+
+  // Режим «Почини баг» (Bug Hunt)
+  const [bugHuntMode, setBugHuntMode] = useState(false);
+  const [bugHintText, setBugHintText] = useState<string | null>(null);
+
+  // Режим «Мок-собеседование» (30 минут, 3 задачи)
+  const [mockTasks, setMockTasks] = useState<Task[] | null>(null);
+  const [mockSolvedIds, setMockSolvedIds] = useState<string[]>([]);
+  const [mockRemainingSec, setMockRemainingSec] = useState(MOCK_DURATION_SEC);
 
   const hydrated = useProgressStore((s) => s.hydrated);
   const hydrate = useProgressStore((s) => s.hydrate);
@@ -75,6 +102,8 @@ export function AppShell() {
   const lastXpBanner = useProgressStore((s) => s.lastXpBanner);
   const recordAttempt = useProgressStore((s) => s.recordAttempt);
   const recordGiveUp = useProgressStore((s) => s.recordGiveUp);
+  const saveTaskNote = useProgressStore((s) => s.saveTaskNote);
+  const awardBonusXp = useProgressStore((s) => s.awardBonusXp);
   const clearXpBanner = useProgressStore((s) => s.clearXpBanner);
 
   useEffect(() => {
@@ -86,6 +115,21 @@ export function AppShell() {
       void ensureDailySession(ALL_TASKS);
     }
   }, [hydrated, ensureDailySession]);
+
+  // Таймер мок-собеседования
+  useEffect(() => {
+    if (!mockTasks) return;
+    const timer = window.setInterval(() => {
+      setMockRemainingSec((prev) => {
+        if (prev <= 1) {
+          window.clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [mockTasks]);
 
   const solvedMap = useMemo(() => {
     const map: Record<string, boolean> = {};
@@ -124,52 +168,84 @@ export function AppShell() {
     if (!task) {
       return;
     }
-    if (memoryMode) {
+    if (bugHuntMode) {
+      const buggy = injectBugIntoTask(task);
+      setHtml(buggy.html);
+      setCss(buggy.css);
+      setJs(buggy.js);
+      setBugHintText(buggy.bugHint);
+    } else if (memoryMode) {
       setHtml('');
       setCss('');
       setJs('');
+      setBugHintText(null);
     } else {
       const draft = loadTaskDraft(task);
       setHtml(draft.html);
       setCss(draft.css);
       setJs(draft.js);
+      setBugHintText(null);
     }
     setHintTier(0);
     setGaveUp(false);
     setResults(null);
+    setCustomOutcome(null);
     setSuspiciousSpeed(false);
     setAttemptsOnRun(0);
     clearXpBanner();
-  }, [task?.id, memoryMode, clearXpBanner]);
+  }, [task?.id, memoryMode, bugHuntMode, clearXpBanner]);
 
   const handleHtmlChange = (nextHtml: string) => {
     setHtml(nextHtml);
-    if (task && !memoryMode) {
+    if (task && !memoryMode && !bugHuntMode) {
       saveTaskDraft(task.id, { html: nextHtml, css, js });
     }
   };
 
   const handleCssChange = (nextCss: string) => {
     setCss(nextCss);
-    if (task && !memoryMode) {
+    if (task && !memoryMode && !bugHuntMode) {
       saveTaskDraft(task.id, { html, css: nextCss, js });
     }
   };
 
   const handleJsChange = (nextJs: string) => {
     setJs(nextJs);
-    if (task && !memoryMode) {
+    if (task && !memoryMode && !bugHuntMode) {
       saveTaskDraft(task.id, { html, css, js: nextJs });
     }
   };
 
   const handleResetCode = () => {
     if (!task) return;
-    const fresh = clearTaskDraft(task);
-    setHtml(fresh.html);
-    setCss(fresh.css);
-    setJs(fresh.js);
+    if (bugHuntMode) {
+      const buggy = injectBugIntoTask(task);
+      setHtml(buggy.html);
+      setCss(buggy.css);
+      setJs(buggy.js);
+    } else {
+      const fresh = clearTaskDraft(task);
+      setHtml(fresh.html);
+      setCss(fresh.css);
+      setJs(fresh.js);
+    }
     setResults(null);
+    setCustomOutcome(null);
+  };
+
+  const startMockInterview = () => {
+    const picked = pickMockAssessmentTasks(ALL_TASKS);
+    const first = picked[0];
+    if (!first) return;
+    setMockTasks(picked);
+    setMockSolvedIds([]);
+    setMockRemainingSec(MOCK_DURATION_SEC);
+    setBugHuntMode(false);
+    setMemoryMode(false);
+    setTrack(first.track);
+    setLevel(first.level);
+    setTaskId(first.id);
+    setScreen('trainer');
   };
 
   const showPreview = Boolean(
@@ -182,15 +258,21 @@ export function AppShell() {
     return found ? `Уровень ${found.tier}: ${found.text}` : null;
   }, [task, hintTier]);
 
-  const handleRun = async () => {
+  const handleRun = useCallback(async () => {
     if (!task) return;
 
     const currentAttemptNumber = attemptsOnRun + 1;
     setAttemptsOnRun(currentAttemptNumber);
+    const startMs = performance.now();
 
     const outcome =
       task.track === 'logic' && !task.needsDom
-        ? await runLogicTask(js, task.tests)
+        ? await runCodeAndLogicTask(
+            js,
+            task.codeChecks,
+            task.tests,
+            task.codeLanguage === 'typescript',
+          )
         : await runDomTask({
             html: task.track === 'logic' ? task.htmlFixture : html,
             css,
@@ -198,7 +280,11 @@ export function AppShell() {
             checks: task.checks,
           });
 
+    const elapsedMs = Math.max(1, Math.round(performance.now() - startMs));
     setResults(outcome.results);
+
+    const snapshot =
+      task.track === 'layout' ? JSON.stringify({ html, css }) : js;
 
     if (!gaveUp) {
       await recordAttempt({
@@ -208,17 +294,123 @@ export function AppShell() {
         passed: outcome.allPassed,
         attemptsOnCurrentRun: currentAttemptNumber,
         maxHintTierUsed: hintTier,
-        hardcore,
+        hardcore: hardcore || Boolean(mockTasks),
         suspiciousSpeed,
         isMemoryReview: memoryMode,
+        codeSnapshot: snapshot,
+        durationMs: elapsedMs,
       });
+
+      if (
+        outcome.allPassed &&
+        mockTasks &&
+        mockRemainingSec > 0 &&
+        !mockSolvedIds.includes(task.id)
+      ) {
+        const nextMockSolved = [...mockSolvedIds, task.id];
+        setMockSolvedIds(nextMockSolved);
+        if (nextMockSolved.length >= mockTasks.length) {
+          await awardBonusXp(
+            MOCK_BONUS_XP,
+            `🏆 Мок-собеседование пройдено (3/3)! Бонус +${MOCK_BONUS_XP} XP!`,
+          );
+        }
+      }
     }
-  };
+  }, [
+    task,
+    attemptsOnRun,
+    js,
+    html,
+    css,
+    gaveUp,
+    recordAttempt,
+    hintTier,
+    hardcore,
+    mockTasks,
+    suspiciousSpeed,
+    memoryMode,
+    mockRemainingSec,
+    mockSolvedIds,
+    awardBonusXp,
+  ]);
+
+  const handleRunCustom = useCallback(
+    async (customCall: string) => {
+      if (!task) return;
+      const out = await runCustomTaskCall(
+        js,
+        customCall,
+        task.codeLanguage === 'typescript',
+      );
+      setCustomOutcome(out);
+    },
+    [task, js],
+  );
+
+  const handleNext = useCallback(() => {
+    if (!task || tasks.length === 0) {
+      return;
+    }
+    const index = tasks.findIndex((item) => item.id === task.id);
+    const next = tasks[(index + 1) % tasks.length];
+    if (next) {
+      setTaskId(next.id);
+      setMemoryMode(false);
+    }
+  }, [task, tasks]);
+
+  useEffect(() => {
+    if (screen !== 'trainer') return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        (event.key === 'Enter' || event.code === 'Enter')
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        void handleRun();
+      } else if (
+        event.altKey &&
+        (event.key === 'ArrowRight' || event.code === 'ArrowRight')
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        handleNext();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown, true);
+    return () => window.removeEventListener('keydown', onKeyDown, true);
+  }, [screen, handleRun, handleNext]);
 
   const handleGiveUp = async () => {
     setGaveUp(true);
     if (task) {
       await recordGiveUp(task.id);
+    }
+  };
+
+  const handleRestoreSubmission = (codeSnapshot: string) => {
+    if (!task) return;
+    if (task.track === 'layout') {
+      try {
+        const parsed = JSON.parse(codeSnapshot) as {
+          html?: string;
+          css?: string;
+        };
+        const nextHtml = parsed.html ?? html;
+        const nextCss = parsed.css ?? css;
+        setHtml(nextHtml);
+        setCss(nextCss);
+        saveTaskDraft(task.id, { html: nextHtml, css: nextCss, js });
+      } catch {
+        // ignore
+      }
+    } else {
+      setJs(codeSnapshot);
+      saveTaskDraft(task.id, { html, css, js: codeSnapshot });
     }
   };
 
@@ -233,6 +425,18 @@ export function AppShell() {
     setTaskId(nextTaskId);
     setMemoryMode(isMemory);
     setScreen('trainer');
+  };
+
+  const canCustomTest = Boolean(
+    task && task.track === 'logic' && !task.needsDom && task.tests.length > 0,
+  );
+  const defaultCustomCall = task?.tests[0]?.call ?? '';
+  const currentTaskProgress = task ? progressByTask[task.id] : undefined;
+
+  const formatTimer = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   };
 
   return (
@@ -276,7 +480,7 @@ export function AppShell() {
               {dailySolvedIds.length}/{dailySlots.length || 3}
             </span>
           </button>
-			 <button
+          <button
             type="button"
             onClick={() => setScreen('terminal')}
             className={
@@ -300,7 +504,35 @@ export function AppShell() {
           </button>
         </nav>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={startMockInterview}
+            className={
+              mockTasks
+                ? 'flex items-center gap-1.5 rounded-lg border border-purple-500 bg-purple-500/20 px-2.5 py-1 text-xs font-semibold text-purple-300'
+                : 'flex items-center gap-1.5 rounded-lg border border-border bg-muted/40 px-2.5 py-1 text-xs font-medium text-foreground transition hover:bg-muted'
+            }
+            title="Запустить Мок-собеседование: 3 случайные задачи на 30 минут без подсказок"
+          >
+            <Timer className="size-3.5 text-purple-400" />
+            <span>{mockTasks ? formatTimer(mockRemainingSec) : 'Собес 30м'}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setBugHuntMode((prev) => !prev)}
+            className={
+              bugHuntMode
+                ? 'flex items-center gap-1.5 rounded-lg border border-rose-500 bg-rose-500/20 px-2.5 py-1 text-xs font-semibold text-rose-300'
+                : 'flex items-center gap-1.5 rounded-lg border border-border bg-muted/40 px-2.5 py-1 text-xs font-medium text-foreground transition hover:bg-muted'
+            }
+            title="Режим Bug Hunt: загрузить код с багом и починить его"
+          >
+            <Bug className="size-3.5 text-rose-400" />
+            <span>Почини баг</span>
+          </button>
+
           <div className="flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-500 dark:text-amber-300">
             <Trophy className="size-3.5" />
             <span>{totalXp} XP</span>
@@ -316,27 +548,21 @@ export function AppShell() {
             onClick={() =>
               setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
             }
-            className="flex items-center gap-1.5 rounded-lg border border-border bg-muted/40 px-2.5 py-1.5 text-xs font-medium text-foreground transition hover:bg-muted"
+            className="flex items-center gap-1.5 rounded-lg border border-border bg-muted/40 px-2.5 py-1 text-xs font-medium text-foreground transition hover:bg-muted"
             title="Переключить тему оформления"
           >
             {theme === 'dark' ? (
-              <>
-                <Sun className="size-3.5 text-amber-400" />
-                <span>Светлая</span>
-              </>
+              <Sun className="size-3.5 text-amber-400" />
             ) : (
-              <>
-                <Moon className="size-3.5 text-sky-600" />
-                <span>Графит</span>
-              </>
+              <Moon className="size-3.5 text-sky-600" />
             )}
           </button>
 
           <label
             className={
               hardcore
-                ? 'flex cursor-pointer items-center gap-2 rounded-lg border border-orange-500/50 bg-orange-500/15 px-3 py-1.5 text-xs font-semibold text-orange-400'
-                : 'flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-muted/30 px-3 py-1.5 text-xs font-medium text-foreground'
+                ? 'flex cursor-pointer items-center gap-2 rounded-lg border border-orange-500/50 bg-orange-500/15 px-2.5 py-1 text-xs font-semibold text-orange-400'
+                : 'flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-muted/30 px-2.5 py-1 text-xs font-medium text-foreground'
             }
           >
             <Switch
@@ -344,12 +570,12 @@ export function AppShell() {
               onCheckedChange={(checked) => setHardcore(checked === true)}
               aria-label="Hardcore"
             />
-            <span>Hardcore x1.5</span>
+            <span>x1.5</span>
           </label>
         </div>
       </header>
 
-		{screen === 'profile' ? (
+      {screen === 'profile' ? (
         <ProfileView
           tasks={ALL_TASKS}
           onSelectTask={openTaskFromDashboard}
@@ -385,6 +611,53 @@ export function AppShell() {
           />
 
           <div className="flex min-h-0 flex-col overflow-hidden">
+            {mockTasks ? (
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-purple-500/40 bg-purple-500/10 px-5 py-2 text-xs">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-bold text-purple-300">
+                    ⏱ Мок-собеседование ({formatTimer(mockRemainingSec)}):
+                  </span>
+                  {mockTasks.map((mTask, idx) => {
+                    const done = mockSolvedIds.includes(mTask.id);
+                    const current = task?.id === mTask.id;
+                    return (
+                      <button
+                        key={mTask.id}
+                        type="button"
+                        onClick={() => {
+                          setTrack(mTask.track);
+                          setLevel(mTask.level);
+                          setTaskId(mTask.id);
+                        }}
+                        className={
+                          current
+                            ? 'inline-flex items-center gap-1 rounded-md border border-purple-400 bg-purple-500/30 px-2.5 py-1 font-semibold text-foreground'
+                            : 'inline-flex items-center gap-1 rounded-md border border-border bg-background/60 px-2.5 py-1 text-muted-foreground hover:text-foreground'
+                        }
+                      >
+                        {done ? (
+                          <CheckCircle2 className="size-3.5 text-emerald-400" />
+                        ) : null}
+                        <span>
+                          Задача {idx + 1}: {mTask.title}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setMockTasks(null)}
+                  className="h-6 gap-1 px-2 text-xs"
+                >
+                  <X className="size-3.5" />
+                  Завершить собес
+                </Button>
+              </div>
+            ) : null}
+
             <main className="flex min-h-0 flex-1 flex-col overflow-y-auto">
               {task ? (
                 <>
@@ -395,9 +668,14 @@ export function AppShell() {
                         {task.isBoss ? (
                           <Badge variant="destructive">БОСС x3 XP</Badge>
                         ) : null}
+                        {bugHuntMode ? (
+                          <Badge className="bg-rose-500 text-white">
+                            🐛 Режим «Почини баг»
+                          </Badge>
+                        ) : null}
                         {memoryMode ? (
                           <Badge className="bg-sky-500 text-slate-950">
-                            Режим «По памяти» (пустой редактор)
+                            Режим «По памяти»
                           </Badge>
                         ) : null}
                         {task.mapTopics.map((topic) => (
@@ -414,6 +692,12 @@ export function AppShell() {
                         </div>
                       ) : null}
                     </div>
+
+                    {bugHuntMode && bugHintText ? (
+                      <div className="mt-2 rounded-lg border border-rose-500/40 bg-rose-500/10 px-3 py-1.5 text-xs text-rose-300">
+                        🐛 <strong>Симптом бага:</strong> {bugHintText}
+                      </div>
+                    ) : null}
 
                     <p className="mt-1 max-w-3xl text-sm text-foreground/90">
                       {task.prompt}
@@ -456,7 +740,7 @@ export function AppShell() {
                       html={html}
                       css={css}
                       js={js}
-                      hardcore={hardcore}
+                      hardcore={hardcore || Boolean(mockTasks)}
                       onHtmlChange={handleHtmlChange}
                       onCssChange={handleCssChange}
                       onJsChange={handleJsChange}
@@ -485,27 +769,35 @@ export function AppShell() {
             <ResultsPanel
               results={results}
               hint={currentHint}
-              hintTier={hintTier}
+              hintTier={mockTasks ? 3 : hintTier}
               solutionVisible={gaveUp || Boolean(task?.solved)}
               solution={task?.solution ?? ''}
+              canCustomTest={canCustomTest}
+              defaultCustomCall={defaultCustomCall}
+              customOutcome={customOutcome}
+              note={currentTaskProgress?.note ?? ''}
+              submissions={currentTaskProgress?.submissions ?? []}
               onRun={() => {
                 void handleRun();
               }}
-              onHint={() => setHintTier((tier) => Math.min(3, tier + 1))}
+              onRunCustom={(call) => {
+                void handleRunCustom(call);
+              }}
+              onNoteChange={(nextNote) => {
+                if (task) {
+                  void saveTaskNote(task.id, nextNote);
+                }
+              }}
+              onRestoreSubmission={handleRestoreSubmission}
+              onHint={() => {
+                if (!mockTasks) {
+                  setHintTier((tier) => Math.min(3, tier + 1));
+                }
+              }}
               onGiveUp={() => {
                 void handleGiveUp();
               }}
-              onNext={() => {
-                if (!task || tasks.length === 0) {
-                  return;
-                }
-                const index = tasks.findIndex((item) => item.id === task.id);
-                const next = tasks[(index + 1) % tasks.length];
-                if (next) {
-                  setTaskId(next.id);
-                  setMemoryMode(false);
-                }
-              }}
+              onNext={handleNext}
             />
           </div>
         </>

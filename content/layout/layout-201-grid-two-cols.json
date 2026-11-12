@@ -1,0 +1,61 @@
+{
+  "id": "layout-201-grid-two-cols",
+  "title": "Tailwind Grid: сетка из двух карточек",
+  "track": "layout",
+  "level": 2,
+  "isBoss": false,
+  "topic": "tailwind-grid",
+  "mapTopics": [
+    "Tailwind CSS",
+    "CSS Grid"
+  ],
+  "learn": "Классы Tailwind для Grid-раскладки: grid, grid-cols-2 и gap-4 (16px).",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "С помощью классов Tailwind CSS преврати контейнер .grid-box в сетку из 2 равных колонок с отступом 16px.",
+  "specs": [
+    "Добавь на .grid-box классы: grid grid-cols-2 gap-4",
+    "Не удаляй базовый класс grid-box (по нему идёт проверка)"
+  ],
+  "starterHtml": "<div class=\"grid-box\">\n  <div class=\"bg-slate-800 text-slate-50 p-4 rounded-xl font-semibold\">Frontend</div>\n  <div class=\"bg-slate-800 text-slate-50 p-4 rounded-xl font-semibold\">Backend</div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"grid-box grid grid-cols-2 gap-4\">\n  <div class=\"bg-slate-800 text-slate-50 p-4 rounded-xl font-semibold\">Frontend</div>\n  <div class=\"bg-slate-800 text-slate-50 p-4 rounded-xl font-semibold\">Backend</div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Tailwind 16px — это шаг 4 (4 × 4px)."
+    },
+    {
+      "tier": 2,
+      "text": "Документация: https://tailwindcss.com/docs/grid-template-columns"
+    },
+    {
+      "tier": 3,
+      "text": "Пропиши class=\"grid-box grid grid-cols-2 gap-4\"."
+    }
+  ],
+  "checks": [
+    {
+      "type": "selector",
+      "name": "Внутри .grid-box 2 карточки",
+      "selector": ".grid-box > div",
+      "minCount": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": ".grid-box использует display: grid",
+      "selector": ".grid-box",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Отступ gap-4 равен 16px",
+      "selector": ".grid-box",
+      "property": "columnGap",
+      "expected": "16px"
+    }
+  ],
+  "solution": "<div class=\"grid-box grid grid-cols-2 gap-4\">\n  <div class=\"bg-slate-800 text-slate-50 p-4 rounded-xl font-semibold\">Frontend</div>\n  <div class=\"bg-slate-800 text-slate-50 p-4 rounded-xl font-semibold\">Backend</div>\n</div>"
+}

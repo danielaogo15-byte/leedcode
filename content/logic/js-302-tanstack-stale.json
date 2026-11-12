@@ -1,0 +1,75 @@
+{
+  "id": "js-302-tanstack-stale",
+  "title": "TanStack Query: фабрика queryOptions с queryKey и staleTime",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "tanstack-query",
+  "mapTopics": [
+    "TanStack Query",
+    "React",
+    "TypeScript"
+  ],
+  "learn": "Формирование объекта конфигурации для useQuery: массив ключей кэша queryKey и время жизни staleTime.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function userQueryOptions(userId: string)`, которая возвращает конфигурацию для `useQuery`: `{ queryKey: [\"users\", userId], staleTime: 60000, enabled: Boolean(userId) }`.",
+  "specs": [
+    "Ключ кэша queryKey должен быть массивом [\"users\", userId]",
+    "Поле enabled должно быть true только если userId не пустой"
+  ],
+  "starterJs": "function userQueryOptions(userId: string) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В TanStack Query v5 параметры запроса передаются вторым элементом массива queryKey."
+    },
+    {
+      "tier": 2,
+      "text": "Документация TanStack Query: https://tanstack.com/query/latest/docs/framework/react/guides/query-keys"
+    },
+    {
+      "tier": 3,
+      "text": "Верни { queryKey: [\"users\", userId], staleTime: 60000, enabled: Boolean(userId) }."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Массив queryKey: [\"users\", userId]",
+      "pattern": "queryKey\\s*:\\s*\\[\\s*[\"']users[\"']\\s*,\\s*userId\\s*\\]",
+      "expectedHint": "queryKey: [\"users\", userId]"
+    },
+    {
+      "name": "Задан staleTime: 60000",
+      "pattern": "staleTime\\s*:\\s*60000",
+      "expectedHint": "staleTime: 60000"
+    }
+  ],
+  "tests": [
+    {
+      "name": "опции для активного userId",
+      "call": "userQueryOptions(\"u-42\")",
+      "expected": {
+        "queryKey": [
+          "users",
+          "u-42"
+        ],
+        "staleTime": 60000,
+        "enabled": true
+      }
+    },
+    {
+      "name": "отключён при пустом userId",
+      "call": "userQueryOptions(\"\")",
+      "expected": {
+        "queryKey": [
+          "users",
+          ""
+        ],
+        "staleTime": 60000,
+        "enabled": false
+      }
+    }
+  ],
+  "solution": "function userQueryOptions(userId: string) {\n  return {\n    queryKey: [\"users\", userId],\n    staleTime: 60000,\n    enabled: Boolean(userId),\n  };\n}"
+}

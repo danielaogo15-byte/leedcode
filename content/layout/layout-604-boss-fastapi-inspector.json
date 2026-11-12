@@ -1,0 +1,70 @@
+{
+  "id": "layout-604-boss-fastapi-inspector",
+  "title": "Босс: Документация эндпоинта FastAPI (200 OK / 422 Error)",
+  "track": "layout",
+  "level": 6,
+  "isBoss": true,
+  "topic": "fastapi-boss",
+  "mapTopics": [
+    "FastAPI",
+    "Pydantic",
+    "Tailwind CSS"
+  ],
+  "learn": "Сборка карточки документации API с флекс-колонкой и двухколоночным блоком кодов ответа.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи карточку .api-doc и секцию ответов .responses классами Tailwind.",
+  "specs": [
+    "Добавь на .api-doc классы: p-4 flex flex-col gap-3",
+    "Добавь на .responses классы: grid grid-cols-2 gap-2.5"
+  ],
+  "starterHtml": "<section class=\"api-doc bg-slate-900 text-slate-50 rounded-xl\">\n  <header class=\"font-mono font-bold text-xs\">POST /api/users (UserCreate)</header>\n  <div class=\"responses\">\n    <div class=\"p-2.5 rounded-lg text-xs font-semibold bg-emerald-900 text-emerald-300\">200 OK · UserOut</div>\n    <div class=\"p-2.5 rounded-lg text-xs font-semibold bg-red-900 text-red-300\">422 Validation Error</div>\n  </div>\n</section>\n",
+  "starterCss": "",
+  "targetHtml": "<section class=\"api-doc p-4 flex flex-col gap-3 bg-slate-900 text-slate-50 rounded-xl\">\n  <header class=\"font-mono font-bold text-xs\">POST /api/users (UserCreate)</header>\n  <div class=\"responses grid grid-cols-2 gap-2.5\">\n    <div class=\"p-2.5 rounded-lg text-xs font-semibold bg-emerald-900 text-emerald-300\">200 OK · UserOut</div>\n    <div class=\"p-2.5 rounded-lg text-xs font-semibold bg-red-900 text-red-300\">422 Validation Error</div>\n  </div>\n</section>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "p-4 = 16px, gap-3 = 12px, gap-2.5 = 10px."
+    },
+    {
+      "tier": 2,
+      "text": "Две равные колонки: grid grid-cols-2."
+    },
+    {
+      "tier": 3,
+      "text": "На .api-doc добавь p-4 flex flex-col gap-3, на .responses — grid grid-cols-2 gap-2.5."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".api-doc выстроен колонкой",
+      "selector": ".api-doc",
+      "property": "flexDirection",
+      "expected": "column"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Шаг внутри .api-doc равен 12px (gap-3)",
+      "selector": ".api-doc",
+      "property": "rowGap",
+      "expected": "12px"
+    },
+    {
+      "type": "computedStyle",
+      "name": ".responses использует grid",
+      "selector": ".responses",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Промежуток в .responses равен 10px (gap-2.5)",
+      "selector": ".responses",
+      "property": "columnGap",
+      "expected": "10px"
+    }
+  ],
+  "solution": "<section class=\"api-doc p-4 flex flex-col gap-3 bg-slate-900 text-slate-50 rounded-xl\">\n  <header class=\"font-mono font-bold text-xs\">POST /api/users (UserCreate)</header>\n  <div class=\"responses grid grid-cols-2 gap-2.5\">\n    <div class=\"p-2.5 rounded-lg text-xs font-semibold bg-emerald-900 text-emerald-300\">200 OK · UserOut</div>\n    <div class=\"p-2.5 rounded-lg text-xs font-semibold bg-red-900 text-red-300\">422 Validation Error</div>\n  </div>\n</section>"
+}

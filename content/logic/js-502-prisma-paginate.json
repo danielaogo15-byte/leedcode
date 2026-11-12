@@ -1,0 +1,60 @@
+{
+  "id": "js-502-prisma-paginate",
+  "title": "Prisma ORM: описание модели User в schema.prisma",
+  "track": "logic",
+  "level": 5,
+  "isBoss": false,
+  "topic": "prisma-schema",
+  "mapTopics": [
+    "Prisma",
+    "PostgreSQL"
+  ],
+  "learn": "Синтаксис декларативной схемы Prisma: model, @id, @default(autoincrement()), @unique и @default(now()).",
+  "needsDom": false,
+  "codeLanguage": "prisma",
+  "prompt": "Напиши декларацию `model User { ... }` для `schema.prisma` с полями: `id Int @id @default(autoincrement())`, `email String @unique` и `createdAt DateTime @default(now())`.",
+  "specs": [
+    "Поле id: Int с атрибутами @id и @default(autoincrement())",
+    "Поле email: String с атрибутом @unique",
+    "Поле createdAt: DateTime с атрибутом @default(now())"
+  ],
+  "starterJs": "model User {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Первичный ключ в Prisma помечается атрибутом @id."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Prisma Schema: https://www.prisma.io/docs/orm/prisma-schema/data-model/models"
+    },
+    {
+      "tier": 3,
+      "text": "model User {\n  id Int @id @default(autoincrement())\n  email String @unique\n  createdAt DateTime @default(now())\n}"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Объявлена модель model User",
+      "pattern": "model\\s+User\\s*\\{",
+      "expectedHint": "model User { ... }"
+    },
+    {
+      "name": "Первичный ключ id Int @id @default(autoincrement())",
+      "pattern": "id\\s+Int\\s+@id\\s+@default\\(autoincrement\\(\\)\\)",
+      "expectedHint": "id Int @id @default(autoincrement())"
+    },
+    {
+      "name": "Уникальное поле email String @unique",
+      "pattern": "email\\s+String\\s+@unique",
+      "expectedHint": "email String @unique"
+    },
+    {
+      "name": "Таймстамп createdAt DateTime @default(now())",
+      "pattern": "createdAt\\s+DateTime\\s+@default\\(now\\(\\)\\)",
+      "expectedHint": "createdAt DateTime @default(now())"
+    }
+  ],
+  "tests": [],
+  "solution": "model User {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  createdAt DateTime @default(now())\n}"
+}

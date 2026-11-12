@@ -1,0 +1,62 @@
+{
+  "id": "layout-601-fastapi-swagger",
+  "title": "FastAPI Swagger UI: строка GET-эндпоинта",
+  "track": "layout",
+  "level": 6,
+  "isBoss": false,
+  "topic": "fastapi-ui",
+  "mapTopics": [
+    "FastAPI",
+    "Python",
+    "Tailwind CSS"
+  ],
+  "learn": "Оформление плашки OpenAPI-операции через flex items-center gap-3 p-2.5 rounded-lg.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи блок эндпоинта .swagger-op классами Tailwind: флекс по центру, шаг 12px, паддинг 10px и скругление 8px.",
+  "specs": [
+    "Добавь на .swagger-op классы: flex items-center gap-3 p-2.5 rounded-lg"
+  ],
+  "starterHtml": "<div class=\"swagger-op bg-emerald-900 border border-emerald-500 text-slate-50\">\n  <span class=\"bg-emerald-500 text-emerald-950 px-2.5 py-1 rounded font-bold text-xs\">GET</span>\n  <code class=\"text-xs\">/items/{item_id}</code>\n  <span class=\"text-emerald-300 text-xs\">Read Item</span>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"swagger-op flex items-center gap-3 p-2.5 rounded-lg bg-emerald-900 border border-emerald-500 text-slate-50\">\n  <span class=\"bg-emerald-500 text-emerald-950 px-2.5 py-1 rounded font-bold text-xs\">GET</span>\n  <code class=\"text-xs\">/items/{item_id}</code>\n  <span class=\"text-emerald-300 text-xs\">Read Item</span>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "10px в Tailwind — это p-2.5, а 8px скругления — rounded-lg."
+    },
+    {
+      "tier": 2,
+      "text": "Отступ 12px между элементами — gap-3."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .swagger-op: flex items-center gap-3 p-2.5 rounded-lg."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".swagger-op использует flex",
+      "selector": ".swagger-op",
+      "property": "display",
+      "expected": "flex"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Промежуток gap-3 равен 12px",
+      "selector": ".swagger-op",
+      "property": "columnGap",
+      "expected": "12px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Скругление rounded-lg (8px)",
+      "selector": ".swagger-op",
+      "property": "borderTopLeftRadius",
+      "expected": "8px"
+    }
+  ],
+  "solution": "<div class=\"swagger-op flex items-center gap-3 p-2.5 rounded-lg bg-emerald-900 border border-emerald-500 text-slate-50\">\n  <span class=\"bg-emerald-500 text-emerald-950 px-2.5 py-1 rounded font-bold text-xs\">GET</span>\n  <code class=\"text-xs\">/items/{item_id}</code>\n  <span class=\"text-emerald-300 text-xs\">Read Item</span>\n</div>"
+}

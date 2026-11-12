@@ -15,6 +15,7 @@ import {
   Layers,
   Layout,
   Lock,
+  Unlock,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -40,8 +41,21 @@ export function Sidebar({
   onTaskChange,
 }: Props) {
   const [previewLevel, setPreviewLevel] = useState<Level>(level);
+  const [freeExplore, setFreeExplore] = useState<boolean>(() => {
+    return window.localStorage.getItem('vibedojo:free-explore') === 'true';
+  });
+
   const solvedCount = tasks.filter((t) => t.solved).length;
   const roadmap = LEVEL_ROADMAP[previewLevel];
+  const effectiveUnlocked: Level = freeExplore ? 7 : unlockedLevel;
+
+  const toggleFreeExplore = () => {
+    setFreeExplore((prev) => {
+      const next = !prev;
+      window.localStorage.setItem('vibedojo:free-explore', String(next));
+      return next;
+    });
+  };
 
   return (
     <aside className="flex flex-col gap-5 overflow-y-auto border-r border-border/80 bg-card/40 p-4">
@@ -76,15 +90,31 @@ export function Sidebar({
       <div>
         <div className="mb-2 flex items-center justify-between">
           <p className="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
-            Уровень (открыт 1–{unlockedLevel})
+            Уровень (1–7)
           </p>
-          <span className="text-xs text-muted-foreground">
-            {solvedCount}/{tasks.length} решено
-          </span>
+          <button
+            type="button"
+            onClick={toggleFreeExplore}
+            className="inline-flex items-center gap-1 rounded border border-border bg-muted/40 px-2 py-0.5 text-[10px] font-medium text-muted-foreground transition hover:bg-muted hover:text-foreground"
+            title="Переключить свободный доступ ко всем уровням"
+          >
+            {freeExplore ? (
+              <>
+                <Unlock className="size-3 text-emerald-400" />
+                <span>Все открыты</span>
+              </>
+            ) : (
+              <>
+                <Lock className="size-3 text-amber-400" />
+                <span>По прогрессу</span>
+              </>
+            )}
+          </button>
         </div>
+
         <div className="grid grid-cols-7 gap-1">
           {LEVELS.map((item) => {
-            const unlocked = item <= unlockedLevel;
+            const unlocked = item <= effectiveUnlocked;
             const active = item === level;
             return (
               <button
@@ -133,9 +163,14 @@ export function Sidebar({
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col">
-        <p className="mb-2 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
-          Задачи уровня {level}
-        </p>
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
+            Задачи уровня {level}
+          </p>
+          <span className="text-xs text-muted-foreground">
+            {solvedCount}/{tasks.length} решено
+          </span>
+        </div>
         <ul className="flex flex-col gap-1.5">
           {tasks.map((item) => {
             const active = item.id === taskId;

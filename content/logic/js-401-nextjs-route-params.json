@@ -1,0 +1,55 @@
+{
+  "id": "js-401-nextjs-route-params",
+  "title": "Next.js App Router: Server Action с revalidatePath",
+  "track": "logic",
+  "level": 4,
+  "isBoss": false,
+  "topic": "nextjs-actions",
+  "mapTopics": [
+    "Next.js",
+    "React",
+    "TypeScript"
+  ],
+  "learn": "Директива \"use server\" и сброс кэша маршрута через revalidatePath() в Next.js App Router.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши асинхронный Server Action `async function createPostAction(title: string)`: первой строкой внутри функции укажи директиву `\"use server\";`, затем вызови `revalidatePath(\"/blog\")` и верни `{ ok: true, title }`.",
+  "specs": [
+    "Внутри функции обязательно должна быть директива \"use server\"",
+    "Обязательно вызови revalidatePath(\"/blog\")"
+  ],
+  "starterJs": "async function createPostAction(title: string) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Server Action в Next.js начинается со строки \"use server\";"
+    },
+    {
+      "tier": 2,
+      "text": "Документация Next.js: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations"
+    },
+    {
+      "tier": 3,
+      "text": "Вставь \"use server\"; затем revalidatePath(\"/blog\"); и return { ok: true, title };"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Указана директива \"use server\"",
+      "pattern": "[\"']use server[\"']",
+      "expectedHint": "\"use server\";"
+    },
+    {
+      "name": "Вызван revalidatePath(\"/blog\")",
+      "pattern": "revalidatePath\\(\\s*[\"']/blog[\"']\\s*\\)",
+      "expectedHint": "revalidatePath(\"/blog\")"
+    },
+    {
+      "name": "Функция объявлена как async",
+      "pattern": "async\\s+function\\s+createPostAction",
+      "expectedHint": "async function createPostAction"
+    }
+  ],
+  "tests": [],
+  "solution": "async function createPostAction(title: string) {\n  \"use server\";\n  revalidatePath(\"/blog\");\n  return { ok: true, title };\n}"
+}

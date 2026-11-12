@@ -1,0 +1,63 @@
+{
+  "id": "layout-303-toast-card",
+  "title": "shadcn/ui Toast: всплывающее уведомление",
+  "track": "layout",
+  "level": 3,
+  "isBoss": false,
+  "topic": "shadcn-toast",
+  "mapTopics": [
+    "shadcn/ui",
+    "Zustand",
+    "Tailwind CSS"
+  ],
+  "learn": "Горизонтальный флекс-контейнер flex justify-between items-center p-3.5 rounded-[10px].",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи уведомление .toast классами Tailwind: флекс с разносом по краям, вертикальное центрирование, паддинг 14px и скругление 10px.",
+  "specs": [
+    "Добавь на .toast классы: flex justify-between items-center p-3.5 rounded-[10px]",
+    "p-3.5 в Tailwind равен 14px (3.5 × 4px)"
+  ],
+  "starterHtml": "<div class=\"toast bg-slate-900 text-slate-50 border border-slate-700\">\n  <div>\n    <strong class=\"text-sm\">Прогресс сохранён</strong>\n    <p class=\"m-0 mt-1 text-xs text-slate-400\">Начислено +25 XP</p>\n  </div>\n  <button class=\"bg-transparent border-none text-slate-400 text-sm\" type=\"button\">✕</button>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"toast flex justify-between items-center p-3.5 rounded-[10px] bg-slate-900 text-slate-50 border border-slate-700\">\n  <div>\n    <strong class=\"text-sm\">Прогресс сохранён</strong>\n    <p class=\"m-0 mt-1 text-xs text-slate-400\">Начислено +25 XP</p>\n  </div>\n  <button class=\"bg-transparent border-none text-slate-400 text-sm\" type=\"button\">✕</button>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Для отступа 14px используй класс p-3.5."
+    },
+    {
+      "tier": 2,
+      "text": "Для разноса по краям и центрирования: flex justify-between items-center."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .toast: flex justify-between items-center p-3.5 rounded-[10px]."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Разнос justify-between",
+      "selector": ".toast",
+      "property": "justifyContent",
+      "expected": "space-between"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Выравнивание items-center",
+      "selector": ".toast",
+      "property": "alignItems",
+      "expected": "center"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Отступ p-3.5 равен 14px",
+      "selector": ".toast",
+      "property": "paddingTop",
+      "expected": "14px"
+    }
+  ],
+  "solution": "<div class=\"toast flex justify-between items-center p-3.5 rounded-[10px] bg-slate-900 text-slate-50 border border-slate-700\">\n  <div>\n    <strong class=\"text-sm\">Прогресс сохранён</strong>\n    <p class=\"m-0 mt-1 text-xs text-slate-400\">Начислено +25 XP</p>\n  </div>\n  <button class=\"bg-transparent border-none text-slate-400 text-sm\" type=\"button\">✕</button>\n</div>"
+}

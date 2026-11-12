@@ -2,6 +2,7 @@ import {
 	db,
 	getTodayKey,
 	getYesterdayKey,
+	type SubmissionRecord,
 	type TaskProgressRecord,
 	type UserStatsRecord,
  } from '@/db/database';
@@ -19,6 +20,8 @@ import {
  import type { Level } from '@/types/track';
  import { create } from 'zustand';
  
+ export const STREAK_FREEZE_COST_XP = 100;
+ 
  type RecordAttemptParams = {
 	taskId: string;
 	level: Level;
@@ -29,12 +32,15 @@ import {
 	hardcore: boolean;
 	suspiciousSpeed: boolean;
 	isMemoryReview?: boolean;
+	codeSnapshot?: string;
+	durationMs?: number;
  };
  
  type ProgressState = {
 	hydrated: boolean;
 	totalXp: number;
 	streakDays: number;
+	streakFreezes: number;
 	lastActiveDate: string | null;
 	activityByDate: Record<string, number>;
 	progressByTask: Record<string, TaskProgressRecord>;
@@ -47,6 +53,9 @@ import {
 	ensureDailySession: (allTasks: Task[]) => Promise<void>;
 	recordAttempt: (params: RecordAttemptParams) => Promise<void>;
 	recordGiveUp: (taskId: string) => Promise<void>;
+	saveTaskNote: (taskId: string, note: string) => Promise<void>;
+	buyStreakFreeze: () => Promise<boolean>;
+	awardBonusXp: (amount: number, reason: string) => Promise<void>;
 	clearXpBanner: () => void;
  };
  
@@ -60,6 +69,8 @@ import {
 	  inRepeatQueue: false,
 	  reviewStage: 0,
 	  nextReviewAt: null,
+	  note: '',
+	  submissions: [],
 	};
  }
  
@@ -67,6 +78,7 @@ import {
 	hydrated: false,
 	totalXp: 0,
 	streakDays: 0,
+	streakFreezes: 0,
 	lastActiveDate: null,
 	activityByDate: {},
 	progressByTask: {},
@@ -112,7 +124,10 @@ import {
 		 ]);
  
 		 for (const row of rows) {
-			initialMap[row.taskId] = row;
+			initialMap[row.taskId] = {
+			  ...createEmptyRecord(row.taskId),
+			  ...row,
+			};
 		 }
  
 		 const calculatedXp =
@@ -124,6 +139,7 @@ import {
 			progressByTask: initialMap,
 			totalXp: calculatedXp,
 			streakDays: stats?.streakDays ?? (calculatedXp > 0 ? 1 : 0),
+			streakFreezes: stats?.streakFreezes ?? 0,
 			lastActiveDate: stats?.lastActiveDate ?? null,
 			activityByDate: stats?.activityByDate ?? {},
 			dailyDate: stats?.dailyDate ?? null,
@@ -157,6 +173,7 @@ import {
 			id: 'main',
 			totalXp: state.totalXp,
 			streakDays: state.streakDays,
+			streakFreezes: state.streakFreezes,
 			lastActiveDate: state.lastActiveDate,
 			activityByDate: state.activityByDate,
 			dailyDate: today,
@@ -190,10 +207,19 @@ import {
 	  const today = getTodayKey();
 	  const yesterday = getYesterdayKey();
 	  let nextStreak = state.streakDays;
+	  let nextFreezes = state.streakFreezes;
+	  let freezeUsed = false;
  
 	  if (state.lastActiveDate !== today) {
-		 nextStreak =
-			state.lastActiveDate === yesterday ? state.streakDays + 1 : 1;
+		 if (state.lastActiveDate === yesterday) {
+			nextStreak = state.streakDays + 1;
+		 } else if (state.lastActiveDate && state.streakFreezes > 0 && state.streakDays > 0) {
+			nextStreak = state.streakDays + 1;
+			nextFreezes = state.streakFreezes - 1;
+			freezeUsed = true;
+		 } else {
+			nextStreak = 1;
+		 }
 	  }
  
 	  const breakdown = calculateTaskXp({
@@ -213,6 +239,21 @@ import {
  
 	  const { nextReviewAt, nextStage } = computeNextReviewDate(prev.reviewStage);
  
+	  const newSubmission: SubmissionRecord | null = params.codeSnapshot
+		 ? {
+			  id: `sub-${Date.now()}`,
+			  createdAt: Date.now(),
+			  codeSnapshot: params.codeSnapshot,
+			  durationMs: params.durationMs ?? 1,
+			  xpEarned: earnedXp,
+			}
+		 : null;
+ 
+	  const prevSubmissions = prev.submissions ?? [];
+	  const nextSubmissions = newSubmission
+		 ? [newSubmission, ...prevSubmissions].slice(0, 10)
+		 : prevSubmissions;
+ 
 	  const updatedRecord: TaskProgressRecord = {
 		 ...prev,
 		 solved: true,
@@ -222,6 +263,7 @@ import {
 		 inRepeatQueue: false,
 		 reviewStage: nextStage,
 		 nextReviewAt,
+		 submissions: nextSubmissions,
 	  };
  
 	  const nextProgressMap = {
@@ -234,7 +276,6 @@ import {
 		 [today]: (state.activityByDate[today] ?? 0) + 1,
 	  };
  
-	  // Проверяем прогресс ежедневной сессии
 	  const isInDaily = state.dailySlots.some((s) => s.taskId === params.taskId);
 	  const nextDailySolvedIds =
 		 isInDaily &&
@@ -255,8 +296,11 @@ import {
 	  let bannerMessage =
 		 earnedXp > 0
 			? breakdown.reason
-			: 'Задача уже была решена ранее (0 новых XP)';
+			: 'Задача уже была решена ранее (0 новых XP) · Решение сохранено в Историю';
  
+	  if (freezeUsed) {
+		 bannerMessage += ' · ❄️ Использована 1 заморозка стрика!';
+	  }
 	  if (justCompletedDaily) {
 		 bannerMessage += ` · 🎉 +${DAILY_SESSION_BONUS_XP} XP за ежедневную сессию (3/3)!`;
 	  }
@@ -265,6 +309,7 @@ import {
 		 progressByTask: nextProgressMap,
 		 totalXp: nextTotalXp,
 		 streakDays: nextStreak,
+		 streakFreezes: nextFreezes,
 		 lastActiveDate: today,
 		 activityByDate: nextActivity,
 		 dailySolvedIds: nextDailySolvedIds,
@@ -283,6 +328,7 @@ import {
 			id: 'main',
 			totalXp: nextTotalXp,
 			streakDays: nextStreak,
+			streakFreezes: nextFreezes,
 			lastActiveDate: today,
 			activityByDate: nextActivity,
 			dailyDate: state.dailyDate ?? today,
@@ -313,6 +359,77 @@ import {
  
 	  if (db) {
 		 await db.taskProgress.put(updated);
+	  }
+	},
+ 
+	saveTaskNote: async (taskId, note) => {
+	  const state = get();
+	  const prev = state.progressByTask[taskId] ?? createEmptyRecord(taskId);
+	  const updated: TaskProgressRecord = {
+		 ...prev,
+		 note,
+	  };
+	  set({
+		 progressByTask: { ...state.progressByTask, [taskId]: updated },
+	  });
+	  if (db) {
+		 await db.taskProgress.put(updated);
+	  }
+	},
+ 
+	buyStreakFreeze: async () => {
+	  const state = get();
+	  if (state.totalXp < STREAK_FREEZE_COST_XP) {
+		 return false;
+	  }
+	  const nextXp = state.totalXp - STREAK_FREEZE_COST_XP;
+	  const nextFreezes = state.streakFreezes + 1;
+ 
+	  set({
+		 totalXp: nextXp,
+		 streakFreezes: nextFreezes,
+		 lastXpBanner: `❄️ Куплена заморозка стрика (-${STREAK_FREEZE_COST_XP} XP). Запас: ${nextFreezes}`,
+	  });
+ 
+	  if (db) {
+		 const nextStats: UserStatsRecord = {
+			id: 'main',
+			totalXp: nextXp,
+			streakDays: state.streakDays,
+			streakFreezes: nextFreezes,
+			lastActiveDate: state.lastActiveDate,
+			activityByDate: state.activityByDate,
+			dailyDate: state.dailyDate,
+			dailySlots: state.dailySlots,
+			dailySolvedIds: state.dailySolvedIds,
+			dailyBonusClaimed: state.dailyBonusClaimed,
+		 };
+		 await db.userStats.put(nextStats);
+	  }
+	  return true;
+	},
+ 
+	awardBonusXp: async (amount, reason) => {
+	  const state = get();
+	  const nextXp = state.totalXp + amount;
+	  set({
+		 totalXp: nextXp,
+		 lastXpBanner: reason,
+	  });
+	  if (db) {
+		 const nextStats: UserStatsRecord = {
+			id: 'main',
+			totalXp: nextXp,
+			streakDays: state.streakDays,
+			streakFreezes: state.streakFreezes,
+			lastActiveDate: state.lastActiveDate,
+			activityByDate: state.activityByDate,
+			dailyDate: state.dailyDate,
+			dailySlots: state.dailySlots,
+			dailySolvedIds: state.dailySolvedIds,
+			dailyBonusClaimed: state.dailyBonusClaimed,
+		 };
+		 await db.userStats.put(nextStats);
 	  }
 	},
  

@@ -1,0 +1,61 @@
+{
+  "id": "js-501-express-bearer",
+  "title": "Express Middleware: проверка Bearer-токена",
+  "track": "logic",
+  "level": 5,
+  "isBoss": false,
+  "topic": "express-middleware",
+  "mapTopics": [
+    "Express",
+    "Node.js",
+    "TypeScript"
+  ],
+  "learn": "Архитектура middleware в Express (req, res, next) и извлечение заголовка Authorization.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function extractBearerToken(headerValue?: string): string | null`, которая проверяет заголовок `Authorization`: если он начинается с `\"Bearer \"`, возвращает сам токен, иначе `null`.",
+  "specs": [
+    "Типизируй параметр headerValue?: string и возврат : string | null",
+    "Если после \"Bearer \" пусто или схема другая (Basic) -> верни null"
+  ],
+  "starterJs": "function extractBearerToken(headerValue?: string): string | null {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Разбей строку по пробелам через trim().split(/\\s+/)."
+    },
+    {
+      "tier": 2,
+      "text": "Проверь, что частей ровно 2 и первая равна \"bearer\" в нижнем регистре."
+    },
+    {
+      "tier": 3,
+      "text": "if (!headerValue) return null; const parts = headerValue.trim().split(/\\s+/); return parts.length === 2 && parts[0].toLowerCase() === \"bearer\" ? parts[1] : null;"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Типизирован возврат : string | null",
+      "pattern": ":\\s*string\\s*\\|\\s*null",
+      "expectedHint": ": string | null"
+    }
+  ],
+  "tests": [
+    {
+      "name": "корректный JWT",
+      "call": "extractBearerToken(\"Bearer eyJhbGciOi\")",
+      "expected": "eyJhbGciOi"
+    },
+    {
+      "name": "неверная схема Basic",
+      "call": "extractBearerToken(\"Basic 12345\")",
+      "expected": null
+    },
+    {
+      "name": "пустой заголовок",
+      "call": "extractBearerToken(\"\")",
+      "expected": null
+    }
+  ],
+  "solution": "function extractBearerToken(headerValue?: string): string | null {\n  if (typeof headerValue !== \"string\") return null;\n  const parts = headerValue.trim().split(/\\s+/);\n  if (parts.length !== 2 || parts[0].toLowerCase() !== \"bearer\" || !parts[1]) return null;\n  return parts[1];\n}"
+}

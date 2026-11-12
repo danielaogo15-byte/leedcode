@@ -1,0 +1,55 @@
+{
+  "id": "js-603-alembic-autogenerate-diff",
+  "title": "Python + Alembic: функции upgrade() и downgrade() миграции",
+  "track": "logic",
+  "level": 6,
+  "isBoss": false,
+  "topic": "alembic-migrations",
+  "mapTopics": [
+    "Alembic",
+    "SQLAlchemy",
+    "Python"
+  ],
+  "learn": "Написание обратимой миграции БД в Alembic с помощью op.add_column и op.drop_column.",
+  "needsDom": false,
+  "codeLanguage": "python",
+  "prompt": "Допиши миграцию Alembic на Python: в `def upgrade() -> None:` добавь колонку `op.add_column(\"users\", sa.Column(\"phone\", sa.String(20), nullable=True))`, а в `def downgrade() -> None:` удали её через `op.drop_column(\"users\", \"phone\")`.",
+  "specs": [
+    "В upgrade() вызови op.add_column(\"users\", sa.Column(\"phone\", sa.String(20), nullable=True))",
+    "В downgrade() вызови op.drop_column(\"users\", \"phone\")"
+  ],
+  "starterJs": "from alembic import op\nimport sqlalchemy as sa\n\ndef upgrade() -> None:\n    pass\n\ndef downgrade() -> None:\n    pass\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Каждая операция в upgrade() должна иметь зеркальную отмену в downgrade()."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Alembic Operations: https://alembic.sqlalchemy.org/en/latest/ops.html"
+    },
+    {
+      "tier": 3,
+      "text": "В upgrade: op.add_column(\"users\", sa.Column(\"phone\", sa.String(20), nullable=True)), в downgrade: op.drop_column(\"users\", \"phone\")."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Вызов op.add_column(\"users\", sa.Column(\"phone\", ...))",
+      "pattern": "op\\.add_column\\(\\s*[\"']users[\"']\\s*,\\s*sa\\.Column\\(\\s*[\"']phone[\"']",
+      "expectedHint": "op.add_column(\"users\", sa.Column(\"phone\", ...))"
+    },
+    {
+      "name": "Тип колонки sa.String(20)",
+      "pattern": "sa\\.String\\(\\s*20\\s*\\)",
+      "expectedHint": "sa.String(20)"
+    },
+    {
+      "name": "Откат op.drop_column(\"users\", \"phone\")",
+      "pattern": "op\\.drop_column\\(\\s*[\"']users[\"']\\s*,\\s*[\"']phone[\"']\\s*\\)",
+      "expectedHint": "op.drop_column(\"users\", \"phone\")"
+    }
+  ],
+  "tests": [],
+  "solution": "from alembic import op\nimport sqlalchemy as sa\n\ndef upgrade() -> None:\n    op.add_column(\"users\", sa.Column(\"phone\", sa.String(20), nullable=True))\n\ndef downgrade() -> None:\n    op.drop_column(\"users\", \"phone\")"
+}

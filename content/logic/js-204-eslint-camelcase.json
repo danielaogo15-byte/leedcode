@@ -1,0 +1,64 @@
+{
+  "id": "js-204-eslint-camelcase",
+  "title": "ESLint + Prettier: генератор правил eslint.config.js",
+  "track": "logic",
+  "level": 2,
+  "isBoss": false,
+  "topic": "eslint-rules",
+  "mapTopics": [
+    "ESLint",
+    "Prettier",
+    "TypeScript"
+  ],
+  "learn": "Настройка правил @typescript-eslint/no-unused-vars и eqeqeq в Flat Config ESLint.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function buildEslintRules(isProd: boolean)`, которая возвращает объект правил ESLint: `eqeqeq: \"error\"`, `\"no-console\": isProd ? \"error\" : \"warn\"` и `\"@typescript-eslint/no-unused-vars\": \"error\"`.",
+  "specs": [
+    "В режиме isProd === true правило \"no-console\" должно быть \"error\", иначе \"warn\"",
+    "Правила eqeqeq и @typescript-eslint/no-unused-vars всегда равны \"error\""
+  ],
+  "starterJs": "function buildEslintRules(isProd: boolean) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Используй тернарный оператор isProd ? \"error\" : \"warn\" для ключа \"no-console\"."
+    },
+    {
+      "tier": 2,
+      "text": "Документация ESLint Rules: https://eslint.org/docs/latest/use/configure/rules"
+    },
+    {
+      "tier": 3,
+      "text": "Верни { eqeqeq: \"error\", \"no-console\": isProd ? \"error\" : \"warn\", \"@typescript-eslint/no-unused-vars\": \"error\" }."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Включено правило @typescript-eslint/no-unused-vars",
+      "pattern": "@typescript-eslint/no-unused-vars",
+      "expectedHint": "\"@typescript-eslint/no-unused-vars\": \"error\""
+    }
+  ],
+  "tests": [
+    {
+      "name": "правила для продакшена",
+      "call": "buildEslintRules(true)",
+      "expected": {
+        "eqeqeq": "error",
+        "no-console": "error",
+        "@typescript-eslint/no-unused-vars": "error"
+      }
+    },
+    {
+      "name": "правила для разработки",
+      "call": "buildEslintRules(false)",
+      "expected": {
+        "eqeqeq": "error",
+        "no-console": "warn",
+        "@typescript-eslint/no-unused-vars": "error"
+      }
+    }
+  ],
+  "solution": "function buildEslintRules(isProd: boolean) {\n  return {\n    eqeqeq: \"error\",\n    \"no-console\": isProd ? \"error\" : \"warn\",\n    \"@typescript-eslint/no-unused-vars\": \"error\",\n  };\n}"
+}

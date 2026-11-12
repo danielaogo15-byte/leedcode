@@ -7,10 +7,29 @@ export type TaskHint = {
   text: string;
 };
 
+export type CodeLanguage =
+  | 'javascript'
+  | 'typescript'
+  | 'python'
+  | 'sql'
+  | 'dockerfile'
+  | 'yaml'
+  | 'prisma'
+  | 'nginx'
+  | 'tailwind';
+
 export type LogicTest = {
   name: string;
   call: string;
   expected: unknown;
+};
+
+export type CodePatternCheck = {
+  name: string;
+  pattern: string;
+  flags?: string;
+  mustNotMatch?: boolean;
+  expectedHint: string;
 };
 
 export type SelectorCheck = {
@@ -63,6 +82,7 @@ export type TaskJson = {
   mapTopics: string[];
   learn: string;
   needsDom: boolean;
+  codeLanguage?: CodeLanguage;
   prompt: string;
   specs?: string[];
   starterHtml?: string;
@@ -73,6 +93,7 @@ export type TaskJson = {
   htmlFixture?: string;
   hints: [TaskHint, TaskHint, TaskHint];
   tests?: LogicTest[];
+  codeChecks?: CodePatternCheck[];
   checks?: TaskCheck[];
   solution: string;
 };
@@ -89,6 +110,7 @@ export type Task = Required<
     | 'mapTopics'
     | 'learn'
     | 'needsDom'
+    | 'codeLanguage'
     | 'prompt'
     | 'specs'
     | 'starterHtml'
@@ -102,6 +124,7 @@ export type Task = Required<
   >
 > & {
   tests: LogicTest[];
+  codeChecks: CodePatternCheck[];
   checks: TaskCheck[];
   solved: boolean;
 };

@@ -1,0 +1,64 @@
+{
+  "id": "layout-501-prisma-row",
+  "title": "Prisma Studio: строка записи PostgreSQL на Tailwind Grid",
+  "track": "layout",
+  "level": 5,
+  "isBoss": false,
+  "topic": "prisma-studio",
+  "mapTopics": [
+    "Prisma",
+    "PostgreSQL",
+    "Tailwind CSS"
+  ],
+  "learn": "Табличная сетка с фиксированными и резиновыми колонками grid-cols-[60px_1fr_90px].",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Выстрой строку БД .db-row в 3 колонки (60px, 1fr, 90px) с отступом 12px и выравниванием по центру.",
+  "specs": [
+    "Добавь на .db-row классы: grid grid-cols-[60px_1fr_90px] gap-3 items-center"
+  ],
+  "starterHtml": "<div class=\"db-row bg-slate-800 text-slate-50 p-3 rounded-lg text-xs\">\n  <span class=\"id text-slate-400 font-mono\">#42</span>\n  <span class=\"email\">daniela@dojo.dev</span>\n  <span class=\"role bg-sky-400 text-slate-900 text-center py-1 px-1.5 rounded font-bold\">ADMIN</span>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"db-row grid grid-cols-[60px_1fr_90px] gap-3 items-center bg-slate-800 text-slate-50 p-3 rounded-lg text-xs\">\n  <span class=\"id text-slate-400 font-mono\">#42</span>\n  <span class=\"email\">daniela@dojo.dev</span>\n  <span class=\"role bg-sky-400 text-slate-900 text-center py-1 px-1.5 rounded font-bold\">ADMIN</span>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Три колонки задаются через grid-cols-[60px_1fr_90px]."
+    },
+    {
+      "tier": 2,
+      "text": "Промежуток 12px — это gap-3."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .db-row: grid grid-cols-[60px_1fr_90px] gap-3 items-center."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".db-row использует grid",
+      "selector": ".db-row",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "boundingRect",
+      "name": "Ширина колонки .id 60px",
+      "selector": ".id",
+      "property": "width",
+      "expected": 60,
+      "tolerance": 2
+    },
+    {
+      "type": "boundingRect",
+      "name": "Ширина колонки .role 90px",
+      "selector": ".role",
+      "property": "width",
+      "expected": 90,
+      "tolerance": 2
+    }
+  ],
+  "solution": "<div class=\"db-row grid grid-cols-[60px_1fr_90px] gap-3 items-center bg-slate-800 text-slate-50 p-3 rounded-lg text-xs\">\n  <span class=\"id text-slate-400 font-mono\">#42</span>\n  <span class=\"email\">daniela@dojo.dev</span>\n  <span class=\"role bg-sky-400 text-slate-900 text-center py-1 px-1.5 rounded font-bold\">ADMIN</span>\n</div>"
+}

@@ -1,0 +1,62 @@
+{
+  "id": "layout-702-sentry-issue-card",
+  "title": "Sentry Issue: карточка перехваченного исключения",
+  "track": "layout",
+  "level": 7,
+  "isBoss": false,
+  "topic": "sentry-ui",
+  "mapTopics": [
+    "Sentry",
+    "Tailwind CSS"
+  ],
+  "learn": "Оформление карточки инцидента p-3.5 flex flex-col gap-2 и шапки со space-between.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи карточку инцидента .sentry-card и верхнюю строку .sentry-top классами Tailwind.",
+  "specs": [
+    "Добавь на .sentry-card классы: p-3.5 flex flex-col gap-2",
+    "Добавь на .sentry-top классы: flex justify-between items-center"
+  ],
+  "starterHtml": "<div class=\"sentry-card bg-indigo-950 text-slate-50 border border-indigo-500 rounded-[10px]\">\n  <div class=\"sentry-top text-xs\">\n    <strong>TypeError: Cannot read properties</strong>\n    <span class=\"bg-red-500 px-2 py-0.5 rounded-full text-xs font-bold\">42 events</span>\n  </div>\n  <pre class=\"m-0 bg-slate-900 p-2 rounded text-xs text-slate-300\">at AppShell (AppShell.tsx:142:18)</pre>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"sentry-card p-3.5 flex flex-col gap-2 bg-indigo-950 text-slate-50 border border-indigo-500 rounded-[10px]\">\n  <div class=\"sentry-top flex justify-between items-center text-xs\">\n    <strong>TypeError: Cannot read properties</strong>\n    <span class=\"bg-red-500 px-2 py-0.5 rounded-full text-xs font-bold\">42 events</span>\n  </div>\n  <pre class=\"m-0 bg-slate-900 p-2 rounded text-xs text-slate-300\">at AppShell (AppShell.tsx:142:18)</pre>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "p-3.5 = 14px, gap-2 = 8px."
+    },
+    {
+      "tier": 2,
+      "text": "Для верхней строки используй flex justify-between items-center."
+    },
+    {
+      "tier": 3,
+      "text": "На .sentry-card добавь p-3.5 flex flex-col gap-2, на .sentry-top — flex justify-between items-center."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".sentry-card выстроен колонкой",
+      "selector": ".sentry-card",
+      "property": "flexDirection",
+      "expected": "column"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Шаг внутри .sentry-card равен 8px (gap-2)",
+      "selector": ".sentry-card",
+      "property": "rowGap",
+      "expected": "8px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Разнос в .sentry-top",
+      "selector": ".sentry-top",
+      "property": "justifyContent",
+      "expected": "space-between"
+    }
+  ],
+  "solution": "<div class=\"sentry-card p-3.5 flex flex-col gap-2 bg-indigo-950 text-slate-50 border border-indigo-500 rounded-[10px]\">\n  <div class=\"sentry-top flex justify-between items-center text-xs\">\n    <strong>TypeError: Cannot read properties</strong>\n    <span class=\"bg-red-500 px-2 py-0.5 rounded-full text-xs font-bold\">42 events</span>\n  </div>\n  <pre class=\"m-0 bg-slate-900 p-2 rounded text-xs text-slate-300\">at AppShell (AppShell.tsx:142:18)</pre>\n</div>"
+}

@@ -1,0 +1,66 @@
+{
+  "id": "js-703-gh-actions-needs",
+  "title": "GitHub Actions: YAML-воркфлоу CI для проверки кода и тестов",
+  "track": "logic",
+  "level": 7,
+  "isBoss": false,
+  "topic": "github-actions",
+  "mapTopics": [
+    "GitHub Actions",
+    "Git",
+    "GitHub",
+    "pnpm"
+  ],
+  "learn": "Структура файла .github/workflows/ci.yml: триггеры on, окружение runs-on: ubuntu-latest и шаги steps.",
+  "needsDom": false,
+  "codeLanguage": "yaml",
+  "prompt": "Допиши YAML-файл `.github/workflows/ci.yml`: триггер `on: [push, pull_request]`, джоб `test` на `runs-on: ubuntu-latest`, шаг чекаута `uses: actions/checkout@v4` и команды `run: pnpm install --frozen-lockfile` и `run: pnpm test:run`.",
+  "specs": [
+    "Укажи триггер on: [push, pull_request]",
+    "Укажи runs-on: ubuntu-latest, шаг uses: actions/checkout@v4 и запуск pnpm test:run"
+  ],
+  "starterJs": "name: CI\non: [push, pull_request]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      \n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Каждый шаг с командой в GitHub Actions пишется через дефис: - run: <команда>."
+    },
+    {
+      "tier": 2,
+      "text": "Документация GitHub Actions: https://docs.github.com/en/actions/writing-workflows"
+    },
+    {
+      "tier": 3,
+      "text": "Добавь два шага:\n      - run: pnpm install --frozen-lockfile\n      - run: pnpm test:run"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Триггер on: [push, pull_request]",
+      "pattern": "on:\\s*\\[\\s*push\\s*,\\s*pull_request\\s*\\]",
+      "expectedHint": "on: [push, pull_request]"
+    },
+    {
+      "name": "Окружение runs-on: ubuntu-latest",
+      "pattern": "runs-on:\\s*ubuntu-latest",
+      "expectedHint": "runs-on: ubuntu-latest"
+    },
+    {
+      "name": "Экшен uses: actions/checkout@v4",
+      "pattern": "uses:\\s*actions/checkout@v4",
+      "expectedHint": "uses: actions/checkout@v4"
+    },
+    {
+      "name": "Установка зависимостей pnpm install --frozen-lockfile",
+      "pattern": "run:\\s*pnpm\\s+install\\s+--frozen-lockfile",
+      "expectedHint": "- run: pnpm install --frozen-lockfile"
+    },
+    {
+      "name": "Запуск тестов pnpm test:run",
+      "pattern": "run:\\s*pnpm\\s+test:run",
+      "expectedHint": "- run: pnpm test:run"
+    }
+  ],
+  "tests": [],
+  "solution": "name: CI\non: [push, pull_request]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: pnpm install --frozen-lockfile\n      - run: pnpm test:run"
+}

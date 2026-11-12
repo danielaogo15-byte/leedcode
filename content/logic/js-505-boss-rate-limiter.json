@@ -1,0 +1,65 @@
+{
+  "id": "js-505-boss-rate-limiter",
+  "title": "Босс: Sliding Window Rate Limiter для Express + Redis",
+  "track": "logic",
+  "level": 5,
+  "isBoss": true,
+  "topic": "backend-boss",
+  "mapTopics": [
+    "Node.js",
+    "Express",
+    "Redis",
+    "TypeScript"
+  ],
+  "learn": "Реализация алгоритма защиты API от DDoS/брутфорса с возвратом HTTP 429 Too Many Requests.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши типизированную функцию `function checkRateLimit(timestamps: number[], now: number, windowMs: number, maxRequests: number)`, которая оставляет только запросы новее `now - windowMs` и возвращает `{ allowed: true, status: 200, remaining }` либо `{ allowed: false, status: 429, remaining: 0 }`.",
+  "specs": [
+    "Типизируй все 4 параметра в сигнатуре функции",
+    "При превышении лимита возвращай статус 429 и remaining: 0"
+  ],
+  "starterJs": "function checkRateLimit(timestamps: number[], now: number, windowMs: number, maxRequests: number) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Отфильтруй массив: const recent = timestamps.filter((t) => t > now - windowMs);"
+    },
+    {
+      "tier": 2,
+      "text": "Если recent.length >= maxRequests — лимит исчерпан (status: 429)."
+    },
+    {
+      "tier": 3,
+      "text": "Иначе верни { allowed: true, status: 200, remaining: maxRequests - recent.length - 1 }."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Типизирован массив timestamps: number[]",
+      "pattern": "timestamps\\s*:\\s*number\\[\\]",
+      "expectedHint": "timestamps: number[]"
+    }
+  ],
+  "tests": [
+    {
+      "name": "запрос разрешён (200)",
+      "call": "checkRateLimit([1000, 2000], 2500, 1000, 3)",
+      "expected": {
+        "allowed": true,
+        "status": 200,
+        "remaining": 1
+      }
+    },
+    {
+      "name": "превышен лимит (429)",
+      "call": "checkRateLimit([1800, 2000, 2200], 2500, 1000, 3)",
+      "expected": {
+        "allowed": false,
+        "status": 429,
+        "remaining": 0
+      }
+    }
+  ],
+  "solution": "function checkRateLimit(timestamps: number[], now: number, windowMs: number, maxRequests: number) {\n  const recent = timestamps.filter((t) => t > now - windowMs);\n  if (recent.length >= maxRequests) {\n    return { allowed: false, status: 429, remaining: 0 };\n  }\n  return { allowed: true, status: 200, remaining: maxRequests - recent.length - 1 };\n}"
+}

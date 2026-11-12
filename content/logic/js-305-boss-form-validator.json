@@ -1,0 +1,56 @@
+{
+  "id": "js-305-boss-form-validator",
+  "title": "Босс: Связка React Hook Form + Zod (z.infer и zodResolver)",
+  "track": "logic",
+  "level": 3,
+  "isBoss": true,
+  "topic": "rhf-zod-boss",
+  "mapTopics": [
+    "React Hook Form",
+    "Zod",
+    "React",
+    "TypeScript"
+  ],
+  "learn": "Вывод TypeScript-типа из схемы через z.infer<typeof Schema> и подключение zodResolver в useForm.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Объяви схему `LoginSchema = z.object({ email: z.string().email(), password: z.string().min(6) })`, выведи тип `type LoginValues = z.infer<typeof LoginSchema>;` и передай `resolver: zodResolver(LoginSchema)` внутрь вызова `useForm<LoginValues>({ ... })`.",
+  "specs": [
+    "Обязательно объяви type LoginValues = z.infer<typeof LoginSchema>;",
+    "Передай resolver: zodResolver(LoginSchema) в useForm"
+  ],
+  "starterJs": "const LoginSchema = z.object({\n  email: z.string().email(),\n  password: z.string().min(6),\n});\n\n// 1. Выведи тип LoginValues через z.infer\n\n// 2. Инициализируй form через useForm<LoginValues> с zodResolver\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Тип из схемы Zod выводится конструкцией type LoginValues = z.infer<typeof LoginSchema>;"
+    },
+    {
+      "tier": 2,
+      "text": "Внутри useForm<LoginValues>({ resolver: zodResolver(LoginSchema) }) подключается валидатор."
+    },
+    {
+      "tier": 3,
+      "text": "Напиши type LoginValues = z.infer<typeof LoginSchema>; и const form = useForm<LoginValues>({ resolver: zodResolver(LoginSchema) });"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Объявлена схема LoginSchema",
+      "pattern": "LoginSchema\\s*=\\s*z\\.object",
+      "expectedHint": "const LoginSchema = z.object(...)"
+    },
+    {
+      "name": "Выведен тип через z.infer<typeof LoginSchema>",
+      "pattern": "type\\s+LoginValues\\s*=\\s*z\\.infer<\\s*typeof\\s+LoginSchema\\s*>",
+      "expectedHint": "type LoginValues = z.infer<typeof LoginSchema>"
+    },
+    {
+      "name": "Подключён zodResolver(LoginSchema)",
+      "pattern": "resolver\\s*:\\s*zodResolver\\(\\s*LoginSchema\\s*\\)",
+      "expectedHint": "resolver: zodResolver(LoginSchema)"
+    }
+  ],
+  "tests": [],
+  "solution": "const LoginSchema = z.object({\n  email: z.string().email(),\n  password: z.string().min(6),\n});\n\ntype LoginValues = z.infer<typeof LoginSchema>;\n\nconst form = useForm<LoginValues>({\n  resolver: zodResolver(LoginSchema),\n});"
+}

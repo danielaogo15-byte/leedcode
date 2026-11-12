@@ -1,0 +1,70 @@
+{
+  "id": "js-701-docker-env-parser",
+  "title": "Docker: написание боевого Dockerfile для Node.js + pnpm",
+  "track": "logic",
+  "level": 7,
+  "isBoss": false,
+  "topic": "dockerfile",
+  "mapTopics": [
+    "Docker",
+    "pnpm",
+    "Node.js",
+    "Linux"
+  ],
+  "learn": "Инструкции Dockerfile: базовый образ FROM node:22-alpine, WORKDIR, кэширование слоёв COPY, RUN pnpm install --frozen-lockfile, EXPOSE и CMD.",
+  "needsDom": false,
+  "codeLanguage": "dockerfile",
+  "prompt": "Напиши `Dockerfile` для продакшен-сервиса: базовый образ `FROM node:22-alpine`, рабочая папка `WORKDIR /app`, копирование `COPY package.json pnpm-lock.yaml ./`, установка `RUN corepack enable && pnpm install --frozen-lockfile`, копирование кода `COPY . .`, порт `EXPOSE 3000` и запуск `CMD [\"node\", \"dist/server.js\"]`.",
+  "specs": [
+    "Обязательно используй FROM node:22-alpine и WORKDIR /app",
+    "Установка зависимостей должна использовать флаг --frozen-lockfile",
+    "Финальная команда: CMD [\"node\", \"dist/server.js\"]"
+  ],
+  "starterJs": "# Напиши Dockerfile для Node.js + pnpm\nFROM node:22-alpine\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Сначала копируются только package.json и pnpm-lock.yaml, чтобы Docker кэшировал слой зависимостей."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Dockerfile: https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "tier": 3,
+      "text": "FROM node:22-alpine\nWORKDIR /app\nCOPY package.json pnpm-lock.yaml ./\nRUN corepack enable && pnpm install --frozen-lockfile\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"dist/server.js\"]"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Базовый образ FROM node:22-alpine",
+      "pattern": "^FROM\\s+node:22-alpine",
+      "flags": "m",
+      "expectedHint": "FROM node:22-alpine"
+    },
+    {
+      "name": "Рабочая директория WORKDIR /app",
+      "pattern": "^WORKDIR\\s+/app",
+      "flags": "m",
+      "expectedHint": "WORKDIR /app"
+    },
+    {
+      "name": "Установка с --frozen-lockfile",
+      "pattern": "pnpm\\s+install\\s+--frozen-lockfile",
+      "expectedHint": "pnpm install --frozen-lockfile"
+    },
+    {
+      "name": "Открыт порт EXPOSE 3000",
+      "pattern": "^EXPOSE\\s+3000",
+      "flags": "m",
+      "expectedHint": "EXPOSE 3000"
+    },
+    {
+      "name": "Запуск CMD [\"node\", \"dist/server.js\"]",
+      "pattern": "CMD\\s*\\[\\s*\"node\"\\s*,\\s*\"dist/server\\.js\"\\s*\\]",
+      "expectedHint": "CMD [\"node\", \"dist/server.js\"]"
+    }
+  ],
+  "tests": [],
+  "solution": "FROM node:22-alpine\nWORKDIR /app\nCOPY package.json pnpm-lock.yaml ./\nRUN corepack enable && pnpm install --frozen-lockfile\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"dist/server.js\"]"
+}

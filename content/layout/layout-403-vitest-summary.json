@@ -1,0 +1,64 @@
+{
+  "id": "layout-403-vitest-summary",
+  "title": "Vitest UI: статус-бар тестового прогона",
+  "track": "layout",
+  "level": 4,
+  "isBoss": false,
+  "topic": "vitest-ui",
+  "mapTopics": [
+    "Vitest",
+    "React Testing Library",
+    "Tailwind CSS"
+  ],
+  "learn": "Комбинирование высоты h-12 (48px), горизонтального паддинга px-4 и вложенного флекс-ряда.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи плашку .test-bar и блок счётчиков .counters классами Tailwind.",
+  "specs": [
+    "Добавь на .test-bar классы: h-12 px-4 flex justify-between items-center",
+    "Добавь на .counters классы: flex gap-3"
+  ],
+  "starterHtml": "<div class=\"test-bar bg-emerald-900 text-slate-50 rounded-[10px]\">\n  <span class=\"bg-emerald-500 text-emerald-950 px-2 py-1 rounded font-bold text-xs\">PASS</span>\n  <div class=\"counters text-xs\">\n    <span>12 passed</span>\n    <span>180ms</span>\n  </div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"test-bar h-12 px-4 flex justify-between items-center bg-emerald-900 text-slate-50 rounded-[10px]\">\n  <span class=\"bg-emerald-500 text-emerald-950 px-2 py-1 rounded font-bold text-xs\">PASS</span>\n  <div class=\"counters flex gap-3 text-xs\">\n    <span>12 passed</span>\n    <span>180ms</span>\n  </div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Высота 48px в Tailwind — это h-12."
+    },
+    {
+      "tier": 2,
+      "text": "Горизонтальный отступ 16px — это px-4, а промежуток 12px — gap-3."
+    },
+    {
+      "tier": 3,
+      "text": "На .test-bar добавь h-12 px-4 flex justify-between items-center, на .counters — flex gap-3."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Высота .test-bar равна 48px (h-12)",
+      "selector": ".test-bar",
+      "property": "height",
+      "expected": 48,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": "Разнос по краям в .test-bar",
+      "selector": ".test-bar",
+      "property": "justifyContent",
+      "expected": "space-between"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Промежуток в .counters равен 12px (gap-3)",
+      "selector": ".counters",
+      "property": "columnGap",
+      "expected": "12px"
+    }
+  ],
+  "solution": "<div class=\"test-bar h-12 px-4 flex justify-between items-center bg-emerald-900 text-slate-50 rounded-[10px]\">\n  <span class=\"bg-emerald-500 text-emerald-950 px-2 py-1 rounded font-bold text-xs\">PASS</span>\n  <div class=\"counters flex gap-3 text-xs\">\n    <span>12 passed</span>\n    <span>180ms</span>\n  </div>\n</div>"
+}

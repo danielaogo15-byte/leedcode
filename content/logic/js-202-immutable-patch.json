@@ -1,0 +1,58 @@
+{
+  "id": "js-202-immutable-patch",
+  "title": "TypeScript Interfaces & Partial<T>: обновление конфига",
+  "track": "logic",
+  "level": 2,
+  "isBoss": false,
+  "topic": "ts-interfaces",
+  "mapTopics": [
+    "TypeScript",
+    "Immutability"
+  ],
+  "learn": "Объявление interface в TypeScript и использование встроенного утилитарного типа Partial<T>.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Объяви `interface AppConfig { port: number; host: string; }` и напиши функцию `function patchConfig(config: AppConfig, patch: Partial<AppConfig>): AppConfig`, возвращающую новый объект с применённым патчем.",
+  "specs": [
+    "Используй interface AppConfig и тип Partial<AppConfig>",
+    "Верни новый объект через spread-оператор { ...config, ...patch }"
+  ],
+  "starterJs": "interface AppConfig {\n  port: number;\n  host: string;\n}\n\nfunction patchConfig(config: AppConfig, patch: Partial<AppConfig>): AppConfig {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Утилита Partial<AppConfig> делает все поля интерфейса необязательными."
+    },
+    {
+      "tier": 2,
+      "text": "MDN / TS Handbook: https://www.typescriptlang.org/docs/handbook/utility-types.html"
+    },
+    {
+      "tier": 3,
+      "text": "Верни { ...config, ...patch }."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Объявлен interface AppConfig",
+      "pattern": "interface\\s+AppConfig\\s*\\{",
+      "expectedHint": "interface AppConfig { ... }"
+    },
+    {
+      "name": "Использован утилитарный тип Partial<AppConfig>",
+      "pattern": "Partial<AppConfig>",
+      "expectedHint": "patch: Partial<AppConfig>"
+    }
+  ],
+  "tests": [
+    {
+      "name": "обновление порта",
+      "call": "patchConfig({ port: 3000, host: \"localhost\" }, { port: 5173 })",
+      "expected": {
+        "port": 5173,
+        "host": "localhost"
+      }
+    }
+  ],
+  "solution": "interface AppConfig {\n  port: number;\n  host: string;\n}\n\nfunction patchConfig(config: AppConfig, patch: Partial<AppConfig>): AppConfig {\n  return { ...config, ...patch };\n}"
+}

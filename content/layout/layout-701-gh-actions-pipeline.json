@@ -1,0 +1,61 @@
+{
+  "id": "layout-701-gh-actions-pipeline",
+  "title": "GitHub Actions: пайплайн из 3 джобов на Tailwind Grid",
+  "track": "layout",
+  "level": 7,
+  "isBoss": false,
+  "topic": "ci-cd-ui",
+  "mapTopics": [
+    "GitHub Actions",
+    "Docker",
+    "Tailwind CSS"
+  ],
+  "learn": "Сетка из 3 равных колонок grid grid-cols-3 gap-2.5.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Выстрой 3 шага пайплайна .pipeline в 3 равные колонки с промежутком 10px классами Tailwind.",
+  "specs": [
+    "Добавь на .pipeline классы: grid grid-cols-3 gap-2.5"
+  ],
+  "starterHtml": "<div class=\"pipeline\">\n  <div class=\"job bg-emerald-900 text-emerald-300 p-3 rounded-lg text-center font-bold text-xs\">1. Lint ✔</div>\n  <div class=\"job bg-emerald-900 text-emerald-300 p-3 rounded-lg text-center font-bold text-xs\">2. Vitest ✔</div>\n  <div class=\"job bg-emerald-900 text-emerald-300 p-3 rounded-lg text-center font-bold text-xs\">3. Deploy ✔</div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"pipeline grid grid-cols-3 gap-2.5\">\n  <div class=\"job bg-emerald-900 text-emerald-300 p-3 rounded-lg text-center font-bold text-xs\">1. Lint ✔</div>\n  <div class=\"job bg-emerald-900 text-emerald-300 p-3 rounded-lg text-center font-bold text-xs\">2. Vitest ✔</div>\n  <div class=\"job bg-emerald-900 text-emerald-300 p-3 rounded-lg text-center font-bold text-xs\">3. Deploy ✔</div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Три равные колонки в Tailwind — это grid-cols-3."
+    },
+    {
+      "tier": 2,
+      "text": "Отступ 10px — это gap-2.5."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .pipeline: grid grid-cols-3 gap-2.5."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".pipeline использует grid",
+      "selector": ".pipeline",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Отступ gap-2.5 равен 10px",
+      "selector": ".pipeline",
+      "property": "columnGap",
+      "expected": "10px"
+    },
+    {
+      "type": "selector",
+      "name": "Три шага .job внутри .pipeline",
+      "selector": ".pipeline .job",
+      "minCount": 3
+    }
+  ],
+  "solution": "<div class=\"pipeline grid grid-cols-3 gap-2.5\">\n  <div class=\"job bg-emerald-900 text-emerald-300 p-3 rounded-lg text-center font-bold text-xs\">1. Lint ✔</div>\n  <div class=\"job bg-emerald-900 text-emerald-300 p-3 rounded-lg text-center font-bold text-xs\">2. Vitest ✔</div>\n  <div class=\"job bg-emerald-900 text-emerald-300 p-3 rounded-lg text-center font-bold text-xs\">3. Deploy ✔</div>\n</div>"
+}

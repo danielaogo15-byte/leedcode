@@ -1,0 +1,64 @@
+{
+  "id": "layout-703-docker-metrics",
+  "title": "Docker & AWS: виджет нагрузки контейнера",
+  "track": "layout",
+  "level": 7,
+  "isBoss": false,
+  "topic": "docker-ui",
+  "mapTopics": [
+    "Docker",
+    "AWS",
+    "Linux",
+    "Tailwind CSS"
+  ],
+  "learn": "Фиксированная высота h-[84px] с вертикальным разносом flex flex-col justify-between.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Задай карточке .container-metric высоту 84px, паддинг 14px и флекс-колонку со space-between.",
+  "specs": [
+    "Добавь на .container-metric классы: h-[84px] p-3.5 flex flex-col justify-between"
+  ],
+  "starterHtml": "<div class=\"container-metric bg-slate-900 text-slate-50 rounded-[10px]\">\n  <div class=\"text-xs font-semibold\">nginx-proxy · CPU 35%</div>\n  <div class=\"h-2 bg-slate-700 rounded-full overflow-hidden\">\n    <div class=\"w-[35%] h-full bg-sky-400\"></div>\n  </div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"container-metric h-[84px] p-3.5 flex flex-col justify-between bg-slate-900 text-slate-50 rounded-[10px]\">\n  <div class=\"text-xs font-semibold\">nginx-proxy · CPU 35%</div>\n  <div class=\"h-2 bg-slate-700 rounded-full overflow-hidden\">\n    <div class=\"w-[35%] h-full bg-sky-400\"></div>\n  </div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Нестандартная высота 84px пишется как h-[84px]."
+    },
+    {
+      "tier": 2,
+      "text": "Паддинг 14px — это p-3.5."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .container-metric: h-[84px] p-3.5 flex flex-col justify-between."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Высота .container-metric 84px",
+      "selector": ".container-metric",
+      "property": "height",
+      "expected": 84,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": "Флекс-колонка (flex-col)",
+      "selector": ".container-metric",
+      "property": "flexDirection",
+      "expected": "column"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Разнос по краям (justify-between)",
+      "selector": ".container-metric",
+      "property": "justifyContent",
+      "expected": "space-between"
+    }
+  ],
+  "solution": "<div class=\"container-metric h-[84px] p-3.5 flex flex-col justify-between bg-slate-900 text-slate-50 rounded-[10px]\">\n  <div class=\"text-xs font-semibold\">nginx-proxy · CPU 35%</div>\n  <div class=\"h-2 bg-slate-700 rounded-full overflow-hidden\">\n    <div class=\"w-[35%] h-full bg-sky-400\"></div>\n  </div>\n</div>"
+}

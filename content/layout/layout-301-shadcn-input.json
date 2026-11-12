@@ -1,0 +1,65 @@
+{
+  "id": "layout-301-shadcn-input",
+  "title": "shadcn/ui FormItem: поле ввода с ошибкой валидации Zod",
+  "track": "layout",
+  "level": 3,
+  "isBoss": false,
+  "topic": "shadcn-forms",
+  "mapTopics": [
+    "shadcn/ui",
+    "React Hook Form",
+    "Zod",
+    "Tailwind CSS"
+  ],
+  "learn": "Стилизация FormItem и Input в shadcn/ui через утилиты Tailwind.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи блок поля формы .field и само поле .input классами Tailwind по спецификации shadcn/ui.",
+  "specs": [
+    "Добавь на .field классы: flex flex-col gap-1.5",
+    "Добавь на .input классы: h-10 px-3 rounded-lg (высота 40px, горизонтальный паддинг 12px, скругление 8px)"
+  ],
+  "starterHtml": "<div class=\"field\">\n  <label class=\"text-xs font-semibold text-slate-900\">Email</label>\n  <input class=\"input border border-red-500 bg-white text-sm\" value=\"not-an-email\" />\n  <p class=\"m-0 text-xs text-red-500\">Некорректный формат email (Zod)</p>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"field flex flex-col gap-1.5\">\n  <label class=\"text-xs font-semibold text-slate-900\">Email</label>\n  <input class=\"input h-10 px-3 rounded-lg border border-red-500 bg-white text-sm\" value=\"not-an-email\" />\n  <p class=\"m-0 text-xs text-red-500\">Некорректный формат email (Zod)</p>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Tailwind gap-1.5 = 6px, h-10 = 40px, px-3 = 12px, rounded-lg = 8px."
+    },
+    {
+      "tier": 2,
+      "text": "Документация shadcn/ui Input: https://ui.shadcn.com/docs/components/input"
+    },
+    {
+      "tier": 3,
+      "text": "На .field добавь flex flex-col gap-1.5, на .input добавь h-10 px-3 rounded-lg."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".field выстроен колонкой (flex-col)",
+      "selector": ".field",
+      "property": "flexDirection",
+      "expected": "column"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Отступ gap-1.5 равен 6px",
+      "selector": ".field",
+      "property": "rowGap",
+      "expected": "6px"
+    },
+    {
+      "type": "boundingRect",
+      "name": "Высота .input равна 40px (h-10)",
+      "selector": ".input",
+      "property": "height",
+      "expected": 40,
+      "tolerance": 2
+    }
+  ],
+  "solution": "<div class=\"field flex flex-col gap-1.5\">\n  <label class=\"text-xs font-semibold text-slate-900\">Email</label>\n  <input class=\"input h-10 px-3 rounded-lg border border-red-500 bg-white text-sm\" value=\"not-an-email\" />\n  <p class=\"m-0 text-xs text-red-500\">Некорректный формат email (Zod)</p>\n</div>"
+}

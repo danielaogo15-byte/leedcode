@@ -28,7 +28,17 @@ import {
  let emmetRegistered = false;
  
  type Props = {
-	language: 'html' | 'css' | 'javascript';
+	language:
+	  | 'html'
+	  | 'css'
+	  | 'javascript'
+	  | 'typescript'
+	  | 'python'
+	  | 'sql'
+	  | 'dockerfile'
+	  | 'yaml'
+	  | 'graphql'
+	  | 'ini';
 	value: string;
 	hardcore: boolean;
 	guardState: PasteGuardState;

@@ -1,0 +1,62 @@
+{
+  "id": "layout-603-alembic-revision",
+  "title": "Alembic Migration: карточка ревизии БД",
+  "track": "layout",
+  "level": 6,
+  "isBoss": false,
+  "topic": "alembic-ui",
+  "mapTopics": [
+    "Alembic",
+    "SQLAlchemy",
+    "Tailwind CSS"
+  ],
+  "learn": "Оформление плашки ревизии миграции p-3 rounded-lg flex justify-between items-center.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи карточку миграции .rev-card классами Tailwind: паддинг 12px, скругление 8px, флекс с разносом по краям и центрированием.",
+  "specs": [
+    "Добавь на .rev-card классы: p-3 rounded-lg flex justify-between items-center"
+  ],
+  "starterHtml": "<div class=\"rev-card bg-slate-900 text-slate-50 border-l-4 border-sky-400\">\n  <div>\n    <strong class=\"text-xs\">add_users_table</strong>\n    <div class=\"text-xs text-slate-400 font-mono mt-1\">rev: 8f1a2b3c -> head</div>\n  </div>\n  <span class=\"bg-sky-500 text-white px-2 py-1 rounded text-xs font-bold\">APPLIED</span>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"rev-card p-3 rounded-lg flex justify-between items-center bg-slate-900 text-slate-50 border-l-4 border-sky-400\">\n  <div>\n    <strong class=\"text-xs\">add_users_table</strong>\n    <div class=\"text-xs text-slate-400 font-mono mt-1\">rev: 8f1a2b3c -> head</div>\n  </div>\n  <span class=\"bg-sky-500 text-white px-2 py-1 rounded text-xs font-bold\">APPLIED</span>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "p-3 = 12px, rounded-lg = 8px."
+    },
+    {
+      "tier": 2,
+      "text": "Разнос по краям: flex justify-between items-center."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .rev-card: p-3 rounded-lg flex justify-between items-center."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Разнос justify-between",
+      "selector": ".rev-card",
+      "property": "justifyContent",
+      "expected": "space-between"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Выравнивание items-center",
+      "selector": ".rev-card",
+      "property": "alignItems",
+      "expected": "center"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Отступ p-3 равен 12px",
+      "selector": ".rev-card",
+      "property": "paddingTop",
+      "expected": "12px"
+    }
+  ],
+  "solution": "<div class=\"rev-card p-3 rounded-lg flex justify-between items-center bg-slate-900 text-slate-50 border-l-4 border-sky-400\">\n  <div>\n    <strong class=\"text-xs\">add_users_table</strong>\n    <div class=\"text-xs text-slate-400 font-mono mt-1\">rev: 8f1a2b3c -> head</div>\n  </div>\n  <span class=\"bg-sky-500 text-white px-2 py-1 rounded text-xs font-bold\">APPLIED</span>\n</div>"
+}

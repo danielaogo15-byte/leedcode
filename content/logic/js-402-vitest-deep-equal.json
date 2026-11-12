@@ -1,0 +1,54 @@
+{
+  "id": "js-402-vitest-deep-equal",
+  "title": "Vitest: написание юнит-теста describe / it / expect",
+  "track": "logic",
+  "level": 4,
+  "isBoss": false,
+  "topic": "vitest-syntax",
+  "mapTopics": [
+    "Vitest",
+    "TypeScript"
+  ],
+  "learn": "Структура теста в Vitest: блок describe, тест-кейс it и проверка глубокого равенства expect().toEqual().",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши юнит-тест Vitest: оберни его в `describe(\"cart\", () => { ... })`, внутри создай тест `it(\"calculates total\", () => { ... })` и проверь через `expect(calcTotal([10, 20])).toEqual(30)`.",
+  "specs": [
+    "Используй блок describe(\"cart\", ...)",
+    "Используй проверку expect(calcTotal([10, 20])).toEqual(30)"
+  ],
+  "starterJs": "// Напиши тест-сьют Vitest для функции calcTotal\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Синтаксис Vitest: describe(\"имя\", () => { it(\"тест\", () => { expect(...).toEqual(...); }); });"
+    },
+    {
+      "tier": 2,
+      "text": "Документация Vitest: https://vitest.dev/api/"
+    },
+    {
+      "tier": 3,
+      "text": "describe(\"cart\", () => { it(\"calculates total\", () => { expect(calcTotal([10, 20])).toEqual(30); }); });"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Использован блок describe(\"cart\", ...)",
+      "pattern": "describe\\(\\s*[\"']cart[\"']",
+      "expectedHint": "describe(\"cart\", () => ...)"
+    },
+    {
+      "name": "Использован блок it(...) или test(...)",
+      "pattern": "\\b(it|test)\\(\\s*[\"']",
+      "expectedHint": "it(\"calculates total\", () => ...)"
+    },
+    {
+      "name": "Проверка expect(calcTotal([10, 20])).toEqual(30)",
+      "pattern": "expect\\(\\s*calcTotal\\(\\s*\\[\\s*10\\s*,\\s*20\\s*\\]\\s*\\)\\s*\\)\\.toEqual\\(\\s*30\\s*\\)",
+      "expectedHint": "expect(calcTotal([10, 20])).toEqual(30)"
+    }
+  ],
+  "tests": [],
+  "solution": "describe(\"cart\", () => {\n  it(\"calculates total\", () => {\n    expect(calcTotal([10, 20])).toEqual(30);\n  });\n});"
+}

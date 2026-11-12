@@ -1,0 +1,61 @@
+{
+  "id": "js-503-redis-ttl-lookup",
+  "title": "Redis + Node.js: формирование команды SET с EX (TTL)",
+  "track": "logic",
+  "level": 5,
+  "isBoss": false,
+  "topic": "redis-cache",
+  "mapTopics": [
+    "Redis",
+    "Node.js",
+    "TypeScript"
+  ],
+  "learn": "Стандартизация ключей с неймспейсом (session:user:id) и передача флага EX для TTL в секундах.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function buildRedisSetArgs(userId: number, payload: object, ttlSeconds: number = 3600)`, которая возвращает кортеж аргументов для `redis.set`: `[`session:user:${userId}`, JSON.stringify(payload), \"EX\", ttlSeconds]`.",
+  "specs": [
+    "Ключ должен иметь формат \"session:user:<userId>\"",
+    "Третий элемент массива — строка \"EX\", четвёртый — число ttlSeconds"
+  ],
+  "starterJs": "function buildRedisSetArgs(userId: number, payload: object, ttlSeconds: number = 3600) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В ioredis / node-redis TTL в секундах задаётся аргументами \"EX\", ttlSeconds."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Redis SET: https://redis.io/docs/latest/commands/set/"
+    },
+    {
+      "tier": 3,
+      "text": "return [`session:user:${userId}`, JSON.stringify(payload), \"EX\", ttlSeconds];"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Сериализация через JSON.stringify",
+      "pattern": "JSON\\.stringify\\(\\s*payload\\s*\\)",
+      "expectedHint": "JSON.stringify(payload)"
+    },
+    {
+      "name": "Передан флаг TTL \"EX\"",
+      "pattern": "[\"']EX[\"']",
+      "expectedHint": "\"EX\", ttlSeconds"
+    }
+  ],
+  "tests": [
+    {
+      "name": "формирует аргументы Redis SET с EX",
+      "call": "buildRedisSetArgs(42, { role: \"admin\" }, 1800)",
+      "expected": [
+        "session:user:42",
+        "{\"role\":\"admin\"}",
+        "EX",
+        1800
+      ]
+    }
+  ],
+  "solution": "function buildRedisSetArgs(userId: number, payload: object, ttlSeconds: number = 3600) {\n  return [`session:user:${userId}`, JSON.stringify(payload), \"EX\", ttlSeconds];\n}"
+}

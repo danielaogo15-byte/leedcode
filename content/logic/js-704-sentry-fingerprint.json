@@ -1,0 +1,65 @@
+{
+  "id": "js-704-sentry-fingerprint",
+  "title": "Sentry SDK: конфигурация Sentry.init() для продакшена",
+  "track": "logic",
+  "level": 7,
+  "isBoss": false,
+  "topic": "sentry-monitoring",
+  "mapTopics": [
+    "Sentry",
+    "TypeScript"
+  ],
+  "learn": "Инициализация мониторинга ошибок Sentry с dsn, environment и tracesSampleRate.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function createSentryConfig(dsn: string, env: string = \"production\")`, которая возвращает объект настроек для `Sentry.init`: `{ dsn, environment: env, tracesSampleRate: env === \"production\" ? 0.2 : 1.0, enabled: Boolean(dsn) }`.",
+  "specs": [
+    "В продакшене tracesSampleRate должен быть равен 0.2 (20% транзакций), иначе 1.0",
+    "Поле enabled равно Boolean(dsn)"
+  ],
+  "starterJs": "function createSentryConfig(dsn: string, env: string = \"production\") {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Используй тернарный оператор env === \"production\" ? 0.2 : 1.0."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Sentry JS: https://docs.sentry.io/platforms/javascript/configuration/options/"
+    },
+    {
+      "tier": 3,
+      "text": "return { dsn, environment: env, tracesSampleRate: env === \"production\" ? 0.2 : 1.0, enabled: Boolean(dsn) };"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Настроен параметр tracesSampleRate",
+      "pattern": "tracesSampleRate\\s*:",
+      "expectedHint": "tracesSampleRate: ..."
+    }
+  ],
+  "tests": [
+    {
+      "name": "настройки для production (0.2)",
+      "call": "createSentryConfig(\"https://key@sentry.io/1\", \"production\")",
+      "expected": {
+        "dsn": "https://key@sentry.io/1",
+        "environment": "production",
+        "tracesSampleRate": 0.2,
+        "enabled": true
+      }
+    },
+    {
+      "name": "настройки для staging (1.0)",
+      "call": "createSentryConfig(\"https://key@sentry.io/1\", \"staging\")",
+      "expected": {
+        "dsn": "https://key@sentry.io/1",
+        "environment": "staging",
+        "tracesSampleRate": 1,
+        "enabled": true
+      }
+    }
+  ],
+  "solution": "function createSentryConfig(dsn: string, env: string = \"production\") {\n  return {\n    dsn,\n    environment: env,\n    tracesSampleRate: env === \"production\" ? 0.2 : 1.0,\n    enabled: Boolean(dsn),\n  };\n}"
+}

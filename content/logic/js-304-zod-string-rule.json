@@ -1,0 +1,59 @@
+{
+  "id": "js-304-zod-string-rule",
+  "title": "Zod: объявление схемы пользователя z.object()",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "zod-schema",
+  "mapTopics": [
+    "Zod",
+    "TypeScript"
+  ],
+  "learn": "Цепочки валидации в Zod: z.object, z.string().email(), z.string().min(8) и z.number().int().min(18).",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши схему `const RegisterSchema = z.object({ ... })` с тремя полями: `email: z.string().email()`, `password: z.string().min(8)` и `age: z.number().int().min(18)`.",
+  "specs": [
+    "Используй синтаксис z.object({ ... })",
+    "Поле email проверяется через .email(), password через .min(8), age через .min(18)"
+  ],
+  "starterJs": "const RegisterSchema = z.object({\n  \n});\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Zod строковые правила соединяются в цепочку: z.string().email()."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Zod: https://zod.dev/?id=objects"
+    },
+    {
+      "tier": 3,
+      "text": "Объяви поля email: z.string().email(), password: z.string().min(8), age: z.number().int().min(18)."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Использован конструктор z.object",
+      "pattern": "z\\.object\\s*\\(",
+      "expectedHint": "z.object({ ... })"
+    },
+    {
+      "name": "Валидация email: z.string().email()",
+      "pattern": "email\\s*:\\s*z\\.string\\(\\)\\.email\\(\\)",
+      "expectedHint": "email: z.string().email()"
+    },
+    {
+      "name": "Валидация password: z.string().min(8)",
+      "pattern": "password\\s*:\\s*z\\.string\\(\\)\\.min\\(8\\)",
+      "expectedHint": "password: z.string().min(8)"
+    },
+    {
+      "name": "Валидация age: .min(18)",
+      "pattern": "age\\s*:\\s*z\\.number\\(\\).*\\.min\\(18\\)",
+      "expectedHint": "age: z.number().int().min(18)"
+    }
+  ],
+  "tests": [],
+  "solution": "const RegisterSchema = z.object({\n  email: z.string().email(),\n  password: z.string().min(8),\n  age: z.number().int().min(18),\n});"
+}

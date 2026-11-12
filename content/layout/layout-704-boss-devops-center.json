@@ -1,0 +1,67 @@
+{
+  "id": "layout-704-boss-devops-center",
+  "title": "Босс: Production Control Center (AWS + Vercel + Docker + Sentry)",
+  "track": "layout",
+  "level": 7,
+  "isBoss": true,
+  "topic": "devops-boss",
+  "mapTopics": [
+    "Docker",
+    "Nginx",
+    "AWS",
+    "Vercel",
+    "Sentry",
+    "Tailwind CSS"
+  ],
+  "learn": "Финальный босс Tailwind-вёрстки: дашборд мониторинга кластера с шапкой h-12 и сеткой узлов grid-cols-2.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Собери дашборд продакшена классами Tailwind: шапка .ops-bar высотой 48px со space-between и сетка .cluster-grid из 2 колонок с отступом 12px.",
+  "specs": [
+    "Добавь на .ops-bar классы: h-12 flex justify-between items-center",
+    "Добавь на .cluster-grid классы: grid grid-cols-2 gap-3"
+  ],
+  "starterHtml": "<section class=\"ops-center bg-slate-900 text-slate-50 p-3.5 rounded-xl\">\n  <header class=\"ops-bar text-xs\">\n    <strong>⚡ Production Cluster (AWS eu-central-1)</strong>\n    <span class=\"text-emerald-400 font-bold\">99.98% Uptime</span>\n  </header>\n  <div class=\"cluster-grid\">\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Vercel Edge · OK</div>\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Docker API · OK</div>\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Postgres Primary · OK</div>\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Sentry 0 unresolved</div>\n  </div>\n</section>\n",
+  "starterCss": "",
+  "targetHtml": "<section class=\"ops-center bg-slate-900 text-slate-50 p-3.5 rounded-xl\">\n  <header class=\"ops-bar h-12 flex justify-between items-center text-xs\">\n    <strong>⚡ Production Cluster (AWS eu-central-1)</strong>\n    <span class=\"text-emerald-400 font-bold\">99.98% Uptime</span>\n  </header>\n  <div class=\"cluster-grid grid grid-cols-2 gap-3\">\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Vercel Edge · OK</div>\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Docker API · OK</div>\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Postgres Primary · OK</div>\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Sentry 0 unresolved</div>\n  </div>\n</section>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Высота 48px — это h-12, а шаг 12px — это gap-3."
+    },
+    {
+      "tier": 2,
+      "text": "Две равные колонки: grid grid-cols-2."
+    },
+    {
+      "tier": 3,
+      "text": "На .ops-bar добавь h-12 flex justify-between items-center, на .cluster-grid — grid grid-cols-2 gap-3."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Высота .ops-bar равна 48px (h-12)",
+      "selector": ".ops-bar",
+      "property": "height",
+      "expected": 48,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": ".cluster-grid использует grid",
+      "selector": ".cluster-grid",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Промежуток в .cluster-grid равен 12px (gap-3)",
+      "selector": ".cluster-grid",
+      "property": "columnGap",
+      "expected": "12px"
+    }
+  ],
+  "solution": "<section class=\"ops-center bg-slate-900 text-slate-50 p-3.5 rounded-xl\">\n  <header class=\"ops-bar h-12 flex justify-between items-center text-xs\">\n    <strong>⚡ Production Cluster (AWS eu-central-1)</strong>\n    <span class=\"text-emerald-400 font-bold\">99.98% Uptime</span>\n  </header>\n  <div class=\"cluster-grid grid grid-cols-2 gap-3\">\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Vercel Edge · OK</div>\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Docker API · OK</div>\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Postgres Primary · OK</div>\n    <div class=\"bg-slate-800 p-3 rounded-lg text-xs font-semibold\">Sentry 0 unresolved</div>\n  </div>\n</section>"
+}

@@ -1,0 +1,64 @@
+{
+  "id": "layout-401-skeleton-card",
+  "title": "Next.js Loading UI: Skeleton-карточка на Tailwind",
+  "track": "layout",
+  "level": 4,
+  "isBoss": false,
+  "topic": "nextjs-skeleton",
+  "mapTopics": [
+    "Next.js",
+    "Tailwind CSS"
+  ],
+  "learn": "Круглый аватар w-12 h-12 rounded-full и флекс-ряд скелетона для loading.tsx в Next.js.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Задай контейнеру .skeleton-row флекс-выравнивание с шагом 12px, а блоку .avatar — размер 48×48px и круглое скругление.",
+  "specs": [
+    "Добавь на .skeleton-row классы: flex items-center gap-3",
+    "Добавь на .avatar классы: w-12 h-12 rounded-full (12 × 4px = 48px)"
+  ],
+  "starterHtml": "<div class=\"skeleton-row bg-slate-900 p-3.5 rounded-xl\">\n  <div class=\"avatar bg-slate-700\"></div>\n  <div class=\"flex-1 flex flex-col gap-2\">\n    <div class=\"h-2.5 w-[70%] bg-slate-700 rounded\"></div>\n    <div class=\"h-2.5 w-[45%] bg-slate-700 rounded\"></div>\n  </div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"skeleton-row flex items-center gap-3 bg-slate-900 p-3.5 rounded-xl\">\n  <div class=\"avatar w-12 h-12 rounded-full bg-slate-700\"></div>\n  <div class=\"flex-1 flex flex-col gap-2\">\n    <div class=\"h-2.5 w-[70%] bg-slate-700 rounded\"></div>\n    <div class=\"h-2.5 w-[45%] bg-slate-700 rounded\"></div>\n  </div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "48px в шкале Tailwind — это 12 (w-12 h-12)."
+    },
+    {
+      "tier": 2,
+      "text": "Для отступа 12px используй gap-3."
+    },
+    {
+      "tier": 3,
+      "text": "На .skeleton-row добавь flex items-center gap-3, на .avatar — w-12 h-12 rounded-full."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".skeleton-row использует flex",
+      "selector": ".skeleton-row",
+      "property": "display",
+      "expected": "flex"
+    },
+    {
+      "type": "boundingRect",
+      "name": "Ширина .avatar 48px (w-12)",
+      "selector": ".avatar",
+      "property": "width",
+      "expected": 48,
+      "tolerance": 2
+    },
+    {
+      "type": "boundingRect",
+      "name": "Высота .avatar 48px (h-12)",
+      "selector": ".avatar",
+      "property": "height",
+      "expected": 48,
+      "tolerance": 2
+    }
+  ],
+  "solution": "<div class=\"skeleton-row flex items-center gap-3 bg-slate-900 p-3.5 rounded-xl\">\n  <div class=\"avatar w-12 h-12 rounded-full bg-slate-700\"></div>\n  <div class=\"flex-1 flex flex-col gap-2\">\n    <div class=\"h-2.5 w-[70%] bg-slate-700 rounded\"></div>\n    <div class=\"h-2.5 w-[45%] bg-slate-700 rounded\"></div>\n  </div>\n</div>"
+}

@@ -1,0 +1,63 @@
+{
+  "id": "layout-203-pricing-card",
+  "title": "Tailwind Flex Column: карточка тарифа",
+  "track": "layout",
+  "level": 2,
+  "isBoss": false,
+  "topic": "tailwind-flex",
+  "mapTopics": [
+    "Tailwind CSS",
+    "Flexbox"
+  ],
+  "learn": "Вертикальная колонка flex flex-col justify-between и произвольная высота h-[200px].",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Задай карточке .plan-card высоту 200px, внутренний отступ 20px и вертикальную флекс-колонку с разносом элементов по краям.",
+  "specs": [
+    "Добавь на .plan-card классы: h-[200px] p-5 flex flex-col justify-between",
+    "p-5 в Tailwind даёт 20px отступа со всех сторон"
+  ],
+  "starterHtml": "<article class=\"plan-card bg-slate-800 text-slate-50 rounded-xl\">\n  <div>\n    <h3 class=\"m-0 mb-1.5 text-lg font-bold\">Pro Stack</h3>\n    <p class=\"m-0 text-xs text-slate-400\">Полный доступ к 39 технологиям</p>\n  </div>\n  <button class=\"bg-sky-400 text-slate-900 border-none p-2.5 rounded-lg font-bold\" type=\"button\">Выбрать тариф</button>\n</article>\n",
+  "starterCss": "",
+  "targetHtml": "<article class=\"plan-card h-[200px] p-5 flex flex-col justify-between bg-slate-800 text-slate-50 rounded-xl\">\n  <div>\n    <h3 class=\"m-0 mb-1.5 text-lg font-bold\">Pro Stack</h3>\n    <p class=\"m-0 text-xs text-slate-400\">Полный доступ к 39 технологиям</p>\n  </div>\n  <button class=\"bg-sky-400 text-slate-900 border-none p-2.5 rounded-lg font-bold\" type=\"button\">Выбрать тариф</button>\n</article>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Arbitrary value в Tailwind пишется в квадратных скобках: h-[200px]."
+    },
+    {
+      "tier": 2,
+      "text": "Документация: https://tailwindcss.com/docs/flex-direction"
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .plan-card классы: h-[200px] p-5 flex flex-col justify-between."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Высота карточки 200px (±2px)",
+      "selector": ".plan-card",
+      "property": "height",
+      "expected": 200,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": "Направление flex-col",
+      "selector": ".plan-card",
+      "property": "flexDirection",
+      "expected": "column"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Разнос justify-between",
+      "selector": ".plan-card",
+      "property": "justifyContent",
+      "expected": "space-between"
+    }
+  ],
+  "solution": "<article class=\"plan-card h-[200px] p-5 flex flex-col justify-between bg-slate-800 text-slate-50 rounded-xl\">\n  <div>\n    <h3 class=\"m-0 mb-1.5 text-lg font-bold\">Pro Stack</h3>\n    <p class=\"m-0 text-xs text-slate-400\">Полный доступ к 39 технологиям</p>\n  </div>\n  <button class=\"bg-sky-400 text-slate-900 border-none p-2.5 rounded-lg font-bold\" type=\"button\">Выбрать тариф</button>\n</article>"
+}

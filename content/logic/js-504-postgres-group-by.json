@@ -1,0 +1,63 @@
+{
+  "id": "js-504-postgres-group-by",
+  "title": "PostgreSQL: SQL-запрос с GROUP BY, COUNT и HAVING",
+  "track": "logic",
+  "level": 5,
+  "isBoss": false,
+  "topic": "postgresql-sql",
+  "mapTopics": [
+    "PostgreSQL",
+    "SQL"
+  ],
+  "learn": "Написание аналитического SQL-запроса с фильтрацией WHERE, группировкой GROUP BY и агрегацией COUNT / SUM.",
+  "needsDom": false,
+  "codeLanguage": "sql",
+  "prompt": "Напиши SQL-запрос для PostgreSQL: выбери `status`, `COUNT(*) AS total_count` и `SUM(amount) AS total_amount` из таблицы `orders`, где `amount > 0`, сгруппируй по `status` (`GROUP BY status`) и отсортируй по `total_amount DESC`.",
+  "specs": [
+    "Используй SELECT status, COUNT(*) AS total_count, SUM(amount) AS total_amount",
+    "Укажи FROM orders, WHERE amount > 0, GROUP BY status и ORDER BY total_amount DESC"
+  ],
+  "starterJs": "-- Напиши SQL-запрос для PostgreSQL\nSELECT \n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Порядок секций в SQL: SELECT -> FROM -> WHERE -> GROUP BY -> ORDER BY."
+    },
+    {
+      "tier": 2,
+      "text": "Документация PostgreSQL GROUP BY: https://www.postgresql.org/docs/current/queries-table-expressions.html"
+    },
+    {
+      "tier": 3,
+      "text": "SELECT status, COUNT(*) AS total_count, SUM(amount) AS total_amount FROM orders WHERE amount > 0 GROUP BY status ORDER BY total_amount DESC;"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Агрегации COUNT(*) AS total_count и SUM(amount) AS total_amount",
+      "pattern": "COUNT\\(\\*\\)\\s+AS\\s+total_count.*SUM\\(amount\\)\\s+AS\\s+total_amount",
+      "flags": "is",
+      "expectedHint": "COUNT(*) AS total_count, SUM(amount) AS total_amount"
+    },
+    {
+      "name": "Фильтрация FROM orders WHERE amount > 0",
+      "pattern": "FROM\\s+orders\\s+WHERE\\s+amount\\s*>\\s*0",
+      "flags": "is",
+      "expectedHint": "FROM orders WHERE amount > 0"
+    },
+    {
+      "name": "Группировка GROUP BY status",
+      "pattern": "GROUP\\s+BY\\s+status",
+      "flags": "is",
+      "expectedHint": "GROUP BY status"
+    },
+    {
+      "name": "Сортировка ORDER BY total_amount DESC",
+      "pattern": "ORDER\\s+BY\\s+total_amount\\s+DESC",
+      "flags": "is",
+      "expectedHint": "ORDER BY total_amount DESC"
+    }
+  ],
+  "tests": [],
+  "solution": "SELECT status, COUNT(*) AS total_count, SUM(amount) AS total_amount\nFROM orders\nWHERE amount > 0\nGROUP BY status\nORDER BY total_amount DESC;"
+}

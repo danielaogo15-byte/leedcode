@@ -1,0 +1,61 @@
+{
+  "id": "layout-402-breadcrumbs",
+  "title": "Next.js Breadcrumbs: навигационная цепочка на Tailwind",
+  "track": "layout",
+  "level": 4,
+  "isBoss": false,
+  "topic": "nextjs-navigation",
+  "mapTopics": [
+    "Next.js",
+    "Tailwind CSS"
+  ],
+  "learn": "Сброс маркеров списка list-none m-0 и выстраивание хлебных крошек через flex items-center gap-2.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи список хлебных крошек ul.crumbs классами Tailwind: без маркеров списка, без внешних отступов, в ряд по центру с шагом 8px.",
+  "specs": [
+    "Добавь на ul.crumbs классы: list-none m-0 flex items-center gap-2"
+  ],
+  "starterHtml": "<ul class=\"crumbs bg-slate-800 text-slate-400 px-3.5 py-2.5 rounded-lg text-xs\">\n  <li>Главная</li>\n  <li>/</li>\n  <li>Курсы</li>\n  <li>/</li>\n  <li class=\"text-sky-400 font-bold\">Next.js 15</li>\n</ul>\n",
+  "starterCss": "",
+  "targetHtml": "<ul class=\"crumbs list-none m-0 flex items-center gap-2 bg-slate-800 text-slate-400 px-3.5 py-2.5 rounded-lg text-xs\">\n  <li>Главная</li>\n  <li>/</li>\n  <li>Курсы</li>\n  <li>/</li>\n  <li class=\"text-sky-400 font-bold\">Next.js 15</li>\n</ul>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Класс list-none отключает точки у списка ul."
+    },
+    {
+      "tier": 2,
+      "text": "Для отступа 8px между элементами используй gap-2."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .crumbs: list-none m-0 flex items-center gap-2."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Маркеры списка отключены (list-none)",
+      "selector": ".crumbs",
+      "property": "listStyleType",
+      "expected": "none"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Элементы в ряд (flex)",
+      "selector": ".crumbs",
+      "property": "display",
+      "expected": "flex"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Промежуток gap-2 равен 8px",
+      "selector": ".crumbs",
+      "property": "columnGap",
+      "expected": "8px"
+    }
+  ],
+  "solution": "<ul class=\"crumbs list-none m-0 flex items-center gap-2 bg-slate-800 text-slate-400 px-3.5 py-2.5 rounded-lg text-xs\">\n  <li>Главная</li>\n  <li>/</li>\n  <li>Курсы</li>\n  <li>/</li>\n  <li class=\"text-sky-400 font-bold\">Next.js 15</li>\n</ul>"
+}

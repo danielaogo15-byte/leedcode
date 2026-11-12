@@ -1,0 +1,55 @@
+{
+  "id": "js-403-rtl-query-by-role",
+  "title": "React Testing Library: render, screen.getByRole и fireEvent",
+  "track": "logic",
+  "level": 4,
+  "isBoss": false,
+  "topic": "rtl-testing",
+  "mapTopics": [
+    "React Testing Library",
+    "Vitest",
+    "React"
+  ],
+  "learn": "Тестирование React-компонента: рендер через render(<Counter />), поиск кнопки по роли и клик через fireEvent.click.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши тело компонентного теста RTL: отрендери компонент `render(<Counter />)`, найди кнопку `const btn = screen.getByRole(\"button\")` и симулируй клик `fireEvent.click(btn)`.",
+  "specs": [
+    "Вызови render(<Counter />)",
+    "Найди кнопку через screen.getByRole(\"button\") и вызови fireEvent.click(...)"
+  ],
+  "starterJs": "// Напиши шаги теста React Testing Library\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В RTL элементы ищутся через объект screen: screen.getByRole(\"button\")."
+    },
+    {
+      "tier": 2,
+      "text": "Документация RTL: https://testing-library.com/docs/react-testing-library/example-intro"
+    },
+    {
+      "tier": 3,
+      "text": "render(<Counter />);\nconst btn = screen.getByRole(\"button\");\nfireEvent.click(btn);"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Вызван render(<Counter />)",
+      "pattern": "render\\(\\s*<Counter\\s*\\/>\\s*\\)",
+      "expectedHint": "render(<Counter />)"
+    },
+    {
+      "name": "Поиск кнопки screen.getByRole(\"button\")",
+      "pattern": "screen\\.getByRole\\(\\s*[\"']button[\"']",
+      "expectedHint": "screen.getByRole(\"button\")"
+    },
+    {
+      "name": "Симуляция клика fireEvent.click(...)",
+      "pattern": "fireEvent\\.click\\(",
+      "expectedHint": "fireEvent.click(btn)"
+    }
+  ],
+  "tests": [],
+  "solution": "render(<Counter />);\nconst btn = screen.getByRole(\"button\");\nfireEvent.click(btn);"
+}

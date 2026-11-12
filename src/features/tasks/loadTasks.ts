@@ -17,6 +17,8 @@ function normalizeTask(raw: TaskJson): Task {
     mapTopics: raw.mapTopics,
     learn: raw.learn,
     needsDom: raw.track === 'layout' ? true : Boolean(raw.needsDom),
+    codeLanguage:
+      raw.codeLanguage ?? (raw.track === 'layout' ? 'tailwind' : 'javascript'),
     prompt: raw.prompt,
     specs: raw.specs ?? [],
     starterHtml: raw.starterHtml ?? '',
@@ -27,6 +29,7 @@ function normalizeTask(raw: TaskJson): Task {
     htmlFixture: raw.htmlFixture ?? '',
     hints: raw.hints,
     tests: raw.tests ?? [],
+    codeChecks: raw.codeChecks ?? [],
     checks: raw.checks ?? [],
     solution: raw.solution,
     solved: false,

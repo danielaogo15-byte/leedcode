@@ -1,6 +1,14 @@
 import type { DailySlot } from '@/features/today/dailySession';
 import Dexie, { type EntityTable } from 'dexie';
 
+export type SubmissionRecord = {
+  id: string;
+  createdAt: number;
+  codeSnapshot: string;
+  durationMs: number;
+  xpEarned: number;
+};
+
 export type TaskProgressRecord = {
   taskId: string;
   solved: boolean;
@@ -10,12 +18,15 @@ export type TaskProgressRecord = {
   inRepeatQueue: boolean;
   reviewStage: number; // 0 -> 2 дня, 1 -> 7 дней, 2 -> 21 день
   nextReviewAt: number | null;
+  note?: string;
+  submissions?: SubmissionRecord[];
 };
 
 export type UserStatsRecord = {
   id: 'main';
   totalXp: number;
   streakDays: number;
+  streakFreezes?: number;
   lastActiveDate: string | null; // YYYY-MM-DD
   activityByDate: Record<string, number>; // YYYY-MM-DD -> кол-во решённых задач
   dailyDate?: string | null;

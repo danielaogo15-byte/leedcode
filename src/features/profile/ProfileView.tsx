@@ -1,29 +1,42 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { computeUnlockedLevel } from '@/features/profile/xpCalculator';
-import { useProgressStore } from '@/stores/useProgressStore';
+import {
+  STREAK_FREEZE_COST_XP,
+  useProgressStore,
+} from '@/stores/useProgressStore';
 import type { Task } from '@/types/task';
 import { LEVEL_ROADMAP, LEVELS, type Level, type TrackId } from '@/types/track';
 import {
   Award,
   Brain,
+  CalendarDays,
   CheckCircle2,
   Flame,
   Layers,
   RotateCcw,
+  Snowflake,
   Trophy,
 } from 'lucide-react';
+import { useMemo } from 'react';
 
 type Props = {
   tasks: Task[];
-  onSelectTask: (track: TrackId, level: Level, taskId: string, memoryMode?: boolean) => void;
+  onSelectTask: (
+    track: TrackId,
+    level: Level,
+    taskId: string,
+    memoryMode?: boolean,
+  ) => void;
 };
 
 export function ProfileView({ tasks, onSelectTask }: Props) {
   const totalXp = useProgressStore((s) => s.totalXp);
   const streakDays = useProgressStore((s) => s.streakDays);
+  const streakFreezes = useProgressStore((s) => s.streakFreezes);
   const progressByTask = useProgressStore((s) => s.progressByTask);
   const activityByDate = useProgressStore((s) => s.activityByDate);
+  const buyStreakFreeze = useProgressStore((s) => s.buyStreakFreeze);
 
   const solvedMap: Record<string, boolean> = {};
   for (const [id, rec] of Object.entries(progressByTask)) {
@@ -46,22 +59,39 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
     return rec?.solved && rec.nextReviewAt !== null && rec.nextReviewAt <= now;
   });
 
-  // Последние 7 дней для мини-графика стрика
-  const last7Days = Array.from({ length: 7 }, (_, idx) => {
-    const d = new Date();
-    d.setDate(d.getDate() - (6 - idx));
-    const key = d.toISOString().slice(0, 10);
-    return {
-      key,
-      label: d.toLocaleDateString('ru-RU', { weekday: 'short' }),
-      count: activityByDate[key] ?? 0,
-    };
-  });
+  // Годовой хитмап: 52 недели (364 дня)
+  const heatmapWeeks = useMemo(() => {
+    const weeks: { key: string; count: number; label: string }[][] = [];
+    const today = new Date();
+    const totalDays = 52 * 7;
+
+    for (let w = 0; w < 52; w += 1) {
+      const week: { key: string; count: number; label: string }[] = [];
+      for (let d = 0; d < 7; d += 1) {
+        const offset = totalDays - 1 - (w * 7 + d);
+        const date = new Date(today);
+        date.setDate(today.getDate() - offset);
+        const key = date.toISOString().slice(0, 10);
+        const count = activityByDate[key] ?? 0;
+        week.push({
+          key,
+          count,
+          label: `${date.toLocaleDateString('ru-RU')}: решено ${count}`,
+        });
+      }
+      weeks.push(week);
+    }
+    return weeks;
+  }, [activityByDate]);
+
+  const activeDaysCount = Object.values(activityByDate).filter(
+    (c) => c > 0,
+  ).length;
 
   return (
     <div className="col-span-2 overflow-y-auto p-6">
       <div className="mx-auto flex max-w-5xl flex-col gap-6">
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-4">
           <div className="rounded-xl border border-border bg-card/60 p-4">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Trophy className="size-4 text-amber-400" />
@@ -71,7 +101,7 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
               {totalXp} XP
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Бонус за Hardcore ×1.5 · Боссы ×3
+              Hardcore ×1.5 · Боссы ×3
             </p>
           </div>
 
@@ -84,8 +114,33 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
               {streakDays} дн.
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Надбавка к XP: +{Math.min(30, streakDays * 2)}% (макс. +30%)
+              Надбавка к XP: +{Math.min(30, streakDays * 2)}%
             </p>
+          </div>
+
+          <div className="rounded-xl border border-sky-500/30 bg-sky-500/5 p-4">
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <span className="flex items-center gap-1.5 text-sky-400">
+                <Snowflake className="size-4" />
+                Заморозка стрика
+              </span>
+              <Badge variant="secondary">{streakFreezes} шт.</Badge>
+            </div>
+            <p className="mt-1.5 text-xs text-muted-foreground">
+              Спасает стрик при пропуске дня
+            </p>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              disabled={totalXp < STREAK_FREEZE_COST_XP}
+              onClick={() => {
+                void buyStreakFreeze();
+              }}
+              className="mt-2.5 h-7 w-full text-xs"
+            >
+              Купить за {STREAK_FREEZE_COST_XP} XP
+            </Button>
           </div>
 
           <div className="rounded-xl border border-border bg-card/60 p-4">
@@ -103,69 +158,51 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
           </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-xl border border-border bg-card/40 p-4">
-            <h3 className="text-sm font-semibold">Прогресс по трекам</h3>
-            <div className="mt-3 flex flex-col gap-3">
-              <div>
-                <div className="flex justify-between text-xs">
-                  <span>Вёрстка / UI (открыт ур. {unlockedLayout})</span>
-                  <span>
-                    {layoutSolved}/{layoutTasks.length}
-                  </span>
-                </div>
-                <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full bg-sky-500 transition-all"
-                    style={{
-                      width: `${layoutTasks.length ? (layoutSolved / layoutTasks.length) * 100 : 0}%`,
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-xs">
-                  <span>Код / Логика (открыт ур. {unlockedLogic})</span>
-                  <span>
-                    {logicSolved}/{logicTasks.length}
-                  </span>
-                </div>
-                <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full bg-emerald-500 transition-all"
-                    style={{
-                      width: `${logicTasks.length ? (logicSolved / logicTasks.length) * 100 : 0}%`,
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+        <div className="rounded-xl border border-border bg-card/40 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h3 className="flex items-center gap-2 text-sm font-semibold">
+              <CalendarDays className="size-4 text-emerald-400" />
+              Годовая карта активности (52 недели)
+            </h3>
+            <span className="text-xs text-muted-foreground">
+              Активных дней за год:{' '}
+              <strong className="text-foreground">{activeDaysCount}</strong>
+            </span>
           </div>
 
-          <div className="rounded-xl border border-border bg-card/40 p-4">
-            <h3 className="text-sm font-semibold">Активность за 7 дней</h3>
-            <div className="mt-4 grid grid-cols-7 gap-2">
-              {last7Days.map((day) => (
-                <div
-                  key={day.key}
-                  className="flex flex-col items-center gap-1.5 rounded-lg border border-border/60 bg-muted/20 p-2"
-                >
-                  <span className="text-[10px] text-muted-foreground uppercase">
-                    {day.label}
-                  </span>
-                  <span
-                    className={
-                      day.count > 0
-                        ? 'flex size-7 items-center justify-center rounded-md bg-emerald-500/20 text-xs font-bold text-emerald-300 ring-1 ring-emerald-500/40'
-                        : 'flex size-7 items-center justify-center rounded-md bg-muted/40 text-xs text-muted-foreground'
-                    }
-                  >
-                    {day.count}
-                  </span>
+          <div className="mt-3 overflow-x-auto pb-1">
+            <div className="inline-flex gap-1">
+              {heatmapWeeks.map((week, wIdx) => (
+                <div key={wIdx} className="flex flex-col gap-1">
+                  {week.map((day) => {
+                    const cellColor =
+                      day.count === 0
+                        ? 'bg-muted/50 border-border/40'
+                        : day.count === 1
+                          ? 'bg-emerald-500/30 border-emerald-500/40'
+                          : day.count <= 3
+                            ? 'bg-emerald-500/60 border-emerald-500/70'
+                            : 'bg-emerald-400 border-emerald-300';
+                    return (
+                      <div
+                        key={day.key}
+                        title={day.label}
+                        className={`size-3 rounded-[3px] border ${cellColor}`}
+                      />
+                    );
+                  })}
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className="mt-2 flex items-center justify-end gap-1.5 text-[11px] text-muted-foreground">
+            <span>Меньше</span>
+            <span className="size-2.5 rounded-[2px] bg-muted/50" />
+            <span className="size-2.5 rounded-[2px] bg-emerald-500/30" />
+            <span className="size-2.5 rounded-[2px] bg-emerald-500/60" />
+            <span className="size-2.5 rounded-[2px] bg-emerald-400" />
+            <span>Больше</span>
           </div>
         </div>
 
@@ -242,8 +279,7 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
           <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {LEVELS.map((lvl) => {
               const info = LEVEL_ROADMAP[lvl];
-              const isOpen =
-                lvl <= Math.max(unlockedLayout, unlockedLogic);
+              const isOpen = lvl <= Math.max(unlockedLayout, unlockedLogic);
               return (
                 <div
                   key={lvl}

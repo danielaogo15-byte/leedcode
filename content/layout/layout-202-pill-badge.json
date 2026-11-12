@@ -1,0 +1,69 @@
+{
+  "id": "layout-202-pill-badge",
+  "title": "Tailwind Pill Badge: капсульный бейдж версии",
+  "track": "layout",
+  "level": 2,
+  "isBoss": false,
+  "topic": "tailwind-badges",
+  "mapTopics": [
+    "Tailwind CSS",
+    "TypeScript"
+  ],
+  "learn": "Утилиты inline-flex, items-center, gap-2, px-3, py-1.5 и rounded-full.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи бейдж .pill классами Tailwind: строчный флекс, выравнивание по центру, gap 8px, паддинги 6px по вертикали и 12px по горизонтали, полное скругление.",
+  "specs": [
+    "Добавь на .pill классы: inline-flex items-center gap-2 px-3 py-1.5 rounded-full",
+    "gap-2 = 8px, px-3 = 12px, py-1.5 = 6px, rounded-full = 999px"
+  ],
+  "starterHtml": "<div class=\"pill bg-slate-900 text-sky-400 border border-sky-500 text-xs font-semibold\">\n  <span>TypeScript</span>\n  <span class=\"bg-sky-500 text-white px-1.5 py-0.5 rounded-full\">5.9</span>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"pill inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 text-sky-400 border border-sky-500 text-xs font-semibold\">\n  <span>TypeScript</span>\n  <span class=\"bg-sky-500 text-white px-1.5 py-0.5 rounded-full\">5.9</span>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Для капсульного скругления в Tailwind используется класс rounded-full."
+    },
+    {
+      "tier": 2,
+      "text": "Документация: https://tailwindcss.com/docs/border-radius"
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .pill классы: inline-flex items-center gap-2 px-3 py-1.5 rounded-full."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".pill использует inline-flex",
+      "selector": ".pill",
+      "property": "display",
+      "expected": "inline-flex"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Выравнивание items-center",
+      "selector": ".pill",
+      "property": "alignItems",
+      "expected": "center"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Промежуток gap-2 (8px)",
+      "selector": ".pill",
+      "property": "columnGap",
+      "expected": "8px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Скругление rounded-full (999px)",
+      "selector": ".pill",
+      "property": "borderTopLeftRadius",
+      "expected": "999px"
+    }
+  ],
+  "solution": "<div class=\"pill inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 text-sky-400 border border-sky-500 text-xs font-semibold\">\n  <span>TypeScript</span>\n  <span class=\"bg-sky-500 text-white px-1.5 py-0.5 rounded-full\">5.9</span>\n</div>"
+}

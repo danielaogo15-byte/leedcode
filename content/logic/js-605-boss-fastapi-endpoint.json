@@ -1,0 +1,56 @@
+{
+  "id": "js-605-boss-fastapi-endpoint",
+  "title": "Босс: Эндпоинт FastAPI с response_model, status_code=201 и HTTPException",
+  "track": "logic",
+  "level": 6,
+  "isBoss": true,
+  "topic": "fastapi-boss",
+  "mapTopics": [
+    "FastAPI",
+    "Pydantic",
+    "Python"
+  ],
+  "learn": "Создание POST-роута в FastAPI с декларацией response_model, кода 201 и выбросом HTTPException(status_code=400).",
+  "needsDom": false,
+  "codeLanguage": "python",
+  "prompt": "Напиши эндпоинт FastAPI на Python: декоратор `@app.post(\"/users\", response_model=UserOut, status_code=201)`, функция `async def create_user(payload: UserCreate):`. Если `payload.username == \"root\"`, выброси `raise HTTPException(status_code=400, detail=\"Reserved username\")`, иначе верни `payload`.",
+  "specs": [
+    "Декоратор: @app.post(\"/users\", response_model=UserOut, status_code=201)",
+    "Сигнатура: async def create_user(payload: UserCreate):",
+    "Проверка на \"root\" с raise HTTPException(status_code=400, ...)"
+  ],
+  "starterJs": "from fastapi import FastAPI, HTTPException\n\napp = FastAPI()\n\n# Напиши роут @app.post(\"/users\", ...)\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В FastAPI фильтрация выходных данных (чтобы не утёк пароль) делается через response_model=UserOut."
+    },
+    {
+      "tier": 2,
+      "text": "Документация FastAPI: https://fastapi.tiangolo.com/tutorial/response-model/"
+    },
+    {
+      "tier": 3,
+      "text": "@app.post(\"/users\", response_model=UserOut, status_code=201)\nasync def create_user(payload: UserCreate):\n    if payload.username == \"root\":\n        raise HTTPException(status_code=400, detail=\"Reserved username\")\n    return payload"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Декоратор @app.post(\"/users\", response_model=UserOut, status_code=201)",
+      "pattern": "@app\\.post\\(\\s*[\"']/users[\"']\\s*,.*response_model\\s*=\\s*UserOut.*status_code\\s*=\\s*201",
+      "expectedHint": "@app.post(\"/users\", response_model=UserOut, status_code=201)"
+    },
+    {
+      "name": "Асинхронный обработчик async def create_user(payload: UserCreate):",
+      "pattern": "async\\s+def\\s+create_user\\(\\s*payload\\s*:\\s*UserCreate\\s*\\)\\s*:",
+      "expectedHint": "async def create_user(payload: UserCreate):"
+    },
+    {
+      "name": "Выброс исключения raise HTTPException(status_code=400, ...)",
+      "pattern": "raise\\s+HTTPException\\(\\s*status_code\\s*=\\s*400",
+      "expectedHint": "raise HTTPException(status_code=400, ...)"
+    }
+  ],
+  "tests": [],
+  "solution": "from fastapi import FastAPI, HTTPException\n\napp = FastAPI()\n\n@app.post(\"/users\", response_model=UserOut, status_code=201)\nasync def create_user(payload: UserCreate):\n    if payload.username == \"root\":\n        raise HTTPException(status_code=400, detail=\"Reserved username\")\n    return payload"
+}

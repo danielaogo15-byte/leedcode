@@ -1,0 +1,64 @@
+{
+  "id": "layout-503-express-route-badge",
+  "title": "Express API: плашка HTTP-эндпоинта",
+  "track": "layout",
+  "level": 5,
+  "isBoss": false,
+  "topic": "express-ui",
+  "mapTopics": [
+    "Express",
+    "Node.js",
+    "Tailwind CSS"
+  ],
+  "learn": "Фиксированная ширина бейджа метода w-16 (64px) внутри флекс-строки роута.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи строку роута .route-item и бейдж метода .method классами Tailwind.",
+  "specs": [
+    "Добавь на .route-item классы: flex items-center gap-3 p-3",
+    "Добавь на .method класс: w-16 (64px)"
+  ],
+  "starterHtml": "<div class=\"route-item bg-slate-800 text-slate-50 rounded-[10px]\">\n  <span class=\"method bg-emerald-500 text-emerald-950 text-center py-1 rounded font-bold text-xs\">POST</span>\n  <code class=\"flex-1 text-xs\">/api/v1/tasks</code>\n  <span class=\"text-emerald-500 font-bold text-xs\">201</span>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"route-item flex items-center gap-3 p-3 bg-slate-800 text-slate-50 rounded-[10px]\">\n  <span class=\"method w-16 bg-emerald-500 text-emerald-950 text-center py-1 rounded font-bold text-xs\">POST</span>\n  <code class=\"flex-1 text-xs\">/api/v1/tasks</code>\n  <span class=\"text-emerald-500 font-bold text-xs\">201</span>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "64px в Tailwind — это w-16 (16 × 4px)."
+    },
+    {
+      "tier": 2,
+      "text": "Отступ и паддинг по 12px — это gap-3 и p-3."
+    },
+    {
+      "tier": 3,
+      "text": "На .route-item добавь flex items-center gap-3 p-3, на .method — w-16."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".route-item использует flex",
+      "selector": ".route-item",
+      "property": "display",
+      "expected": "flex"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Отступ gap-3 равен 12px",
+      "selector": ".route-item",
+      "property": "columnGap",
+      "expected": "12px"
+    },
+    {
+      "type": "boundingRect",
+      "name": "Ширина .method равна 64px (w-16)",
+      "selector": ".method",
+      "property": "width",
+      "expected": 64,
+      "tolerance": 2
+    }
+  ],
+  "solution": "<div class=\"route-item flex items-center gap-3 p-3 bg-slate-800 text-slate-50 rounded-[10px]\">\n  <span class=\"method w-16 bg-emerald-500 text-emerald-950 text-center py-1 rounded font-bold text-xs\">POST</span>\n  <code class=\"flex-1 text-xs\">/api/v1/tasks</code>\n  <span class=\"text-emerald-500 font-bold text-xs\">201</span>\n</div>"
+}

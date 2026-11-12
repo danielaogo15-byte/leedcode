@@ -1,3 +1,4 @@
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LazyMonaco } from '@/features/editor/LazyMonaco';
@@ -5,7 +6,7 @@ import {
   createPasteGuardState,
   type PasteGuardState,
 } from '@/features/editor/pasteGuard';
-import type { Task } from '@/types/task';
+import type { CodeLanguage, Task } from '@/types/task';
 import { RotateCcw } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -21,6 +22,37 @@ type Props = {
   onResetCode?: () => void;
   onSuspiciousSpeedChange?: (suspicious: boolean) => void;
 };
+
+function mapMonacoLanguage(
+  lang: CodeLanguage,
+):
+  | 'javascript'
+  | 'typescript'
+  | 'python'
+  | 'sql'
+  | 'dockerfile'
+  | 'yaml'
+  | 'graphql'
+  | 'ini' {
+  switch (lang) {
+    case 'typescript':
+      return 'typescript';
+    case 'python':
+      return 'python';
+    case 'sql':
+      return 'sql';
+    case 'dockerfile':
+      return 'dockerfile';
+    case 'yaml':
+      return 'yaml';
+    case 'prisma':
+      return 'graphql';
+    case 'nginx':
+      return 'ini';
+    default:
+      return 'javascript';
+  }
+}
 
 export function EditorPane({
   task,
@@ -49,11 +81,19 @@ export function EditorPane({
     onSuspiciousSpeedChange?.(next.suspiciousSpeed);
   };
 
+  const isTailwindOnly =
+    task.track === 'layout' &&
+    task.codeLanguage === 'tailwind' &&
+    !task.starterCss.trim();
+
   return (
     <section className="mt-2 flex min-h-0 flex-1 flex-col gap-3">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <h3 className="text-sm font-medium">Редактор</h3>
+          <Badge variant="outline" className="font-mono text-[10px] uppercase">
+            {task.codeLanguage}
+          </Badge>
           <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-400">
             Автосохранение включено
           </span>
@@ -93,12 +133,12 @@ export function EditorPane({
       ) : null}
 
       {task.track === 'layout' ? (
-        <Tabs defaultValue="html" className="flex min-h-0 flex-1 flex-col">
-          <TabsList className="w-fit">
-            <TabsTrigger value="html">HTML</TabsTrigger>
-            <TabsTrigger value="css">CSS</TabsTrigger>
-          </TabsList>
-          <TabsContent value="html" className="mt-3.5 flex min-h-0 flex-1">
+        isTailwindOnly ? (
+          <div className="mt-1 flex min-h-0 flex-1 flex-col gap-2">
+            <p className="text-xs text-sky-400">
+              Режим <strong>Tailwind CSS</strong>: пиши утилитарные классы прямо
+              в атрибуте <code>class=&quot;...&quot;</code> внутри HTML.
+            </p>
             <LazyMonaco
               language="html"
               value={html}
@@ -107,18 +147,35 @@ export function EditorPane({
               onGuardStateChange={handleGuardUpdate}
               onChange={onHtmlChange}
             />
-          </TabsContent>
-          <TabsContent value="css" className="mt-3.5 flex min-h-0 flex-1">
-            <LazyMonaco
-              language="css"
-              value={css}
-              hardcore={hardcore}
-              guardState={guardState}
-              onGuardStateChange={handleGuardUpdate}
-              onChange={onCssChange}
-            />
-          </TabsContent>
-        </Tabs>
+          </div>
+        ) : (
+          <Tabs defaultValue="html" className="flex min-h-0 flex-1 flex-col">
+            <TabsList className="w-fit">
+              <TabsTrigger value="html">HTML / Tailwind</TabsTrigger>
+              <TabsTrigger value="css">CSS</TabsTrigger>
+            </TabsList>
+            <TabsContent value="html" className="mt-3.5 flex min-h-0 flex-1">
+              <LazyMonaco
+                language="html"
+                value={html}
+                hardcore={hardcore}
+                guardState={guardState}
+                onGuardStateChange={handleGuardUpdate}
+                onChange={onHtmlChange}
+              />
+            </TabsContent>
+            <TabsContent value="css" className="mt-3.5 flex min-h-0 flex-1">
+              <LazyMonaco
+                language="css"
+                value={css}
+                hardcore={hardcore}
+                guardState={guardState}
+                onGuardStateChange={handleGuardUpdate}
+                onChange={onCssChange}
+              />
+            </TabsContent>
+          </Tabs>
+        )
       ) : (
         <div className="mt-2 flex min-h-0 flex-1 flex-col gap-3">
           {task.needsDom && task.htmlFixture ? (
@@ -130,7 +187,7 @@ export function EditorPane({
             </div>
           ) : null}
           <LazyMonaco
-            language="javascript"
+            language={mapMonacoLanguage(task.codeLanguage)}
             value={js}
             hardcore={hardcore}
             guardState={guardState}

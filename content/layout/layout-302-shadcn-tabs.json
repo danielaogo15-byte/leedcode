@@ -1,0 +1,63 @@
+{
+  "id": "layout-302-shadcn-tabs",
+  "title": "shadcn/ui TabsList: переключатель вкладок",
+  "track": "layout",
+  "level": 3,
+  "isBoss": false,
+  "topic": "shadcn-tabs",
+  "mapTopics": [
+    "shadcn/ui",
+    "React",
+    "Tailwind CSS"
+  ],
+  "learn": "Контейнер TabsList на Tailwind Grid: grid grid-cols-2 gap-1 p-1 rounded-[10px].",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Оформи контейнер вкладок .tabs-list классами Tailwind: сетка из 2 колонок, промежуток 4px, паддинг 4px и скругление 10px.",
+  "specs": [
+    "Добавь на .tabs-list классы: grid grid-cols-2 gap-1 p-1 rounded-[10px]",
+    "gap-1 = 4px, p-1 = 4px"
+  ],
+  "starterHtml": "<div class=\"tabs-list bg-slate-200\">\n  <button class=\"border-none bg-white text-slate-900 py-2 px-3 rounded-md font-semibold text-xs\" type=\"button\">Превью</button>\n  <button class=\"border-none bg-transparent text-slate-600 py-2 px-3 rounded-md font-semibold text-xs\" type=\"button\">Код</button>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"tabs-list grid grid-cols-2 gap-1 p-1 rounded-[10px] bg-slate-200\">\n  <button class=\"border-none bg-white text-slate-900 py-2 px-3 rounded-md font-semibold text-xs\" type=\"button\">Превью</button>\n  <button class=\"border-none bg-transparent text-slate-600 py-2 px-3 rounded-md font-semibold text-xs\" type=\"button\">Код</button>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Для 4px в Tailwind используется единица 1 (gap-1, p-1)."
+    },
+    {
+      "tier": 2,
+      "text": "Для точного скругления 10px используй rounded-[10px]."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .tabs-list классы: grid grid-cols-2 gap-1 p-1 rounded-[10px]."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".tabs-list использует grid",
+      "selector": ".tabs-list",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Внутренний отступ p-1 равен 4px",
+      "selector": ".tabs-list",
+      "property": "paddingTop",
+      "expected": "4px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Скругление 10px",
+      "selector": ".tabs-list",
+      "property": "borderTopLeftRadius",
+      "expected": "10px"
+    }
+  ],
+  "solution": "<div class=\"tabs-list grid grid-cols-2 gap-1 p-1 rounded-[10px] bg-slate-200\">\n  <button class=\"border-none bg-white text-slate-900 py-2 px-3 rounded-md font-semibold text-xs\" type=\"button\">Превью</button>\n  <button class=\"border-none bg-transparent text-slate-600 py-2 px-3 rounded-md font-semibold text-xs\" type=\"button\">Код</button>\n</div>"
+}

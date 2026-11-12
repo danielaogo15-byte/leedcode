@@ -1,3 +1,4 @@
+import { compileTailwindFromHtml } from '@/features/runner/tailwindRuntime';
 import type { RunOutcome, TestResultItem } from '@/types/runner';
 import type { TaskCheck } from '@/types/task';
 
@@ -20,7 +21,6 @@ export function runDomTask({
     const runId = `run-${Date.now()}-${Math.random().toString(36).slice(2)}`;
     const iframe = document.createElement('iframe');
     iframe.setAttribute('sandbox', 'allow-scripts');
-    // Держим iframe в видимой области экрана (прозрачным), чтобы Chromium не отключал расчёт getBoundingClientRect
     iframe.style.position = 'fixed';
     iframe.style.left = '0';
     iframe.style.top = '0';
@@ -64,6 +64,7 @@ export function runDomTask({
 
     const serializedChecks = JSON.stringify(checks);
     const escapedUserJs = JSON.stringify(js);
+    const twCss = compileTailwindFromHtml(html);
 
     iframe.srcdoc = `<!doctype html>
 <html>
@@ -72,6 +73,7 @@ export function runDomTask({
   <style>
     * { box-sizing: border-box; }
     body { margin: 16px; padding: 0; font-family: system-ui, sans-serif; }
+    ${twCss}
     ${css}
   </style>
 </head>

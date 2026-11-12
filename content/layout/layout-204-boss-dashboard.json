@@ -1,0 +1,71 @@
+{
+  "id": "layout-204-boss-dashboard",
+  "title": "Босс: Адаптивный каркас дашборда на Tailwind Grid",
+  "track": "layout",
+  "level": 2,
+  "isBoss": true,
+  "topic": "tailwind-boss",
+  "mapTopics": [
+    "Tailwind CSS",
+    "Vite",
+    "Layouts"
+  ],
+  "learn": "Произвольный шаблон колонок grid-cols-[120px_1fr] и вложенная сетка grid-cols-2.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Собери макет дашборда только классами Tailwind: у .dashboard сетка с колонками 120px и 1fr (gap 16px), а у .stats — сетка из 2 равных колонок (gap 12px).",
+  "specs": [
+    "Добавь на .dashboard классы: grid grid-cols-[120px_1fr] gap-4",
+    "Добавь на .stats классы: grid grid-cols-2 gap-3"
+  ],
+  "starterHtml": "<div class=\"dashboard\">\n  <aside class=\"side bg-slate-900 text-slate-400 p-3.5 rounded-xl text-xs\">Меню</aside>\n  <main class=\"stats\">\n    <div class=\"bg-slate-800 text-slate-50 p-3.5 rounded-xl font-bold\">XP: 450</div>\n    <div class=\"bg-slate-800 text-slate-50 p-3.5 rounded-xl font-bold\">Streak: 7</div>\n  </main>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"dashboard grid grid-cols-[120px_1fr] gap-4\">\n  <aside class=\"side bg-slate-900 text-slate-400 p-3.5 rounded-xl text-xs\">Меню</aside>\n  <main class=\"stats grid grid-cols-2 gap-3\">\n    <div class=\"bg-slate-800 text-slate-50 p-3.5 rounded-xl font-bold\">XP: 450</div>\n    <div class=\"bg-slate-800 text-slate-50 p-3.5 rounded-xl font-bold\">Streak: 7</div>\n  </main>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Tailwind пробел внутри квадратных скобок заменяется на подчёркивание: grid-cols-[120px_1fr]."
+    },
+    {
+      "tier": 2,
+      "text": "gap-4 равен 16px, а gap-3 равен 12px."
+    },
+    {
+      "tier": 3,
+      "text": "На .dashboard добавь grid grid-cols-[120px_1fr] gap-4, а на .stats — grid grid-cols-2 gap-3."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".dashboard использует grid",
+      "selector": ".dashboard",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "boundingRect",
+      "name": "Ширина .side равна 120px (±2px)",
+      "selector": ".side",
+      "property": "width",
+      "expected": 120,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": ".stats использует grid",
+      "selector": ".stats",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Отступ в .stats равен 12px (gap-3)",
+      "selector": ".stats",
+      "property": "columnGap",
+      "expected": "12px"
+    }
+  ],
+  "solution": "<div class=\"dashboard grid grid-cols-[120px_1fr] gap-4\">\n  <aside class=\"side bg-slate-900 text-slate-400 p-3.5 rounded-xl text-xs\">Меню</aside>\n  <main class=\"stats grid grid-cols-2 gap-3\">\n    <div class=\"bg-slate-800 text-slate-50 p-3.5 rounded-xl font-bold\">XP: 450</div>\n    <div class=\"bg-slate-800 text-slate-50 p-3.5 rounded-xl font-bold\">Streak: 7</div>\n  </main>\n</div>"
+}

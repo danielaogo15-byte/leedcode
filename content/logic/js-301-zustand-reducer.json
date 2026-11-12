@@ -1,0 +1,56 @@
+{
+  "id": "js-301-zustand-reducer",
+  "title": "Zustand: создание типизированного стора create<State>()",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "zustand-store",
+  "mapTopics": [
+    "Zustand",
+    "React",
+    "TypeScript"
+  ],
+  "learn": "Паттерн create<CounterState>((set) => ({ ... })) в Zustand с иммутабельным обновлением через колбэк set((state) => ...).",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши фабрику стора в стиле Zustand `createCounterStore(set)`, которая возвращает начальное состояние `count: 0` и экшены `inc: () => set((state) => ({ count: state.count + 1 }))` и `reset: () => set({ count: 0 })`.",
+  "specs": [
+    "Внутри inc обязательно используй функциональный апдейт set((state) => ({ count: state.count + 1 }))",
+    "Внутри reset вызывай set({ count: 0 })"
+  ],
+  "starterJs": "interface CounterState {\n  count: number;\n  inc: () => void;\n  reset: () => void;\n}\n\nfunction createCounterStore(set: ( updater: any ) => void): CounterState {\n  return {\n    count: 0,\n    \n  };\n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "В Zustand обновление от предыдущего стейта пишется через set((state) => ({ count: state.count + 1 }))."
+    },
+    {
+      "tier": 2,
+      "text": "Документация Zustand: https://zustand.docs.pmnd.rs/guides/updating-state"
+    },
+    {
+      "tier": 3,
+      "text": "Верни { count: 0, inc: () => set((state) => ({ count: state.count + 1 })), reset: () => set({ count: 0 }) }."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Использован колбэк set((state) => ...)",
+      "pattern": "set\\(\\s*\\(?\\s*state\\s*\\)?\\s*=>",
+      "expectedHint": "set((state) => ({ count: state.count + 1 }))"
+    },
+    {
+      "name": "Реализован сброс set({ count: 0 })",
+      "pattern": "set\\(\\s*\\{\\s*count\\s*:\\s*0\\s*\\}\\s*\\)",
+      "expectedHint": "set({ count: 0 })"
+    }
+  ],
+  "tests": [
+    {
+      "name": "начальный count равен 0",
+      "call": "createCounterStore(() => {}).count",
+      "expected": 0
+    }
+  ],
+  "solution": "interface CounterState {\n  count: number;\n  inc: () => void;\n  reset: () => void;\n}\n\nfunction createCounterStore(set: (updater: any) => void): CounterState {\n  return {\n    count: 0,\n    inc: () => set((state: CounterState) => ({ count: state.count + 1 })),\n    reset: () => set({ count: 0 }),\n  };\n}"
+}

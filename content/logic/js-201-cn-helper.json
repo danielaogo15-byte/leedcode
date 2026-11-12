@@ -1,0 +1,61 @@
+{
+  "id": "js-201-cn-helper",
+  "title": "TypeScript + Tailwind: типизированный хелпер cn()",
+  "track": "logic",
+  "level": 2,
+  "isBoss": false,
+  "topic": "tailwind-utils",
+  "mapTopics": [
+    "TypeScript",
+    "Tailwind CSS",
+    "shadcn/ui"
+  ],
+  "learn": "Типизация union-массива ClassValue[] в TypeScript и фильтрация классов для Tailwind.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Объяви тип `type ClassValue = string | false | null | undefined;` и напиши типизированную функцию `function cn(inputs: ClassValue[]): string`, которая склеивает только непустые строковые классы через пробел.",
+  "specs": [
+    "Обязательно объяви type ClassValue и типизируй параметр inputs: ClassValue[] и возврат : string",
+    "Пустые строки, false, null и undefined должны отфильтровываться"
+  ],
+  "starterJs": "type ClassValue = string | false | null | undefined;\n\nfunction cn(inputs: ClassValue[]): string {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Используй inputs.filter(...) и join(\" \")."
+    },
+    {
+      "tier": 2,
+      "text": "Проверяй typeof x === \"string\" && x.trim().length > 0."
+    },
+    {
+      "tier": 3,
+      "text": "return inputs.filter((x) => typeof x === \"string\" && x.trim().length > 0).join(\" \");"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Объявлен union-тип ClassValue",
+      "pattern": "type\\s+ClassValue\\s*=",
+      "expectedHint": "type ClassValue = ..."
+    },
+    {
+      "name": "Типизирована сигнатура cn(inputs: ClassValue[]): string",
+      "pattern": "function\\s+cn\\s*\\(\\s*\\w+\\s*:\\s*ClassValue\\[\\]\\s*\\)\\s*:\\s*string",
+      "expectedHint": "function cn(inputs: ClassValue[]): string"
+    }
+  ],
+  "tests": [
+    {
+      "name": "склейка классов Tailwind",
+      "call": "cn([\"px-4\", false, \"py-2\", null, \"bg-sky-500\"])",
+      "expected": "px-4 py-2 bg-sky-500"
+    },
+    {
+      "name": "все значения пустые",
+      "call": "cn([false, null, undefined, \"\"])",
+      "expected": ""
+    }
+  ],
+  "solution": "type ClassValue = string | false | null | undefined;\n\nfunction cn(inputs: ClassValue[]): string {\n  return inputs.filter((x) => typeof x === \"string\" && x.trim().length > 0).join(\" \");\n}"
+}

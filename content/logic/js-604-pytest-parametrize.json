@@ -1,0 +1,54 @@
+{
+  "id": "js-604-pytest-parametrize",
+  "title": "Python + pytest: параметризованный тест @pytest.mark.parametrize",
+  "track": "logic",
+  "level": 6,
+  "isBoss": false,
+  "topic": "pytest-runner",
+  "mapTopics": [
+    "pytest",
+    "Python"
+  ],
+  "learn": "Декоратор @pytest.mark.parametrize для проверки функции на наборе входных и ожидаемых значений.",
+  "needsDom": false,
+  "codeLanguage": "python",
+  "prompt": "Напиши тест на Python с использованием `@pytest.mark.parametrize(\"price,expected\", [(100, 90), (200, 180)])` для тестовой функции `def test_discount(price, expected):` с проверкой `assert apply_discount(price) == expected`.",
+  "specs": [
+    "Используй декоратор @pytest.mark.parametrize(\"price,expected\", ...)",
+    "Внутри test_discount(price, expected) напиши assert apply_discount(price) == expected"
+  ],
+  "starterJs": "import pytest\n\n# Добавь декоратор @pytest.mark.parametrize и функцию test_discount\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Первый аргумент parametrize — строка с именами параметров через запятую: \"price,expected\"."
+    },
+    {
+      "tier": 2,
+      "text": "Документация pytest: https://docs.pytest.org/en/stable/how-to/parametrize.html"
+    },
+    {
+      "tier": 3,
+      "text": "@pytest.mark.parametrize(\"price,expected\", [(100, 90), (200, 180)])\ndef test_discount(price, expected):\n    assert apply_discount(price) == expected"
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Декоратор @pytest.mark.parametrize(\"price,expected\", ...)",
+      "pattern": "@pytest\\.mark\\.parametrize\\(\\s*[\"']price\\s*,\\s*expected[\"']",
+      "expectedHint": "@pytest.mark.parametrize(\"price,expected\", ...)"
+    },
+    {
+      "name": "Функция def test_discount(price, expected):",
+      "pattern": "def\\s+test_discount\\(\\s*price\\s*,\\s*expected\\s*\\)\\s*:",
+      "expectedHint": "def test_discount(price, expected):"
+    },
+    {
+      "name": "Проверка assert apply_discount(price) == expected",
+      "pattern": "assert\\s+apply_discount\\(\\s*price\\s*\\)\\s*==\\s*expected",
+      "expectedHint": "assert apply_discount(price) == expected"
+    }
+  ],
+  "tests": [],
+  "solution": "import pytest\n\n@pytest.mark.parametrize(\"price,expected\", [(100, 90), (200, 180)])\ndef test_discount(price, expected):\n    assert apply_discount(price) == expected"
+}

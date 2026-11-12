@@ -1,0 +1,84 @@
+{
+  "id": "js-205-boss-tsconfig-normalizer",
+  "title": "Босс: Строгий tsconfig.json + Prettier конфиг на TypeScript",
+  "track": "logic",
+  "level": 2,
+  "isBoss": true,
+  "topic": "ts-config-boss",
+  "mapTopics": [
+    "TypeScript",
+    "Vite",
+    "ESLint",
+    "Prettier"
+  ],
+  "learn": "Конфигурация строгого режима компилятора TypeScript (strict, noUncheckedIndexedAccess) и форматирования Prettier.",
+  "needsDom": false,
+  "codeLanguage": "typescript",
+  "prompt": "Напиши функцию `function createToolingConfig(singleQuote: boolean = true)`, которая возвращает `{ tsconfig: { strict: true, noUncheckedIndexedAccess: true, target: \"ES2022\" }, prettier: { semi: true, singleQuote, tabWidth: 2 } }`.",
+  "specs": [
+    "В tsconfig обязательно включены strict: true и noUncheckedIndexedAccess: true",
+    "В prettier передаётся флаг singleQuote и tabWidth: 2"
+  ],
+  "starterJs": "function createToolingConfig(singleQuote: boolean = true) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "noUncheckedIndexedAccess защищает от обращения к массиву по несуществующему индексу."
+    },
+    {
+      "tier": 2,
+      "text": "Документация TSConfig: https://www.typescriptlang.org/tsconfig/#noUncheckedIndexedAccess"
+    },
+    {
+      "tier": 3,
+      "text": "Верни вложенный объект с ключами tsconfig и prettier точно по спецификации."
+    }
+  ],
+  "codeChecks": [
+    {
+      "name": "Включён флаг noUncheckedIndexedAccess: true",
+      "pattern": "noUncheckedIndexedAccess\\s*:\\s*true",
+      "expectedHint": "noUncheckedIndexedAccess: true"
+    },
+    {
+      "name": "Включён флаг strict: true",
+      "pattern": "strict\\s*:\\s*true",
+      "expectedHint": "strict: true"
+    }
+  ],
+  "tests": [
+    {
+      "name": "конфиг по умолчанию",
+      "call": "createToolingConfig()",
+      "expected": {
+        "tsconfig": {
+          "strict": true,
+          "noUncheckedIndexedAccess": true,
+          "target": "ES2022"
+        },
+        "prettier": {
+          "semi": true,
+          "singleQuote": true,
+          "tabWidth": 2
+        }
+      }
+    },
+    {
+      "name": "двойные кавычки",
+      "call": "createToolingConfig(false)",
+      "expected": {
+        "tsconfig": {
+          "strict": true,
+          "noUncheckedIndexedAccess": true,
+          "target": "ES2022"
+        },
+        "prettier": {
+          "semi": true,
+          "singleQuote": false,
+          "tabWidth": 2
+        }
+      }
+    }
+  ],
+  "solution": "function createToolingConfig(singleQuote: boolean = true) {\n  return {\n    tsconfig: {\n      strict: true,\n      noUncheckedIndexedAccess: true,\n      target: \"ES2022\",\n    },\n    prettier: {\n      semi: true,\n      singleQuote,\n      tabWidth: 2,\n    },\n  };\n}"
+}

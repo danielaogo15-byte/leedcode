@@ -1,0 +1,63 @@
+{
+  "id": "layout-602-pydantic-schema",
+  "title": "Pydantic BaseModel: сетка полей JSON-схемы",
+  "track": "layout",
+  "level": 6,
+  "isBoss": false,
+  "topic": "pydantic-ui",
+  "mapTopics": [
+    "Pydantic",
+    "FastAPI",
+    "Tailwind CSS"
+  ],
+  "learn": "Двухколоночная сетка для схемы данных grid grid-cols-[120px_1fr] gap-2 p-3.5.",
+  "needsDom": true,
+  "codeLanguage": "tailwind",
+  "prompt": "Выстрой поля модели Pydantic в сетку .schema-grid из 2 колонок (120px и 1fr) с отступом 8px и паддингом 14px.",
+  "specs": [
+    "Добавь на .schema-grid классы: grid grid-cols-[120px_1fr] gap-2 p-3.5"
+  ],
+  "starterHtml": "<div class=\"schema-grid bg-slate-800 text-slate-50 rounded-[10px] text-xs\">\n  <div class=\"field-name font-mono text-sky-400 font-bold\">username*</div>\n  <div class=\"text-slate-300\">str (min_length=3)</div>\n  <div class=\"field-name font-mono text-sky-400 font-bold\">is_active</div>\n  <div class=\"text-slate-300\">bool = True</div>\n</div>\n",
+  "starterCss": "",
+  "targetHtml": "<div class=\"schema-grid grid grid-cols-[120px_1fr] gap-2 p-3.5 bg-slate-800 text-slate-50 rounded-[10px] text-xs\">\n  <div class=\"field-name font-mono text-sky-400 font-bold\">username*</div>\n  <div class=\"text-slate-300\">str (min_length=3)</div>\n  <div class=\"field-name font-mono text-sky-400 font-bold\">is_active</div>\n  <div class=\"text-slate-300\">bool = True</div>\n</div>",
+  "targetCss": "",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Колонки 120px и 1fr задаются классом grid-cols-[120px_1fr]."
+    },
+    {
+      "tier": 2,
+      "text": "gap-2 = 8px, p-3.5 = 14px."
+    },
+    {
+      "tier": 3,
+      "text": "Добавь к .schema-grid: grid grid-cols-[120px_1fr] gap-2 p-3.5."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".schema-grid использует grid",
+      "selector": ".schema-grid",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "boundingRect",
+      "name": "Первая колонка шириной 120px",
+      "selector": ".field-name",
+      "property": "width",
+      "expected": 120,
+      "tolerance": 2
+    },
+    {
+      "type": "computedStyle",
+      "name": "Внутренний отступ p-3.5 (14px)",
+      "selector": ".schema-grid",
+      "property": "paddingTop",
+      "expected": "14px"
+    }
+  ],
+  "solution": "<div class=\"schema-grid grid grid-cols-[120px_1fr] gap-2 p-3.5 bg-slate-800 text-slate-50 rounded-[10px] text-xs\">\n  <div class=\"field-name font-mono text-sky-400 font-bold\">username*</div>\n  <div class=\"text-slate-300\">str (min_length=3)</div>\n  <div class=\"field-name font-mono text-sky-400 font-bold\">is_active</div>\n  <div class=\"text-slate-300\">bool = True</div>\n</div>"
+}
