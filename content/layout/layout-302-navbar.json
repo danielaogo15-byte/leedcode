@@ -1,0 +1,91 @@
+{
+  "track": "layout",
+  "isBoss": false,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<header class=\"nav\">\n  <div class=\"logo\">Logo</div>\n  <nav class=\"links\">\n    <a href=\"#catalog\">Каталог</a>\n    <a href=\"#prices\">Цены</a>\n    <a href=\"#login\">Войти</a>\n  </nav>\n</header>",
+  "targetCss": "body { margin: 0; font: 16px/24px system-ui, sans-serif; }\n.nav { display: flex; justify-content: space-between; align-items: center; width: 800px; height: 64px; padding: 0 24px; box-sizing: border-box; background: #0f172a; color: #fff; }\n.logo { width: 80px; height: 32px; background: #38bdf8; }\n.links { display: flex; gap: 24px; }\n.links a { width: 72px; height: 24px; text-align: center; color: #fff; }",
+  "solution": "/* HTML */\n<header class=\"nav\">\n  <div class=\"logo\">Logo</div>\n  <nav class=\"links\">\n    <a href=\"#catalog\">Каталог</a>\n    <a href=\"#prices\">Цены</a>\n    <a href=\"#login\">Войти</a>\n  </nav>\n</header>\n\n/* CSS */\nbody { margin: 0; font: 16px/24px system-ui, sans-serif; }\n.nav { display: flex; justify-content: space-between; align-items: center; width: 800px; height: 64px; padding: 0 24px; box-sizing: border-box; background: #0f172a; color: #fff; }\n.logo { width: 80px; height: 32px; background: #38bdf8; }\n.links { display: flex; gap: 24px; }\n.links a { width: 72px; height: 24px; text-align: center; color: #fff; }",
+  "id": "layout-302-navbar",
+  "title": "Навигация: логотип слева, ссылки справа",
+  "level": 3,
+  "topic": "flexbox-basics",
+  "mapTopics": [
+    "CSS #41 Flexbox: контейнер и элементы",
+    "CSS #42 justify-content и align-items",
+    "CSS #44 gap"
+  ],
+  "learn": "Одной строкой выстроить элементы по разным краям и по центру высоты.",
+  "prompt": "Собери шапку 800px шириной и 64px высотой. Логотип прижат влево, ссылки прижаты вправо, между ссылками промежуток 24px. По бокам отступ 24px, всё выровнено по центру шапки по вертикали.",
+  "specs": [
+    "Размеры логотипа (80×32) и ссылок (72×24) уже заданы, менять их не нужно",
+    "Ссылки должны идти в ряд, тремя блоками одинаковой ширины"
+  ],
+  "starterHtml": "<header class=\"nav\">\n  <div class=\"logo\">Logo</div>\n  <nav class=\"links\">\n    <a href=\"#catalog\">Каталог</a>\n    <a href=\"#prices\">Цены</a>\n    <a href=\"#login\">Войти</a>\n  </nav>\n</header>\n",
+  "starterCss": "body { margin: 0; font: 16px/24px system-ui, sans-serif; }\n.nav { width: 800px; height: 64px; padding: 0 24px; box-sizing: border-box; background: #0f172a; color: #fff; }\n.logo { width: 80px; height: 32px; background: #38bdf8; }\n.links a { width: 72px; height: 24px; text-align: center; color: #fff; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: flexbox space-between, flex gap, align-items center, вложенный flex."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: «флексом» нужно сделать и саму шапку, и блок со ссылками. У шапки есть способ раздвинуть двух детей по краям и общий способ выровнять их по центру высоты. У блока со ссылками есть свойство для промежутка."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Логотип прижат влево с отступом 24px",
+      "selector": ".logo",
+      "property": "left",
+      "expected": 24,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Логотип по центру высоты шапки",
+      "selector": ".logo",
+      "property": "top",
+      "expected": 16,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Первая ссылка на своём месте",
+      "selector": ".links a:nth-child(1)",
+      "property": "left",
+      "expected": 512,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Вторая ссылка: промежуток 24px",
+      "selector": ".links a:nth-child(2)",
+      "property": "left",
+      "expected": 608,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Последняя ссылка прижата вправо с отступом 24px",
+      "selector": ".links a:nth-child(3)",
+      "property": "right",
+      "expected": 776,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Ссылки по центру высоты шапки",
+      "selector": ".links a:nth-child(1)",
+      "property": "top",
+      "expected": 20,
+      "tolerance": 1
+    }
+  ]
+}

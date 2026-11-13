@@ -1,0 +1,66 @@
+{
+  "id": "js-301-closure-step-counter",
+  "title": "JS #31 Счётчик с приватным состоянием и сбросом",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "closures",
+  "mapTopics": [
+    "Closures",
+    "Lexical Scope"
+  ],
+  "learn": "Замыкание позволяет методам объекта обращаться к переменным внешней функции, при этом снаружи изменить счётчик напрямую невозможно.",
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "prompt": "Напиши функцию `createStepCounter(initial = 0, step = 1)`, которая возвращает объект с тремя методами: `next()` увеличивает текущее значение на `step` и возвращает новое число, `peek()` возвращает текущее значение без изменения, а `reset()` сбрасывает значение обратно к исходному `initial` и возвращает его.",
+  "specs": [
+    "Два разных счётчика не должны делить одну глобальную переменную",
+    "Метод reset() возвращает счётчик к переданному initial (даже если initial не равен 0)",
+    "На самом возвращаемом объекте не должно быть публичного поля count или value"
+  ],
+  "starterJs": "function createStepCounter(initial = 0, step = 1) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: JavaScript замыкания приватный счётчик"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/JavaScript/Closures"
+    },
+    {
+      "tier": 3,
+      "text": "Храни текущее число в локальной переменной внутри функции, а при сбросе присваивай ей стартовый аргумент."
+    }
+  ],
+  "tests": [
+    {
+      "name": "шаг по умолчанию и чтение peek()",
+      "call": "(() => { const c = createStepCounter(10, 5); return [c.peek(), c.next(), c.next(), c.peek()]; })()",
+      "expected": [
+        10,
+        15,
+        20,
+        20
+      ]
+    },
+    {
+      "name": "сброс возвращает к initial, а не к нулю",
+      "call": "(() => { const c = createStepCounter(10, 5); c.next(); return [c.reset(), c.next()]; })()",
+      "expected": [
+        10,
+        15
+      ]
+    },
+    {
+      "name": "состояние изолировано в замыкании",
+      "call": "(() => { const c = createStepCounter(5, 2); return Object.keys(c).sort(); })()",
+      "expected": [
+        "next",
+        "peek",
+        "reset"
+      ]
+    }
+  ],
+  "solution": "function createStepCounter(initial = 0, step = 1) {\n  let current = initial;\n  return {\n    next() {\n      current += step;\n      return current;\n    },\n    peek() {\n      return current;\n    },\n    reset() {\n      current = initial;\n      return current;\n    },\n  };\n}"
+}

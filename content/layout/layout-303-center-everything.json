@@ -1,0 +1,90 @@
+{
+  "track": "layout",
+  "isBoss": false,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<div class=\"stage\" id=\"s1\"><div class=\"box\"></div></div>\n<div class=\"stage\" id=\"s2\"><div class=\"box\"></div></div>\n<div class=\"stage\" id=\"s3\"><div class=\"box\"></div></div>",
+  "targetCss": "body { margin: 0; }\n.stage { display: grid; place-items: center; background: #e2e8f0; margin: 0 0 20px; }\n#s1 { width: 300px; height: 200px; }\n#s2 { width: 480px; height: 300px; }\n#s3 { width: 200px; height: 200px; }\n.box { width: 100px; height: 60px; background: #2563eb; }",
+  "solution": "/* HTML */\n<div class=\"stage\" id=\"s1\"><div class=\"box\"></div></div>\n<div class=\"stage\" id=\"s2\"><div class=\"box\"></div></div>\n<div class=\"stage\" id=\"s3\"><div class=\"box\"></div></div>\n\n/* CSS */\nbody { margin: 0; }\n.stage { display: grid; place-items: center; background: #e2e8f0; margin: 0 0 20px; }\n#s1 { width: 300px; height: 200px; }\n#s2 { width: 480px; height: 300px; }\n#s3 { width: 200px; height: 200px; }\n.box { width: 100px; height: 60px; background: #2563eb; }",
+  "id": "layout-303-center-everything",
+  "title": "Центрирование, которое переживёт любой размер",
+  "level": 3,
+  "topic": "centering",
+  "mapTopics": [
+    "CSS #42 justify-content и align-items",
+    "CSS #49 Центрирование всеми способами"
+  ],
+  "learn": "Центрировать без подсчёта пикселей вручную.",
+  "prompt": "Поставь синий квадрат .box ровно в центр каждой из трёх серых сцен. Сцены разного размера, а оформляться все должны одним общим правилом: если завтра сцена изменится, квадрат должен остаться по центру.",
+  "specs": [
+    "Размер квадрата (100×60) и сцен менять нельзя",
+    "Правила для отдельных сцен по id писать не нужно: проверка поймает любой «ручной» расчёт"
+  ],
+  "starterHtml": "<div class=\"stage\" id=\"s1\"><div class=\"box\"></div></div>\n<div class=\"stage\" id=\"s2\"><div class=\"box\"></div></div>\n<div class=\"stage\" id=\"s3\"><div class=\"box\"></div></div>\n",
+  "starterCss": "body { margin: 0; }\n.stage { background: #e2e8f0; margin: 0 0 20px; }\n#s1 { width: 300px; height: 200px; }\n#s2 { width: 480px; height: 300px; }\n#s3 { width: 200px; height: 200px; }\n.box { width: 100px; height: 60px; background: #2563eb; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: как отцентрировать div по вертикали и горизонтали, flexbox center, grid place-items."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Aligning_items_in_a_flex_container"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: достаточно одного правила на общий класс сцены. Есть два современных способа (на разных системах раскладки), у каждого для этого хватает двух-трёх свойств."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Сцена 1: квадрат по центру по горизонтали",
+      "selector": "#s1 .box",
+      "property": "left",
+      "expected": 100,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Сцена 1: квадрат по центру по вертикали",
+      "selector": "#s1 .box",
+      "property": "top",
+      "expected": 70,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Сцена 2: квадрат по центру по горизонтали",
+      "selector": "#s2 .box",
+      "property": "left",
+      "expected": 190,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Сцена 2: квадрат по центру по вертикали",
+      "selector": "#s2 .box",
+      "property": "top",
+      "expected": 340,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Сцена 3: квадрат по центру по горизонтали",
+      "selector": "#s3 .box",
+      "property": "left",
+      "expected": 50,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Сцена 3: квадрат по центру по вертикали",
+      "selector": "#s3 .box",
+      "property": "top",
+      "expected": 610,
+      "tolerance": 1
+    }
+  ]
+}

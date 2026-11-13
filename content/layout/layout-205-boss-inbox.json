@@ -1,0 +1,115 @@
+{
+  "track": "layout",
+  "isBoss": true,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<ul id=\"inbox\">\n  <li class=\"item\">Новый комментарий к вашему посту</li>\n  <li class=\"item read\">Вас упомянули в обсуждении</li>\n  <li class=\"item read error\">Не удалось отправить файл</li>\n  <li class=\"item\">Пришло приглашение в команду</li>\n  <li class=\"item read\">Еженедельный отчёт готов</li>\n</ul>",
+  "targetCss": "body { margin: 24px; }\n#inbox { list-style: none; margin: 0; padding: 0; width: 360px; }\n#inbox .item { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #0f172a; margin-top: 8px; }\n#inbox .read { color: #94a3b8; }\n.error { color: #dc2626; }\n#inbox .item:not(.read) { font-weight: 700; border-left: 4px solid #2563eb; }\n#inbox .read.error { color: #dc2626; }\n#inbox .item:first-child { margin-top: 0; }\n#inbox .item:last-child { border-bottom: 0; }",
+  "solution": "/* HTML */\n<ul id=\"inbox\">\n  <li class=\"item\">Новый комментарий к вашему посту</li>\n  <li class=\"item read\">Вас упомянули в обсуждении</li>\n  <li class=\"item read error\">Не удалось отправить файл</li>\n  <li class=\"item\">Пришло приглашение в команду</li>\n  <li class=\"item read\">Еженедельный отчёт готов</li>\n</ul>\n\n/* CSS */\nbody { margin: 24px; }\n#inbox { list-style: none; margin: 0; padding: 0; width: 360px; }\n#inbox .item { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #0f172a; margin-top: 8px; }\n#inbox .read { color: #94a3b8; }\n.error { color: #dc2626; }\n#inbox .item:not(.read) { font-weight: 700; border-left: 4px solid #2563eb; }\n#inbox .read.error { color: #dc2626; }\n#inbox .item:first-child { margin-top: 0; }\n#inbox .item:last-child { border-bottom: 0; }",
+  "id": "layout-205-boss-inbox",
+  "title": "Босс: входящие без !important",
+  "level": 2,
+  "topic": "cascade-boss",
+  "mapTopics": [
+    "CSS #21 Каскад",
+    "CSS #22 Подсчёт специфичности",
+    "CSS #29 Структурные",
+    "CSS #30 :not(), :is(), :where()"
+  ],
+  "learn": "Как выиграть битву селекторов, не прибегая к !important.",
+  "prompt": "Оформи список уведомлений. Непрочитанные (без класса read) выделены жирным и синей полосой слева шириной 4px (#2563eb). Прочитанные остаются серыми и обычной толщины. Ошибка (класс error) всегда красная (#dc2626), даже если она прочитана. У первого пункта нет верхнего отступа, у последнего нет нижней линии.",
+  "specs": [
+    "Готовые правила не редактируй и не удаляй, только добавляй новые",
+    "Слово !important использовать нельзя",
+    "HTML не меняй"
+  ],
+  "starterHtml": "<ul id=\"inbox\">\n  <li class=\"item\">Новый комментарий к вашему посту</li>\n  <li class=\"item read\">Вас упомянули в обсуждении</li>\n  <li class=\"item read error\">Не удалось отправить файл</li>\n  <li class=\"item\">Пришло приглашение в команду</li>\n  <li class=\"item read\">Еженедельный отчёт готов</li>\n</ul>\n",
+  "starterCss": "body { margin: 24px; }\n#inbox { list-style: none; margin: 0; padding: 0; width: 360px; }\n#inbox .item { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #0f172a; margin-top: 8px; }\n#inbox .read { color: #94a3b8; }\n.error { color: #dc2626; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: css :not() selector, css specificity id class, почему margin не перебивается."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/:not"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: у существующих правил в селекторе есть id, а значит новые правила тоже должны «весить» не меньше. Для «не прочитано» нужен селектор с отрицанием, для «красная ошибка» нужно перевесить серый цвет прочитанных."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Непрочитанное: жирный шрифт",
+      "selector": "#inbox li:nth-child(1)",
+      "property": "fontWeight",
+      "expected": "700"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Непрочитанное: синяя полоса 4px слева",
+      "selector": "#inbox li:nth-child(1)",
+      "property": "borderLeftWidth",
+      "expected": "4px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Цвет полосы синий",
+      "selector": "#inbox li:nth-child(1)",
+      "property": "borderLeftColor",
+      "expected": "rgb(37, 99, 235)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "У первого пункта нет верхнего отступа",
+      "selector": "#inbox li:nth-child(1)",
+      "property": "marginTop",
+      "expected": "0px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Прочитанное: серый текст",
+      "selector": "#inbox li:nth-child(2)",
+      "property": "color",
+      "expected": "rgb(148, 163, 184)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Прочитанное: обычная толщина",
+      "selector": "#inbox li:nth-child(2)",
+      "property": "fontWeight",
+      "expected": "400"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Прочитанное: без полосы слева",
+      "selector": "#inbox li:nth-child(2)",
+      "property": "borderLeftWidth",
+      "expected": "0px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Прочитанная ошибка красная",
+      "selector": "#inbox li:nth-child(3)",
+      "property": "color",
+      "expected": "rgb(220, 38, 38)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Второе непрочитанное тоже жирное",
+      "selector": "#inbox li:nth-child(4)",
+      "property": "fontWeight",
+      "expected": "700"
+    },
+    {
+      "type": "computedStyle",
+      "name": "У последнего пункта нет нижней линии",
+      "selector": "#inbox li:last-child",
+      "property": "borderBottomWidth",
+      "expected": "0px"
+    }
+  ]
+}

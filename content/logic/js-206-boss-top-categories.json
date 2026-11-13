@@ -1,0 +1,97 @@
+{
+  "track": "logic",
+  "isBoss": true,
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "starterHtml": "",
+  "starterCss": "",
+  "codeChecks": [],
+  "id": "js-206-boss-top-categories",
+  "title": "Босс: топ категорий по выручке",
+  "level": 2,
+  "topic": "data-pipeline-boss",
+  "mapTopics": [
+    "JS #26 reduce",
+    "JS #28 flat, flatMap, Array.from",
+    "JS #31 Object.entries",
+    "JS #6 Числа: почему 0.1 + 0.2 !== 0.3"
+  ],
+  "learn": "Как собрать отчёт из вложенных данных и не попасться на ошибки округления.",
+  "prompt": "Есть список заказов, в каждом заказе список позиций { category, price, qty }. Напиши функцию topCategories(orders, n): она возвращает n категорий с самой большой выручкой (цена × количество, по всем заказам) в виде массива { category, total }, по убыванию выручки. При равной выручке категории идут по алфавиту. Выручка округляется до копеек (2 знака). Если категорий меньше n, верни все.",
+  "specs": [
+    "Функция называется topCategories и принимает массив заказов и число n",
+    "Каждый заказ выглядит как { id, items: [{ category, price, qty }] }",
+    "Округляй итоговую сумму категории, а не каждую позицию отдельно"
+  ],
+  "starterJs": "// orders: [{ id, items: [{ category, price, qty }] }]\nfunction topCategories(orders, n) {\n\n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: javascript flatMap вложенные массивы, Object.entries сортировка по значению, округление до 2 знаков."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: сначала разверни заказы в один плоский список позиций, потом накопи выручку по категориям в объекте, потом преврати его в массив пар, отсортируй сначала по сумме, при равенстве по названию, и обрежь до n. Дробные суммы в JS накапливают микро-ошибки, округли в самом конце."
+    }
+  ],
+  "tests": [
+    {
+      "name": "обычный отчёт",
+      "call": "topCategories([{ id: 1, items: [{ category: 'books', price: 10, qty: 2 }, { category: 'toys', price: 5, qty: 1 }] }, { id: 2, items: [{ category: 'books', price: 7.5, qty: 2 }, { category: 'food', price: 3, qty: 10 }] }], 2)",
+      "expected": [
+        {
+          "category": "books",
+          "total": 35
+        },
+        {
+          "category": "food",
+          "total": 30
+        }
+      ]
+    },
+    {
+      "name": "равная выручка: по алфавиту",
+      "call": "topCategories([{ id: 1, items: [{ category: 'b', price: 10, qty: 1 }, { category: 'a', price: 5, qty: 2 }, { category: 'c', price: 5, qty: 1 }] }], 2)",
+      "expected": [
+        {
+          "category": "a",
+          "total": 10
+        },
+        {
+          "category": "b",
+          "total": 10
+        }
+      ]
+    },
+    {
+      "name": "ошибки округления",
+      "call": "topCategories([{ id: 1, items: [{ category: 'tea', price: 0.1, qty: 3 }, { category: 'tea', price: 0.2, qty: 1 }] }], 1)",
+      "expected": [
+        {
+          "category": "tea",
+          "total": 0.5
+        }
+      ]
+    },
+    {
+      "name": "n больше числа категорий",
+      "call": "topCategories([{ id: 1, items: [{ category: 'x', price: 1, qty: 1 }] }], 5)",
+      "expected": [
+        {
+          "category": "x",
+          "total": 1
+        }
+      ]
+    },
+    {
+      "name": "нет заказов",
+      "call": "topCategories([], 3)",
+      "expected": []
+    }
+  ],
+  "solution": "function topCategories(orders, n) {\n  const totals = {};\n  for (const item of orders.flatMap((order) => order.items)) {\n    totals[item.category] = (totals[item.category] ?? 0) + item.price * item.qty;\n  }\n  return Object.entries(totals)\n    .map(([category, total]) => ({ category, total: Math.round(total * 100) / 100 }))\n    .sort((a, b) => b.total - a.total || a.category.localeCompare(b.category))\n    .slice(0, n);\n}"
+}

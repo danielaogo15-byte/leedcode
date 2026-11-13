@@ -1,0 +1,70 @@
+{
+  "track": "layout",
+  "isBoss": false,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<div class=\"note\">\n  <p>Нужна помощь? <a href=\"#help\">Напишите нам</a> или нажмите:</p>\n  <button type=\"button\">Связаться</button>\n</div>",
+  "targetCss": "body { margin: 24px; }\n.note { color: #1f6f43; font-family: Georgia, serif; font-size: 18px; line-height: 1.5; }\n.note a, .note button { color: inherit; font: inherit; }",
+  "solution": "/* HTML */\n<div class=\"note\">\n  <p>Нужна помощь? <a href=\"#help\">Напишите нам</a> или нажмите:</p>\n  <button type=\"button\">Связаться</button>\n</div>\n\n/* CSS */\nbody { margin: 24px; }\n.note { color: #1f6f43; font-family: Georgia, serif; font-size: 18px; line-height: 1.5; }\n.note a, .note button { color: inherit; font: inherit; }",
+  "id": "layout-202-inherit-trap",
+  "title": "Ссылка и кнопка в чужом оформлении",
+  "level": 2,
+  "topic": "inheritance",
+  "mapTopics": [
+    "CSS #24 Наследование",
+    "CSS #25 inherit, initial, unset, revert"
+  ],
+  "learn": "Не всё наследуется само: ссылки и кнопки живут по своим правилам.",
+  "prompt": "Внутри блока с примечанием ссылка и кнопка выглядят чужими: у ссылки свой цвет, у кнопки свой шрифт. Сделай так, чтобы они выглядели как остальной текст блока: тот же цвет текста, тот же шрифт и размер.",
+  "specs": [
+    "Менять оформление самого блока .note нельзя, он уже настроен",
+    "Не копируй значения цвета и шрифта вручную: нужно, чтобы они брались от блока"
+  ],
+  "starterHtml": "<div class=\"note\">\n  <p>Нужна помощь? <a href=\"#help\">Напишите нам</a> или нажмите:</p>\n  <button type=\"button\">Связаться</button>\n</div>\n",
+  "starterCss": "body { margin: 24px; }\n.note { color: #1f6f43; font-family: Georgia, serif; font-size: 18px; line-height: 1.5; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: css inherit keyword, почему button не наследует font-family."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/inherit"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: для нужных элементов можно прямо сказать «возьми значение у родителя». Для шрифта есть сокращённая запись, которая забирает сразу и семейство, и размер."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Ссылка того же цвета, что и текст блока",
+      "selector": ".note a",
+      "property": "color",
+      "expected": "rgb(31, 111, 67)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Кнопка того же цвета",
+      "selector": ".note button",
+      "property": "color",
+      "expected": "rgb(31, 111, 67)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Кнопка того же шрифта",
+      "selector": ".note button",
+      "property": "fontFamily",
+      "expected": "Georgia, serif"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Кнопка того же размера шрифта",
+      "selector": ".note button",
+      "property": "fontSize",
+      "expected": "18px"
+    }
+  ]
+}

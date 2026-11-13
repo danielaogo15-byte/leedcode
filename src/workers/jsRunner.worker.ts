@@ -42,11 +42,13 @@ function deepEqual(a: unknown, b: unknown): boolean {
   }
 }
 
-function runWithCapturedConsole<T>(fn: () => T): {
+async function runWithCapturedConsole<T>(
+  fn: () => T | Promise<T>,
+): Promise<{
   value: T;
   logs: string[];
   durationMs: number;
-} {
+}> {
   const logs: string[] = [];
   const originalLog = console.log;
   const originalInfo = console.info;
@@ -65,15 +67,18 @@ function runWithCapturedConsole<T>(fn: () => T): {
 
   const start = performance.now();
   try {
-    const value = fn();
+    const value = await fn();
     const durationMs = Math.max(1, Math.round(performance.now() - start));
     return { value, logs, durationMs };
   } catch (err) {
     const durationMs = Math.max(1, Math.round(performance.now() - start));
-    throw Object.assign(new Error(err instanceof Error ? err.message : String(err)), {
-      capturedLogs: logs,
-      durationMs,
-    });
+    throw Object.assign(
+      new Error(err instanceof Error ? err.message : String(err)),
+      {
+        capturedLogs: logs,
+        durationMs,
+      },
+    );
   } finally {
     console.log = originalLog;
     console.info = originalInfo;
@@ -82,13 +87,15 @@ function runWithCapturedConsole<T>(fn: () => T): {
   }
 }
 
-self.onmessage = (event: MessageEvent<WorkerRequest>) => {
+self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
   const data = event.data;
 
   if (data.mode === 'custom') {
     try {
-      const { value, logs, durationMs } = runWithCapturedConsole(() => {
-        const runnerFn = new Function(`${data.code}\nreturn (${data.customCall});`);
+      const { value, logs, durationMs } = await runWithCapturedConsole(() => {
+        const runnerFn = new Function(
+          `${data.code}\nreturn (${data.customCall});`,
+        );
         return runnerFn();
       });
       const customResult: CustomRunOutcome = {
@@ -117,37 +124,42 @@ self.onmessage = (event: MessageEvent<WorkerRequest>) => {
   }
 
   const { code, tests } = data;
+  const results: TestResultItem[] = [];
 
-  const results: TestResultItem[] = tests.map((test) => {
+  for (const test of tests) {
     try {
-      const { value: actual, logs, durationMs } = runWithCapturedConsole(() => {
+      const {
+        value: actual,
+        logs,
+        durationMs,
+      } = await runWithCapturedConsole(() => {
         const runnerFn = new Function(`${code}\nreturn (${test.call});`);
         return runnerFn();
       });
       const passed = deepEqual(actual, test.expected);
-      return {
+      results.push({
         name: test.name,
         passed,
         expected: formatValue(test.expected),
         received: formatValue(actual),
         logs,
         durationMs,
-      };
+      });
     } catch (error) {
       const errObj = error as Error & {
         capturedLogs?: string[];
         durationMs?: number;
       };
-      return {
+      results.push({
         name: test.name,
         passed: false,
         expected: formatValue(test.expected),
         received: `Ошибка: ${errObj.message}`,
         logs: errObj.capturedLogs ?? [],
         durationMs: errObj.durationMs ?? 1,
-      };
+      });
     }
-  });
+  }
 
   self.postMessage({ results });
 };

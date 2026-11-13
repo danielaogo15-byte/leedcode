@@ -1,0 +1,79 @@
+{
+  "id": "layout-406-boss-bento-grid",
+  "title": "Босс: Адаптивная Bento-сетка аналитики",
+  "track": "layout",
+  "level": 4,
+  "isBoss": true,
+  "topic": "css-grid-boss",
+  "mapTopics": [
+    "CSS Grid",
+    "Media Queries",
+    "Bento Layout"
+  ],
+  "learn": "Комбинирование двумерного растяжения ячеек (по колонкам и строкам одновременно) со сбросом в одноколоночную сетку на узком экране.",
+  "needsDom": true,
+  "codeLanguage": "css",
+  "prompt": "Собери Bento-сетку .bento из 3 равных колонок и 2 строк по 100px (отступ 12px). Главный график .bento-main должен занимать 2 колонки в ширину и 2 строки в высоту, а на экранах <= 600px вся сетка должна перестраиваться в 1 колонку.",
+  "specs": [
+    "На десктопе .bento: 3 равные колонки, 2 строки по 100px, промежуток 12px",
+    "Блок .bento-main на десктопе растянут на 2 колонки и 2 строки",
+    "На экранах <= 600px у .bento остаётся 1 колонка, а .bento-main занимает 1 колонку и 1 строку"
+  ],
+  "starterHtml": "<section class=\"bento\">\n  <div class=\"box bento-main\">Выручка за год</div>\n  <div class=\"box\">Конверсия 4.8%</div>\n  <div class=\"box\">Новых: 142</div>\n</section>\n",
+  "starterCss": ".bento {\n  width: 100%;\n  max-width: 624px;\n}\n\n.box {\n  background: #1e293b;\n  color: #f8fafc;\n  padding: 16px;\n  border-radius: 12px;\n  font-weight: 600;\n}\n\n.bento-main {\n  background: #0284c7;\n}\n",
+  "targetHtml": "<section class=\"bento\">\n  <div class=\"box bento-main\">Выручка за год</div>\n  <div class=\"box\">Конверсия 4.8%</div>\n  <div class=\"box\">Новых: 142</div>\n</section>",
+  "targetCss": ".bento {\n  width: 100%;\n  max-width: 624px;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: 100px;\n  gap: 12px;\n}\n.box {\n  background: #1e293b;\n  color: #f8fafc;\n  padding: 16px;\n  border-radius: 12px;\n  font-weight: 600;\n}\n.bento-main {\n  background: #0284c7;\n  grid-column: span 2;\n  grid-row: span 2;\n}\n@media (max-width: 600px) {\n  .bento {\n    grid-template-columns: 1fr;\n  }\n  .bento-main {\n    grid-column: span 1;\n    grid-row: span 1;\n  }\n}",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: CSS Grid bento layout grid-column span 2 grid-row span 2"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/CSS/grid-row"
+    },
+    {
+      "tier": 3,
+      "text": "Задай .bento три колонки, авто-высоту строк 100px и gap 12px. Главному блоку дай растяжение на 2 дорожки по обеим осям, а в медиазапросе до 600px сбрось сетку и растяжение в 1 дорожку."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "На десктопе .bento-main имеет ширину 412px (2 колонки + gap)",
+      "selector": ".bento-main",
+      "property": "width",
+      "expected": 412,
+      "tolerance": 2,
+      "viewportWidth": 1024
+    },
+    {
+      "type": "boundingRect",
+      "name": "На десктопе .bento-main имеет высоту 212px (2 строки по 100px + gap)",
+      "selector": ".bento-main",
+      "property": "height",
+      "expected": 212,
+      "tolerance": 2,
+      "viewportWidth": 1024
+    },
+    {
+      "type": "boundingRect",
+      "name": "Третья карточка стоит под второй в 3-й колонке (left: 424px, top: 112px)",
+      "selector": ".bento .box:nth-child(3)",
+      "property": "left",
+      "expected": 424,
+      "tolerance": 2,
+      "viewportWidth": 1024
+    },
+    {
+      "type": "boundingRect",
+      "name": "На мобильном (480px) все карточки выстраиваются в 1 колонку (left: 0 у второй карточки)",
+      "selector": ".bento .box:nth-child(2)",
+      "property": "left",
+      "expected": 0,
+      "tolerance": 2,
+      "viewportWidth": 480
+    }
+  ],
+  "solution": ".bento {\n  width: 100%;\n  max-width: 624px;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: 100px;\n  gap: 12px;\n}\n\n.box {\n  background: #1e293b;\n  color: #f8fafc;\n  padding: 16px;\n  border-radius: 12px;\n  font-weight: 600;\n}\n\n.bento-main {\n  background: #0284c7;\n  grid-column: span 2;\n  grid-row: span 2;\n}\n\n@media (max-width: 600px) {\n  .bento {\n    grid-template-columns: 1fr;\n  }\n  .bento-main {\n    grid-column: span 1;\n    grid-row: span 1;\n  }\n}"
+}

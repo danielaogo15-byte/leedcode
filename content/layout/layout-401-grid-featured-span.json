@@ -1,0 +1,73 @@
+{
+  "id": "layout-401-grid-featured-span",
+  "title": "CSS #52 Витрина каталога с широкой карточкой",
+  "track": "layout",
+  "level": 4,
+  "isBoss": false,
+  "topic": "css-grid",
+  "mapTopics": [
+    "CSS Grid",
+    "Grid Tracks"
+  ],
+  "learn": "В Grid элемент растягивается на несколько колонок не фиксированной шириной в пикселях, а указанием числа занимаемых дорожек.",
+  "needsDom": true,
+  "codeLanguage": "css",
+  "prompt": "Разложи карточки товаров в три равные колонки. Первая карточка («Хит сезона») должна занимать сразу две колонки в первом ряду, а остальные — по одной ячейке.",
+  "specs": [
+    "Контейнер .catalog шириной 632px раскладывает элементы в 3 равные колонки с промежутком 16px между строками и колонками",
+    "Карточка .card-featured занимает 2 колонки по горизонтали",
+    "Высота каждой карточки — 96px"
+  ],
+  "starterHtml": "<div class=\"catalog\">\n  <article class=\"card card-featured\">Хит сезона</article>\n  <article class=\"card\">Новинка</article>\n  <article class=\"card\">Скидка</article>\n  <article class=\"card\">Базовый</article>\n  <article class=\"card\">Лимит</article>\n</div>\n",
+  "starterCss": ".catalog {\n  width: 632px;\n}\n\n.card {\n  height: 96px;\n  padding: 16px;\n  background: #1e293b;\n  color: #f8fafc;\n  border-radius: 10px;\n  font-weight: 600;\n}\n\n.card-featured {\n  background: #0284c7;\n}\n",
+  "targetHtml": "<div class=\"catalog\">\n  <article class=\"card card-featured\">Хит сезона</article>\n  <article class=\"card\">Новинка</article>\n  <article class=\"card\">Скидка</article>\n  <article class=\"card\">Базовый</article>\n  <article class=\"card\">Лимит</article>\n</div>",
+  "targetCss": ".catalog {\n  width: 632px;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 16px;\n}\n.card {\n  height: 96px;\n  padding: 16px;\n  background: #1e293b;\n  color: #f8fafc;\n  border-radius: 10px;\n  font-weight: 600;\n}\n.card-featured {\n  background: #0284c7;\n  grid-column: span 2;\n}",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: CSS Grid растянуть элемент на 2 колонки"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/CSS/grid-column"
+    },
+    {
+      "tier": 3,
+      "text": "Контейнеру нужна трёхколоночная сетка с отступом 16px, а акцентной карточке — правило растяжения на две колонки."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".catalog использует Grid",
+      "selector": ".catalog",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "boundingRect",
+      "name": "Акцентная карточка занимает 2 колонки + промежуток (416px)",
+      "selector": ".card-featured",
+      "property": "width",
+      "expected": 416,
+      "tolerance": 2
+    },
+    {
+      "type": "boundingRect",
+      "name": "Вторая карточка стоит в 3-й колонке первого ряда (left: 432px)",
+      "selector": ".catalog .card:nth-child(2)",
+      "property": "left",
+      "expected": 432,
+      "tolerance": 2
+    },
+    {
+      "type": "boundingRect",
+      "name": "Третья карточка перенеслась во второй ряд (top: 112px)",
+      "selector": ".catalog .card:nth-child(3)",
+      "property": "top",
+      "expected": 112,
+      "tolerance": 2
+    }
+  ],
+  "solution": ".catalog {\n  width: 632px;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 16px;\n}\n\n.card {\n  height: 96px;\n  padding: 16px;\n  background: #1e293b;\n  color: #f8fafc;\n  border-radius: 10px;\n  font-weight: 600;\n}\n\n.card-featured {\n  background: #0284c7;\n  grid-column: span 2;\n}"
+}

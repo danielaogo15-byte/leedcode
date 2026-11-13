@@ -1,0 +1,109 @@
+{
+  "track": "layout",
+  "isBoss": true,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<div class=\"app\">\n  <header class=\"top\">Тренажёр</header>\n  <div class=\"middle\">\n    <aside class=\"side\">Меню</aside>\n    <main class=\"main\">\n      <p>Строка 1</p>\n      <p>Строка 2</p>\n      <p>Строка 3</p>\n      <p>Строка 4</p>\n      <p>Строка 5</p>\n      <p>Строка 6</p>\n      <p>Строка 7</p>\n      <p>Строка 8</p>\n      <p>Строка 9</p>\n      <p>Строка 10</p>\n      <p>Строка 11</p>\n      <p>Строка 12</p>\n      <p>Строка 13</p>\n      <p>Строка 14</p>\n      <p>Строка 15</p>\n      <p>Строка 16</p>\n      <p>Строка 17</p>\n      <p>Строка 18</p>\n      <p>Строка 19</p>\n      <p>Строка 20</p>\n      <p>Строка 21</p>\n      <p>Строка 22</p>\n      <p>Строка 23</p>\n      <p>Строка 24</p>\n    </main>\n  </div>\n  <footer class=\"foot\">© 2026</footer>\n</div>",
+  "targetCss": "body { margin: 0; font: 14px/20px system-ui, sans-serif; }\n.app { display: flex; flex-direction: column; width: 600px; height: 400px; background: #f8fafc; }\n.top { flex: none; height: 56px; background: #0f172a; color: #fff; }\n.middle { flex: 1; display: flex; min-height: 0; }\n.side { flex: none; width: 160px; background: #e2e8f0; }\n.main { flex: 1; overflow: auto; }\n.foot { flex: none; height: 40px; background: #0f172a; color: #fff; }",
+  "solution": "/* HTML */\n<div class=\"app\">\n  <header class=\"top\">Тренажёр</header>\n  <div class=\"middle\">\n    <aside class=\"side\">Меню</aside>\n    <main class=\"main\">\n      <p>Строка 1</p>\n      <p>Строка 2</p>\n      <p>Строка 3</p>\n      <p>Строка 4</p>\n      <p>Строка 5</p>\n      <p>Строка 6</p>\n      <p>Строка 7</p>\n      <p>Строка 8</p>\n      <p>Строка 9</p>\n      <p>Строка 10</p>\n      <p>Строка 11</p>\n      <p>Строка 12</p>\n      <p>Строка 13</p>\n      <p>Строка 14</p>\n      <p>Строка 15</p>\n      <p>Строка 16</p>\n      <p>Строка 17</p>\n      <p>Строка 18</p>\n      <p>Строка 19</p>\n      <p>Строка 20</p>\n      <p>Строка 21</p>\n      <p>Строка 22</p>\n      <p>Строка 23</p>\n      <p>Строка 24</p>\n    </main>\n  </div>\n  <footer class=\"foot\">© 2026</footer>\n</div>\n\n/* CSS */\nbody { margin: 0; font: 14px/20px system-ui, sans-serif; }\n.app { display: flex; flex-direction: column; width: 600px; height: 400px; background: #f8fafc; }\n.top { flex: none; height: 56px; background: #0f172a; color: #fff; }\n.middle { flex: 1; display: flex; min-height: 0; }\n.side { flex: none; width: 160px; background: #e2e8f0; }\n.main { flex: 1; overflow: auto; }\n.foot { flex: none; height: 40px; background: #0f172a; color: #fff; }",
+  "id": "layout-305-boss-app-layout",
+  "title": "Босс: каркас приложения с прокруткой внутри",
+  "level": 3,
+  "topic": "flex-layout-boss",
+  "mapTopics": [
+    "CSS #41 Flexbox",
+    "CSS #45 flex-grow, flex-shrink, flex-basis",
+    "CSS #48 min-width: 0 и переполнение",
+    "CSS #18 overflow"
+  ],
+  "learn": "Как заставить длинное содержимое прокручиваться внутри области, а не растягивать всю страницу.",
+  "prompt": "Собери каркас приложения 600×400: сверху шапка 56px, снизу подвал 40px, слева меню 160px, справа основная область занимает всё остальное. Основной контент очень длинный, но страница расти не должна: прокручиваться должна только основная область.",
+  "specs": [
+    "Размеры шапки, подвала и меню уже заданы в стартовом коде",
+    "Общая высота .app остаётся 400px",
+    "Можно менять HTML: обёртка .middle уже стоит на своём месте"
+  ],
+  "starterHtml": "<div class=\"app\">\n  <header class=\"top\">Тренажёр</header>\n  <div class=\"middle\">\n    <aside class=\"side\">Меню</aside>\n    <main class=\"main\">\n      <p>Строка 1</p>\n      <p>Строка 2</p>\n      <p>Строка 3</p>\n      <p>Строка 4</p>\n      <p>Строка 5</p>\n      <p>Строка 6</p>\n      <p>Строка 7</p>\n      <p>Строка 8</p>\n      <p>Строка 9</p>\n      <p>Строка 10</p>\n      <p>Строка 11</p>\n      <p>Строка 12</p>\n      <p>Строка 13</p>\n      <p>Строка 14</p>\n      <p>Строка 15</p>\n      <p>Строка 16</p>\n      <p>Строка 17</p>\n      <p>Строка 18</p>\n      <p>Строка 19</p>\n      <p>Строка 20</p>\n      <p>Строка 21</p>\n      <p>Строка 22</p>\n      <p>Строка 23</p>\n      <p>Строка 24</p>\n    </main>\n  </div>\n  <footer class=\"foot\">© 2026</footer>\n</div>\n",
+  "starterCss": "body { margin: 0; font: 14px/20px system-ui, sans-serif; }\n.app { width: 600px; height: 400px; background: #f8fafc; }\n.top { height: 56px; background: #0f172a; color: #fff; }\n.side { width: 160px; background: #e2e8f0; }\n.foot { height: 40px; background: #0f172a; color: #fff; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: flexbox sticky footer, flex column height 100%, min-height 0 flex scroll, overflow auto."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/min-width"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: два уровня флекса, внешний вертикальный и внутренний горизонтальный. Средняя часть должна занять оставшуюся высоту, но по умолчанию её «минимальная высота» равна высоте всего контента, и страница растёт. Это поведение надо отключить, а прокрутку включить на основной области."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Общая высота каркаса осталась 400px",
+      "selector": ".app",
+      "property": "height",
+      "expected": 400,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Подвал прижат к низу",
+      "selector": ".foot",
+      "property": "top",
+      "expected": 360,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Меню начинается под шапкой",
+      "selector": ".side",
+      "property": "top",
+      "expected": 56,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Ширина меню 160px",
+      "selector": ".side",
+      "property": "width",
+      "expected": 160,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Меню занимает всю высоту между шапкой и подвалом",
+      "selector": ".side",
+      "property": "height",
+      "expected": 304,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Основная область начинается после меню",
+      "selector": ".main",
+      "property": "left",
+      "expected": 160,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Основная область занимает остаток ширины",
+      "selector": ".main",
+      "property": "width",
+      "expected": 440,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Основная область не растёт вместе с контентом",
+      "selector": ".main",
+      "property": "height",
+      "expected": 304,
+      "tolerance": 1
+    }
+  ]
+}

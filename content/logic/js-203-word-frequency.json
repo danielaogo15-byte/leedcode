@@ -1,0 +1,79 @@
+{
+  "track": "logic",
+  "isBoss": false,
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "starterHtml": "",
+  "starterCss": "",
+  "codeChecks": [],
+  "id": "js-203-word-frequency",
+  "title": "Частота слов",
+  "level": 2,
+  "topic": "strings-regex",
+  "mapTopics": [
+    "JS #7 Строки: методы",
+    "JS #30 Вычисляемые ключи",
+    "JS #31 Object.keys, values, entries, fromEntries"
+  ],
+  "learn": "Как разрезать текст на слова и убрать знаки препинания, включая русские буквы.",
+  "prompt": "Напиши функцию wordFrequency(text): она считает, сколько раз встречается каждое слово. Регистр не важен («Привет» и «привет» одно слово), знаки препинания не считаются частью слова, лишние пробелы игнорируются.",
+  "specs": [
+    "Функция называется wordFrequency и принимает строку",
+    "Работает с русскими и английскими словами",
+    "Результат — объект вида { слово: количество }, слова в нижнем регистре"
+  ],
+  "starterJs": "function wordFrequency(text) {\n\n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: javascript split по пробелам регулярка, убрать знаки препинания regex unicode кириллица."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Unicode_character_class_escape"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: сначала приведи к одному регистру и выбрось всё, что не буква и не цифра и не пробел (по умолчанию regexp понимает только латиницу, ищи флаг для Unicode). Потом режь по пробелам, не забывая про пустые куски."
+    }
+  ],
+  "tests": [
+    {
+      "name": "русский текст со знаками",
+      "call": "wordFrequency('Привет, мир! привет')",
+      "expected": {
+        "привет": 2,
+        "мир": 1
+      }
+    },
+    {
+      "name": "лишние пробелы и регистр",
+      "call": "wordFrequency('  a  A b ')",
+      "expected": {
+        "a": 2,
+        "b": 1
+      }
+    },
+    {
+      "name": "пустая строка",
+      "call": "wordFrequency('')",
+      "expected": {}
+    },
+    {
+      "name": "много знаков",
+      "call": "wordFrequency('Hello, hello... HELLO!')",
+      "expected": {
+        "hello": 3
+      }
+    },
+    {
+      "name": "цифры считаются словами",
+      "call": "wordFrequency('go go 2026')",
+      "expected": {
+        "2026": 1,
+        "go": 2
+      }
+    }
+  ],
+  "solution": "function wordFrequency(text) {\n  const words = text\n    .toLowerCase()\n    .replace(/[^\\p{L}\\p{N}\\s]/gu, '')\n    .split(/\\s+/)\n    .filter(Boolean);\n  const result = {};\n  for (const word of words) {\n    result[word] = (result[word] ?? 0) + 1;\n  }\n  return result;\n}"
+}

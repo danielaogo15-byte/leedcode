@@ -10,13 +10,14 @@ type Params = {
   timeoutMs?: number;
 };
 
-export function runDomTask({
-  html,
-  css,
-  js,
-  checks,
-  timeoutMs = 3000,
-}: Params): Promise<RunOutcome> {
+function runIframeAtViewport(
+  html: string,
+  css: string,
+  js: string,
+  checks: TaskCheck[],
+  viewportWidth: number,
+  timeoutMs: number,
+): Promise<{ results: TestResultItem[]; timedOut?: boolean }> {
   return new Promise((resolve) => {
     const runId = `run-${Date.now()}-${Math.random().toString(36).slice(2)}`;
     const iframe = document.createElement('iframe');
@@ -24,7 +25,7 @@ export function runDomTask({
     iframe.style.position = 'fixed';
     iframe.style.left = '0';
     iframe.style.top = '0';
-    iframe.style.width = '1024px';
+    iframe.style.width = `${viewportWidth}px`;
     iframe.style.height = '768px';
     iframe.style.opacity = '0';
     iframe.style.pointerEvents = 'none';
@@ -44,20 +45,21 @@ export function runDomTask({
         expected: 'Выполнение до 3 сек',
         received: 'Таймаут проверки в iframe',
       }));
-      resolve({ results, allPassed: false, timedOut: true });
+      resolve({ results, timedOut: true });
     }, timeoutMs);
 
     function onMessage(event: MessageEvent) {
       const data = event.data;
-      if (!data || data.source !== 'dojo-iframe-runner' || data.runId !== runId) {
+      if (
+        !data ||
+        data.source !== 'dojo-iframe-runner' ||
+        data.runId !== runId
+      ) {
         return;
       }
       window.clearTimeout(timer);
       cleanup();
-      const results: TestResultItem[] = data.results;
-      const allPassed =
-        results.length > 0 && results.every((item) => item.passed);
-      resolve({ results, allPassed });
+      resolve({ results: data.results as TestResultItem[] });
     }
 
     window.addEventListener('message', onMessage);
@@ -72,7 +74,7 @@ export function runDomTask({
   <meta charset="utf-8" />
   <style>
     * { box-sizing: border-box; }
-    body { margin: 16px; padding: 0; font-family: system-ui, sans-serif; }
+    body { margin: 0; padding: 0; font-family: system-ui, sans-serif; }
     ${twCss}
     ${css}
   </style>
@@ -147,7 +149,7 @@ export function runDomTask({
               };
             }
             const rect = el.getBoundingClientRect();
-            const rawVal = rect[check.property] || el.offsetWidth || 0;
+            const rawVal = rect[check.property] !== undefined ? rect[check.property] : (el.offsetWidth || 0);
             const actual = Math.round(Number(rawVal));
             const diff = Math.abs(actual - check.expected);
             return {
@@ -205,4 +207,61 @@ export function runDomTask({
 
     document.body.appendChild(iframe);
   });
+}
+
+export async function runDomTask({
+  html,
+  css,
+  js,
+  checks,
+  timeoutMs = 3000,
+}: Params): Promise<RunOutcome> {
+  const cleanCssWithoutComments = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  if (/!\s*important\b/i.test(cleanCssWithoutComments)) {
+    return {
+      allPassed: false,
+      results: [
+        {
+          name: 'Чистота каскада (без !important)',
+          passed: false,
+          expected: 'Решение за счёт специфичности и каскада',
+          received: 'Обнаружен !important в CSS',
+        },
+      ],
+    };
+  }
+
+  const byViewport = new Map<number, TaskCheck[]>();
+  for (const chk of checks) {
+    const vw =
+      'viewportWidth' in chk && chk.viewportWidth ? chk.viewportWidth : 1024;
+    const list = byViewport.get(vw) ?? [];
+    list.push(chk);
+    byViewport.set(vw, list);
+  }
+
+  const allResults: TestResultItem[] = [];
+  let anyTimedOut = false;
+
+  for (const [vw, vwChecks] of byViewport.entries()) {
+    const out = await runIframeAtViewport(
+      html,
+      css,
+      js,
+      vwChecks,
+      vw,
+      timeoutMs,
+    );
+    allResults.push(...out.results);
+    if (out.timedOut) anyTimedOut = true;
+  }
+
+  const allPassed =
+    allResults.length > 0 && allResults.every((item) => item.passed);
+
+  return {
+    results: allResults,
+    allPassed,
+    timedOut: anyTimedOut,
+  };
 }

@@ -1,0 +1,91 @@
+{
+  "track": "layout",
+  "isBoss": false,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<form>\n  <input type=\"text\" name=\"nickname\" placeholder=\"Ник\">\n  <input type=\"email\" name=\"billing-email\" placeholder=\"Email\" required>\n  <input type=\"text\" name=\"billing-city\" placeholder=\"Город\">\n  <input type=\"text\" name=\"shipping-city\" placeholder=\"Город доставки\" required>\n</form>",
+  "targetCss": "body { margin: 24px; }\ninput { display: block; margin-bottom: 8px; padding: 8px; border: 1px solid #94a3b8; background: #ffffff; }\ninput[required] { border: 2px solid #dc2626; }\ninput[name^=\"billing-\"] { background: #f1f5f9; }",
+  "solution": "/* HTML */\n<form>\n  <input type=\"text\" name=\"nickname\" placeholder=\"Ник\">\n  <input type=\"email\" name=\"billing-email\" placeholder=\"Email\" required>\n  <input type=\"text\" name=\"billing-city\" placeholder=\"Город\">\n  <input type=\"text\" name=\"shipping-city\" placeholder=\"Город доставки\" required>\n</form>\n\n/* CSS */\nbody { margin: 24px; }\ninput { display: block; margin-bottom: 8px; padding: 8px; border: 1px solid #94a3b8; background: #ffffff; }\ninput[required] { border: 2px solid #dc2626; }\ninput[name^=\"billing-\"] { background: #f1f5f9; }",
+  "id": "layout-203-attribute-selectors",
+  "title": "Форма: стили по атрибутам",
+  "level": 2,
+  "topic": "attribute-selectors",
+  "mapTopics": [
+    "CSS #26 Селекторы атрибутов",
+    "CSS #22 Подсчёт специфичности"
+  ],
+  "learn": "Выбирать элементы по атрибутам, не добавляя им классы.",
+  "prompt": "Оформи поля формы, не трогая HTML. Все обязательные поля получают красную рамку толщиной 2px (цвет #dc2626). Все поля, у которых имя начинается с «billing-», получают светло-серый фон (#f1f5f9). Остальные поля остаются как есть.",
+  "specs": [
+    "HTML не меняй: ни классов, ни id добавлять нельзя",
+    "Поле может попасть под оба правила сразу"
+  ],
+  "starterHtml": "<form>\n  <input type=\"text\" name=\"nickname\" placeholder=\"Ник\">\n  <input type=\"email\" name=\"billing-email\" placeholder=\"Email\" required>\n  <input type=\"text\" name=\"billing-city\" placeholder=\"Город\">\n  <input type=\"text\" name=\"shipping-city\" placeholder=\"Город доставки\" required>\n</form>\n",
+  "starterCss": "body { margin: 24px; }\ninput { display: block; margin-bottom: 8px; padding: 8px; border: 1px solid #94a3b8; background: #ffffff; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: css attribute selector, начинается с, атрибут required."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: в квадратных скобках можно проверять не только наличие атрибута, но и то, с чего начинается его значение. Два независимых правила, каждое про свой признак."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Обязательное поле: рамка 2px",
+      "selector": "input[name=\"billing-email\"]",
+      "property": "borderTopWidth",
+      "expected": "2px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Обязательное поле: красный цвет рамки",
+      "selector": "input[name=\"billing-email\"]",
+      "property": "borderTopColor",
+      "expected": "rgb(220, 38, 38)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Обязательное поле «shipping-city» тоже с рамкой 2px",
+      "selector": "input[name=\"shipping-city\"]",
+      "property": "borderTopWidth",
+      "expected": "2px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Необязательное поле «nickname» осталось с рамкой 1px",
+      "selector": "input[name=\"nickname\"]",
+      "property": "borderTopWidth",
+      "expected": "1px"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Поле «billing-email» с серым фоном",
+      "selector": "input[name=\"billing-email\"]",
+      "property": "backgroundColor",
+      "expected": "rgb(241, 245, 249)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Поле «billing-city» с серым фоном",
+      "selector": "input[name=\"billing-city\"]",
+      "property": "backgroundColor",
+      "expected": "rgb(241, 245, 249)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Поле «shipping-city» осталось белым",
+      "selector": "input[name=\"shipping-city\"]",
+      "property": "backgroundColor",
+      "expected": "rgb(255, 255, 255)"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "js-303-group-by-safe",
+  "title": "JS #35 Безопасная группировка элементов по признаку",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "objects-collections",
+  "mapTopics": [
+    "Objects",
+    "Prototypes",
+    "Higher-Order Functions"
+  ],
+  "learn": "У обычного объекта `{}` уже есть свойства прототипа вроде `toString` и `constructor`, поэтому проверка `if (!acc[key])` ломается на таких ключах.",
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "prompt": "Напиши функцию `groupBy(items, getKey)`, которая группирует элементы массива `items` в объект по строковому ключу, возвращаемому функцией `getKey(item)`. Функция должна корректно работать с любыми именами ключей, включая зарезервированные имена методов объекта (например, `\"toString\"`).",
+  "specs": [
+    "Для каждого элемента вызывается getKey(item)",
+    "Элементы внутри каждой группы сохраняют исходный порядок",
+    "Ключ \"toString\" или \"valueOf\" не должен приводить к ошибке"
+  ],
+  "starterJs": "function groupBy(items, getKey) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: JavaScript Object.hasOwn vs in operator prototype pollution"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn"
+    },
+    {
+      "tier": 3,
+      "text": "Проверяй наличие собственного ключа на объекте-аккумуляторе или создавай аккумулятор без прототипа."
+    }
+  ],
+  "tests": [
+    {
+      "name": "группировка по роли",
+      "call": "groupBy([{ name: \"Ada\", role: \"admin\" }, { name: \"Bob\", role: \"user\" }, { name: \"Eve\", role: \"admin\" }], (u) => u.role)",
+      "expected": {
+        "admin": [
+          {
+            "name": "Ada",
+            "role": "admin"
+          },
+          {
+            "name": "Eve",
+            "role": "admin"
+          }
+        ],
+        "user": [
+          {
+            "name": "Bob",
+            "role": "user"
+          }
+        ]
+      }
+    },
+    {
+      "name": "не падает на ключе \"toString\"",
+      "call": "groupBy([\"toString\", \"map\"], (s) => s)",
+      "expected": {
+        "toString": [
+          "toString"
+        ],
+        "map": [
+          "map"
+        ]
+      }
+    }
+  ],
+  "solution": "function groupBy(items, getKey) {\n  const out = {};\n  for (const item of items) {\n    const key = String(getKey(item));\n    if (!Object.hasOwn(out, key)) {\n      out[key] = [];\n    }\n    out[key].push(item);\n  }\n  return out;\n}"
+}

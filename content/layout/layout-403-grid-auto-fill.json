@@ -1,0 +1,76 @@
+{
+  "id": "layout-403-grid-auto-fill",
+  "title": "CSS #56 Адаптивная сетка карточек без медиазапросов",
+  "track": "layout",
+  "level": 4,
+  "isBoss": false,
+  "topic": "css-grid-responsive",
+  "mapTopics": [
+    "CSS Grid",
+    "Responsive"
+  ],
+  "learn": "Связка repeat(auto-fill, minmax(min, 1fr)) автоматически считает, сколько колонок помещается в контейнер, и переносит лишние карточки без единого @media.",
+  "needsDom": true,
+  "codeLanguage": "css",
+  "prompt": "Сделай так, чтобы сетка .auto-grid сама перестраивала число колонок в зависимости от ширины экрана: каждая карточка не должна сжиматься уже 180px, но должна равномерно растягиваться на свободное место в ряду.",
+  "specs": [
+    "Отступ между карточками в .auto-grid: 16px",
+    "Минимальная ширина колонки — 180px, максимальная — равная доля свободного места",
+    "На экране 800px в ряд помещаются все 4 карточки, а на экране 420px — по 2 карточки в ряд"
+  ],
+  "starterHtml": "<div class=\"auto-grid\">\n  <div class=\"tile\">1</div>\n  <div class=\"tile\">2</div>\n  <div class=\"tile\">3</div>\n  <div class=\"tile\">4</div>\n</div>\n",
+  "starterCss": ".auto-grid {\n  \n}\n\n.tile {\n  height: 72px;\n  background: #1e293b;\n  color: #38bdf8;\n  border-radius: 10px;\n  padding: 16px;\n  font-weight: 700;\n}\n",
+  "targetHtml": "<div class=\"auto-grid\">\n  <div class=\"tile\">1</div>\n  <div class=\"tile\">2</div>\n  <div class=\"tile\">3</div>\n  <div class=\"tile\">4</div>\n</div>",
+  "targetCss": ".auto-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));\n  gap: 16px;\n}\n.tile {\n  height: 72px;\n  background: #1e293b;\n  color: #38bdf8;\n  border-radius: 10px;\n  padding: 16px;\n  font-weight: 700;\n}",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: CSS Grid auto-fill minmax без медиазапросов"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/CSS/minmax"
+    },
+    {
+      "tier": 3,
+      "text": "Используй функцию автоматического повторения колонок с диапазоном размера от 180px до одной свободной доли."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".auto-grid использует Grid",
+      "selector": ".auto-grid",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "boundingRect",
+      "name": "На ширине 800px 4-я карточка стоит в первом ряду (top: 0)",
+      "selector": ".tile:nth-child(4)",
+      "property": "top",
+      "expected": 0,
+      "tolerance": 2,
+      "viewportWidth": 800
+    },
+    {
+      "type": "boundingRect",
+      "name": "На ширине 800px ширина карточки равна 188px",
+      "selector": ".tile:nth-child(1)",
+      "property": "width",
+      "expected": 188,
+      "tolerance": 2,
+      "viewportWidth": 800
+    },
+    {
+      "type": "boundingRect",
+      "name": "На ширине 420px 3-я карточка переносится во второй ряд (top: 88px)",
+      "selector": ".tile:nth-child(3)",
+      "property": "top",
+      "expected": 88,
+      "tolerance": 2,
+      "viewportWidth": 420
+    }
+  ],
+  "solution": ".auto-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));\n  gap: 16px;\n}\n\n.tile {\n  height: 72px;\n  background: #1e293b;\n  color: #38bdf8;\n  border-radius: 10px;\n  padding: 16px;\n  font-weight: 700;\n}"
+}

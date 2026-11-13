@@ -1,0 +1,86 @@
+{
+  "track": "logic",
+  "isBoss": false,
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "starterHtml": "",
+  "starterCss": "",
+  "codeChecks": [],
+  "id": "js-205-normalize-users",
+  "title": "Привести ответ API в порядок",
+  "level": 2,
+  "topic": "destructuring-optional-chaining",
+  "mapTopics": [
+    "JS #24 forEach, map, filter",
+    "JS #32 Деструктуризация",
+    "JS #34 Optional chaining и nullish coalescing"
+  ],
+  "learn": "Чем ?? отличается от ||, и почему возраст 0 не должен превращаться в «неизвестно».",
+  "prompt": "С сервера приходят пользователи в формате { id, first_name, last_name, email, profile? }, где profile может отсутствовать целиком. Напиши функцию normalizeUsers(list): для каждого пользователя верни объект { id, fullName, email, age, city }. fullName это имя и фамилия через пробел, email приводится к нижнему регистру и очищается от пробелов по краям. Если возраста нет, age равен null; если города нет, city равен \"не указан\". Возраст 0 это настоящее значение, его терять нельзя.",
+  "specs": [
+    "Функция называется normalizeUsers и принимает массив",
+    "Поля profile.age и profile.city могут отсутствовать, как и сам profile"
+  ],
+  "starterJs": "// list: [{ id, first_name, last_name, email, profile?: { age?, city? } }]\nfunction normalizeUsers(list) {\n\n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: javascript optional chaining, nullish coalescing чем отличается от или, деструктуризация объекта в параметрах map."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: для безопасного чтения вложенного поля есть специальный оператор, а для «значение по умолчанию, только если пусто» есть другой оператор, который, в отличие от обычного «или», не считает нулевое значение пустым."
+    }
+  ],
+  "tests": [
+    {
+      "name": "полный профиль",
+      "call": "normalizeUsers([{ id: 1, first_name: 'Анна', last_name: 'Иванова', email: ' Anna@Mail.RU ', profile: { age: 25, city: 'Казань' } }])",
+      "expected": [
+        {
+          "id": 1,
+          "fullName": "Анна Иванова",
+          "email": "anna@mail.ru",
+          "age": 25,
+          "city": "Казань"
+        }
+      ]
+    },
+    {
+      "name": "профиля нет совсем",
+      "call": "normalizeUsers([{ id: 2, first_name: 'Борис', last_name: 'Петров', email: 'b@x.io' }])",
+      "expected": [
+        {
+          "id": 2,
+          "fullName": "Борис Петров",
+          "email": "b@x.io",
+          "age": null,
+          "city": "не указан"
+        }
+      ]
+    },
+    {
+      "name": "возраст 0 сохраняется",
+      "call": "normalizeUsers([{ id: 3, first_name: 'Ева', last_name: 'К', email: 'e@x.io', profile: { age: 0 } }])",
+      "expected": [
+        {
+          "id": 3,
+          "fullName": "Ева К",
+          "email": "e@x.io",
+          "age": 0,
+          "city": "не указан"
+        }
+      ]
+    },
+    {
+      "name": "пустой список",
+      "call": "normalizeUsers([])",
+      "expected": []
+    }
+  ],
+  "solution": "function normalizeUsers(list) {\n  return list.map(({ id, first_name, last_name, email, profile }) => ({\n    id,\n    fullName: `${first_name} ${last_name}`,\n    email: email.trim().toLowerCase(),\n    age: profile?.age ?? null,\n    city: profile?.city ?? 'не указан',\n  }));\n}"
+}

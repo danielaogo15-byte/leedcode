@@ -1,0 +1,73 @@
+{
+  "id": "layout-402-grid-sticky-footer",
+  "title": "CSS #54 Каркас страницы с прижатым подвалом на Grid",
+  "track": "layout",
+  "level": 4,
+  "isBoss": false,
+  "topic": "css-grid",
+  "mapTopics": [
+    "CSS Grid",
+    "Page Layout"
+  ],
+  "learn": "Если задать строкам сетки шаблон auto 1fr auto, центральная область заберёт всё свободное место, а подвал прижмётся ко дну даже при пустом контенте.",
+  "needsDom": true,
+  "codeLanguage": "css",
+  "prompt": "Внутри контейнера .page мало текста, поэтому подвал .page-footer повис посередине. Прижми подвал к нижнему краю контейнера с помощью Grid-строк, сохранив естественную высоту шапки и подвала.",
+  "specs": [
+    "Высота .page фиксирована: 280px, раскладка — CSS Grid",
+    "Высота .page-header остаётся 48px, высота .page-footer — 44px",
+    "Центральный блок .page-main растягивается на всё оставшееся место по вертикали"
+  ],
+  "starterHtml": "<div class=\"page\">\n  <header class=\"page-header\">Шапка</header>\n  <main class=\"page-main\">Короткая заметка</main>\n  <footer class=\"page-footer\">Подвал 2026</footer>\n</div>\n",
+  "starterCss": ".page {\n  height: 280px;\n  background: #0f172a;\n  color: #f8fafc;\n}\n\n.page-header {\n  height: 48px;\n  padding: 12px 16px;\n  background: #1e293b;\n}\n\n.page-main {\n  padding: 16px;\n}\n\n.page-footer {\n  height: 44px;\n  padding: 12px 16px;\n  background: #1e293b;\n}\n",
+  "targetHtml": "<div class=\"page\">\n  <header class=\"page-header\">Шапка</header>\n  <main class=\"page-main\">Короткая заметка</main>\n  <footer class=\"page-footer\">Подвал 2026</footer>\n</div>",
+  "targetCss": ".page {\n  height: 280px;\n  background: #0f172a;\n  color: #f8fafc;\n  display: grid;\n  grid-template-rows: auto 1fr auto;\n}\n.page-header {\n  height: 48px;\n  padding: 12px 16px;\n  background: #1e293b;\n}\n.page-main {\n  padding: 16px;\n}\n.page-footer {\n  height: 44px;\n  padding: 12px 16px;\n  background: #1e293b;\n}",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: CSS Grid sticky footer grid-template-rows"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/CSS/grid-template-rows"
+    },
+    {
+      "tier": 3,
+      "text": "Задай контейнеру .page три строки: первая и третья по размеру содержимого, а средняя — на всю свободную долю экрана."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".page использует Grid",
+      "selector": ".page",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "boundingRect",
+      "name": "Высота шапки не раздулась (48px)",
+      "selector": ".page-header",
+      "property": "height",
+      "expected": 48,
+      "tolerance": 2
+    },
+    {
+      "type": "boundingRect",
+      "name": "Центральный блок занял 188px (280 - 48 - 44)",
+      "selector": ".page-main",
+      "property": "height",
+      "expected": 188,
+      "tolerance": 2
+    },
+    {
+      "type": "boundingRect",
+      "name": "Подвал прижат к отметке top: 236px",
+      "selector": ".page-footer",
+      "property": "top",
+      "expected": 236,
+      "tolerance": 2
+    }
+  ],
+  "solution": ".page {\n  height: 280px;\n  background: #0f172a;\n  color: #f8fafc;\n  display: grid;\n  grid-template-rows: auto 1fr auto;\n}\n\n.page-header {\n  height: 48px;\n  padding: 12px 16px;\n  background: #1e293b;\n}\n\n.page-main {\n  padding: 16px;\n}\n\n.page-footer {\n  height: 44px;\n  padding: 12px 16px;\n  background: #1e293b;\n}"
+}

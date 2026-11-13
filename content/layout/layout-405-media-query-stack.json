@@ -1,0 +1,66 @@
+{
+  "id": "layout-405-media-query-stack",
+  "title": "CSS #61 Медиазапрос: перестройка тулбара на узком экране",
+  "track": "layout",
+  "level": 4,
+  "isBoss": false,
+  "topic": "media-queries",
+  "mapTopics": [
+    "Media Queries",
+    "Responsive"
+  ],
+  "learn": "Директива @media (max-width: ...) позволяет переопределить направление флекса и скрыть второстепенные блоки на мобильных экранах.",
+  "needsDom": true,
+  "codeLanguage": "css",
+  "prompt": "На широком экране панель .toolbar выстроена в ряд. Добавь адаптивное правило для экранов шириной 600px и меньше: перестрой .toolbar в вертикальную колонку и полностью скрой подсказку .desktop-hint.",
+  "specs": [
+    "На широком экране (1024px) .toolbar остаётся строкой (flex-direction: row), а .desktop-hint виден",
+    "При ширине экрана <= 600px .toolbar переходит в колонку (column)",
+    "При ширине экрана <= 600px элемент .desktop-hint скрыт со страницы (display: none)"
+  ],
+  "starterHtml": "<header class=\"toolbar\">\n  <strong>Панель проектов</strong>\n  <span class=\"desktop-hint\">Нажми Ctrl+K для поиска</span>\n  <button type=\"button\">Создать</button>\n</header>\n",
+  "starterCss": ".toolbar {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  gap: 12px;\n  padding: 16px;\n  background: #1e293b;\n  color: #f8fafc;\n  border-radius: 10px;\n}\n\n.desktop-hint {\n  font-size: 12px;\n  color: #94a3b8;\n}\n\n/* Добавь медиазапрос для экранов <= 600px ниже */\n",
+  "targetHtml": "<header class=\"toolbar\">\n  <strong>Панель проектов</strong>\n  <span class=\"desktop-hint\">Нажми Ctrl+K для поиска</span>\n  <button type=\"button\">Создать</button>\n</header>",
+  "targetCss": ".toolbar {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  gap: 12px;\n  padding: 16px;\n  background: #1e293b;\n  color: #f8fafc;\n  border-radius: 10px;\n}\n.desktop-hint {\n  font-size: 12px;\n  color: #94a3b8;\n}\n@media (max-width: 600px) {\n  .toolbar {\n    flex-direction: column;\n  }\n  .desktop-hint {\n    display: none;\n  }\n}",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: CSS @media max-width 600px"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/CSS/CSS_media_queries/Using_media_queries"
+    },
+    {
+      "tier": 3,
+      "text": "Оберни правила смены направления .toolbar и скрытия .desktop-hint в медиазапрос с максимальной шириной 600px."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "На десктопе (1024px) .toolbar остаётся строкой",
+      "selector": ".toolbar",
+      "property": "flexDirection",
+      "expected": "row",
+      "viewportWidth": 1024
+    },
+    {
+      "type": "computedStyle",
+      "name": "На мобильном (480px) .toolbar выстраивается в колонку",
+      "selector": ".toolbar",
+      "property": "flexDirection",
+      "expected": "column",
+      "viewportWidth": 480
+    },
+    {
+      "type": "computedStyle",
+      "name": "На мобильном (480px) .desktop-hint скрыт",
+      "selector": ".desktop-hint",
+      "property": "display",
+      "expected": "none",
+      "viewportWidth": 480
+    }
+  ],
+  "solution": ".toolbar {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  gap: 12px;\n  padding: 16px;\n  background: #1e293b;\n  color: #f8fafc;\n  border-radius: 10px;\n}\n\n.desktop-hint {\n  font-size: 12px;\n  color: #94a3b8;\n}\n\n@media (max-width: 600px) {\n  .toolbar {\n    flex-direction: column;\n  }\n  .desktop-hint {\n    display: none;\n  }\n}"
+}

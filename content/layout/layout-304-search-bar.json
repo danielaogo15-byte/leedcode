@@ -1,0 +1,83 @@
+{
+  "track": "layout",
+  "isBoss": false,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<div class=\"search\" id=\"wide\">\n  <span class=\"icon\">🔍</span>\n  <input class=\"query\" type=\"text\" placeholder=\"Поиск по тренажёру\">\n  <button class=\"go\" type=\"button\">Найти</button>\n</div>\n<div class=\"search\" id=\"narrow\">\n  <span class=\"icon\">🔍</span>\n  <input class=\"query\" type=\"text\" placeholder=\"Поиск\">\n  <button class=\"go\" type=\"button\">Найти</button>\n</div>",
+  "targetCss": "body { margin: 0; font: 16px system-ui, sans-serif; }\n.search { display: flex; gap: 8px; background: #f1f5f9; margin-bottom: 20px; }\n#wide { width: 600px; }\n#narrow { width: 200px; }\n.icon { flex: none; width: 40px; height: 40px; text-align: center; line-height: 40px; background: #cbd5e1; }\n.query { flex: 1; min-width: 0; height: 40px; box-sizing: border-box; border: 1px solid #94a3b8; }\n.go { flex: none; width: 100px; height: 40px; border: 0; background: #2563eb; color: #fff; }",
+  "solution": "/* HTML */\n<div class=\"search\" id=\"wide\">\n  <span class=\"icon\">🔍</span>\n  <input class=\"query\" type=\"text\" placeholder=\"Поиск по тренажёру\">\n  <button class=\"go\" type=\"button\">Найти</button>\n</div>\n<div class=\"search\" id=\"narrow\">\n  <span class=\"icon\">🔍</span>\n  <input class=\"query\" type=\"text\" placeholder=\"Поиск\">\n  <button class=\"go\" type=\"button\">Найти</button>\n</div>\n\n/* CSS */\nbody { margin: 0; font: 16px system-ui, sans-serif; }\n.search { display: flex; gap: 8px; background: #f1f5f9; margin-bottom: 20px; }\n#wide { width: 600px; }\n#narrow { width: 200px; }\n.icon { flex: none; width: 40px; height: 40px; text-align: center; line-height: 40px; background: #cbd5e1; }\n.query { flex: 1; min-width: 0; height: 40px; box-sizing: border-box; border: 1px solid #94a3b8; }\n.go { flex: none; width: 100px; height: 40px; border: 0; background: #2563eb; color: #fff; }",
+  "id": "layout-304-search-bar",
+  "title": "Строка поиска, которая не ломается",
+  "level": 3,
+  "topic": "flex-grow-shrink",
+  "mapTopics": [
+    "CSS #45 flex-grow, flex-shrink, flex-basis",
+    "CSS #46 Сокращение flex: 1",
+    "CSS #48 min-width: 0 и переполнение во флексе"
+  ],
+  "learn": "Почему поле ввода не сжимается так, как ты ожидаешь, и как ему это разрешить.",
+  "prompt": "Сделай строку поиска: иконка 40px слева, кнопка 100px справа, между ними промежуток 8px и поле ввода, которое занимает всё оставшееся место. Это должно работать и в широкой строке (600px), и в узкой (200px): в узкой кнопка и иконка не должны сплющиться, пусть сжимается только поле.",
+  "specs": [
+    "Размеры иконки (40px) и кнопки (100px) уже заданы в стартовом коде",
+    "Проверяются обе строки: #wide и #narrow"
+  ],
+  "starterHtml": "<div class=\"search\" id=\"wide\">\n  <span class=\"icon\">🔍</span>\n  <input class=\"query\" type=\"text\" placeholder=\"Поиск по тренажёру\">\n  <button class=\"go\" type=\"button\">Найти</button>\n</div>\n<div class=\"search\" id=\"narrow\">\n  <span class=\"icon\">🔍</span>\n  <input class=\"query\" type=\"text\" placeholder=\"Поиск\">\n  <button class=\"go\" type=\"button\">Найти</button>\n</div>\n",
+  "starterCss": "body { margin: 0; font: 16px system-ui, sans-serif; }\n.search { background: #f1f5f9; margin-bottom: 20px; }\n#wide { width: 600px; }\n#narrow { width: 200px; }\n.icon { width: 40px; height: 40px; text-align: center; line-height: 40px; background: #cbd5e1; }\n.query { height: 40px; box-sizing: border-box; border: 1px solid #94a3b8; }\n.go { width: 100px; height: 40px; border: 0; background: #2563eb; color: #fff; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: flex 1 растянуть input, flex-shrink 0, почему input не сжимается во flex, min-width 0."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/flex"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: поле должно уметь расти и уметь сжиматься, но у поля ввода есть «минимальная ширина по умолчанию», которая мешает сжатию. Иконке и кнопке нужно, наоборот, запретить сжиматься."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Широкая строка: поле занимает всё свободное место",
+      "selector": "#wide .query",
+      "property": "width",
+      "expected": 444,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Широкая строка: кнопка прижата вправо",
+      "selector": "#wide .go",
+      "property": "left",
+      "expected": 500,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Узкая строка: поле сжалось до остатка",
+      "selector": "#narrow .query",
+      "property": "width",
+      "expected": 44,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Узкая строка: кнопка не сплющилась",
+      "selector": "#narrow .go",
+      "property": "width",
+      "expected": 100,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Узкая строка: иконка не сплющилась",
+      "selector": "#narrow .icon",
+      "property": "width",
+      "expected": 40,
+      "tolerance": 1
+    }
+  ]
+}

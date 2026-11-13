@@ -1,0 +1,54 @@
+{
+  "id": "js-304-memoize-single",
+  "title": "JS #37 Кэширующая обёртка (memoize)",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "memoization",
+  "mapTopics": [
+    "Closures",
+    "Map",
+    "Performance"
+  ],
+  "learn": "Коллекция Map или проверка собственного ключа позволяет отличить «ключа ещё нет в кэше» от «ключ есть, но его значение равно undefined или null».",
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "prompt": "Напиши функцию `memoize(fn)`, которая кэширует результаты вызовов функции одного аргумента `fn(arg)`. Если обёртка вызывается повторно с тем же аргументом, она должна вернуть значение из кэша без повторного запуска `fn`.",
+  "specs": [
+    "Кэш должен работать в том числе когда fn(arg) возвращает null, false, 0 или undefined",
+    "Разные аргументы кэшируются независимо"
+  ],
+  "starterJs": "function memoize(fn) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: JavaScript Map has get set memoization"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Map"
+    },
+    {
+      "tier": 3,
+      "text": "Храни кэш в коллекции ключ-значение и перед вычислением проверяй наличие ключа в коллекции, а не истинность сохранённого значения."
+    }
+  ],
+  "tests": [
+    {
+      "name": "считает каждое значение только один раз",
+      "call": "(() => { let calls = 0; const sq = memoize((n) => { calls++; return n * n; }); return [sq(4), sq(4), sq(5), calls]; })()",
+      "expected": [
+        16,
+        16,
+        25,
+        2
+      ]
+    },
+    {
+      "name": "кэширует возвращённый undefined без повторного вызова",
+      "call": "(() => { let calls = 0; const find = memoize(() => { calls++; return undefined; }); find(\"x\"); find(\"x\"); return calls; })()",
+      "expected": 1
+    }
+  ],
+  "solution": "function memoize(fn) {\n  const cache = new Map();\n  return function (arg) {\n    if (cache.has(arg)) {\n      return cache.get(arg);\n    }\n    const result = fn(arg);\n    cache.set(arg, result);\n    return result;\n  };\n}"
+}

@@ -1,0 +1,89 @@
+{
+  "track": "logic",
+  "isBoss": false,
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "starterHtml": "",
+  "starterCss": "",
+  "codeChecks": [],
+  "id": "js-201-unique-by-id",
+  "title": "Дубликаты в корзине",
+  "level": 2,
+  "topic": "arrays-set",
+  "mapTopics": [
+    "JS #25 find, some, every, includes",
+    "JS #37 Map и Set"
+  ],
+  "learn": "Как быстро запоминать «уже видел» и не писать цикл в цикле.",
+  "prompt": "В корзине один и тот же товар оказался несколько раз. Напиши функцию uniqueById(items): она принимает массив объектов с полем id и возвращает новый массив без повторов по id. Из повторяющихся остаётся первый объект, порядок сохраняется. Исходный массив менять нельзя.",
+  "specs": [
+    "Функция называется uniqueById и принимает один аргумент",
+    "Возвращает новый массив, исходный остаётся нетронутым"
+  ],
+  "starterJs": "// items: массив объектов вида { id, ... }\nfunction uniqueById(items) {\n\n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: javascript убрать дубликаты в массиве объектов по полю, структура Set."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: идёшь по массиву и ведёшь «список уже встреченных id» в структуре, где проверка наличия мгновенная. Пропускаешь элемент, если его id уже встречался."
+    }
+  ],
+  "tests": [
+    {
+      "name": "повтор в середине",
+      "call": "uniqueById([{ id: 1, n: 'a' }, { id: 2, n: 'b' }, { id: 1, n: 'c' }])",
+      "expected": [
+        {
+          "id": 1,
+          "n": "a"
+        },
+        {
+          "id": 2,
+          "n": "b"
+        }
+      ]
+    },
+    {
+      "name": "пустой массив",
+      "call": "uniqueById([])",
+      "expected": []
+    },
+    {
+      "name": "все одинаковые",
+      "call": "uniqueById([{ id: 5 }, { id: 5 }, { id: 5 }])",
+      "expected": [
+        {
+          "id": 5
+        }
+      ]
+    },
+    {
+      "name": "порядок сохраняется",
+      "call": "uniqueById([{ id: 3 }, { id: 1 }, { id: 3 }, { id: 2 }, { id: 1 }])",
+      "expected": [
+        {
+          "id": 3
+        },
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ]
+    },
+    {
+      "name": "исходный массив не изменён",
+      "call": "(() => { const a = [{ id: 1 }, { id: 1 }]; uniqueById(a); return a.length; })()",
+      "expected": 2
+    }
+  ],
+  "solution": "function uniqueById(items) {\n  const seen = new Set();\n  return items.filter((item) => {\n    if (seen.has(item.id)) return false;\n    seen.add(item.id);\n    return true;\n  });\n}"
+}

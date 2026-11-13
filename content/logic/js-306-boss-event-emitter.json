@@ -1,0 +1,62 @@
+{
+  "id": "js-306-boss-event-emitter",
+  "title": "Босс: Шина событий с безопасной отпиской (EventEmitter)",
+  "track": "logic",
+  "level": 3,
+  "isBoss": true,
+  "topic": "closures-boss",
+  "mapTopics": [
+    "Closures",
+    "EventEmitter",
+    "Immutability"
+  ],
+  "learn": "Если во время перебора массива подписчиков в `emit` один из них отписывается и мутирует массив через `splice`, следующий за ним подписчик пропускается — поэтому перебирать нужно копию списка.",
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "prompt": "Напиши функцию `createEmitter()`, возвращающую шину событий с тремя методами: `on(event, handler)` подписывает функцию и возвращает функцию отписки `unsubscribe()`, `once(event, handler)` подписывает обработчик только на одно следующее срабатывание, а `emit(event, payload)` вызывает все текущие обработчики события по порядку.",
+  "specs": [
+    "Вызов функции, возвращённой из on(event, fn), удаляет только этот обработчик",
+    "Обработчик, добавленный через once(event, fn), срабатывает ровно один раз и сам удаляется до следующего emit",
+    "Если обработчик удаляется прямо во время emit (например, через once), соседние обработчики того же события не должны быть пропущены"
+  ],
+  "starterJs": "function createEmitter() {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: JavaScript EventEmitter on once emit implementation"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/slice"
+    },
+    {
+      "tier": 3,
+      "text": "Храни списки подписчиков по имени события. При испускании события итерируйся по поверхностной копии массива подписчиков, чтобы удаление одноразового слушателя не сбивало индексы цикла."
+    }
+  ],
+  "tests": [
+    {
+      "name": "подписка on и отписка через возвращённую функцию",
+      "call": "(() => { const bus = createEmitter(); const log = []; const off = bus.on(\"msg\", (x) => log.push(x)); bus.emit(\"msg\", 1); off(); bus.emit(\"msg\", 2); return log; })()",
+      "expected": [
+        1
+      ]
+    },
+    {
+      "name": "once срабатывает ровно один раз",
+      "call": "(() => { const bus = createEmitter(); const log = []; bus.once(\"ping\", (v) => log.push(v)); bus.emit(\"ping\", \"a\"); bus.emit(\"ping\", \"b\"); return log; })()",
+      "expected": [
+        "a"
+      ]
+    },
+    {
+      "name": "удаление once во время emit не пропускает следующий за ним обработчик",
+      "call": "(() => { const bus = createEmitter(); const log = []; bus.once(\"hit\", () => log.push(\"first\")); bus.on(\"hit\", () => log.push(\"second\")); bus.emit(\"hit\"); return log; })()",
+      "expected": [
+        "first",
+        "second"
+      ]
+    }
+  ],
+  "solution": "function createEmitter() {\n  const events = new Map();\n\n  function on(event, handler) {\n    const list = events.get(event) ?? [];\n    list.push(handler);\n    events.set(event, list);\n    return function unsubscribe() {\n      const current = events.get(event);\n      if (!current) return;\n      const idx = current.indexOf(handler);\n      if (idx !== -1) current.splice(idx, 1);\n    };\n  }\n\n  function once(event, handler) {\n    const off = on(event, (payload) => {\n      off();\n      handler(payload);\n    });\n    return off;\n  }\n\n  function emit(event, payload) {\n    const list = events.get(event);\n    if (!list) return;\n    for (const handler of [...list]) {\n      handler(payload);\n    }\n  }\n\n  return { on, once, emit };\n}"
+}

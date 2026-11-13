@@ -1,0 +1,44 @@
+{
+  "id": "js-305-context-bind-method",
+  "title": "JS #39 Потеря контекста this при передаче метода в колбэк",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "this-context",
+  "mapTopics": [
+    "this",
+    "bind",
+    "Closures"
+  ],
+  "learn": "Когда метод объекта передаётся отдельно как функция `const fn = obj.method`, при вызове `fn()` его `this` теряется и становится `undefined`.",
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "prompt": "Напиши функцию `bindAllMethods(service, methodNames)`, которая принимает объект `service` и массив имён его методов `methodNames` и навсегда привязывает контекст `this` каждого указанного метода к самому объекту `service`, чтобы методы работали даже при отделении от объекта.",
+  "specs": [
+    "Функция возвращает тот же объект service с привязанными методами из списка methodNames",
+    "Отделённый метод const fn = service.run; fn() должен сохранять доступ к полям service"
+  ],
+  "starterJs": "function bindAllMethods(service, methodNames) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: JavaScript Function.prototype.bind потеря контекста this"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/bind"
+    },
+    {
+      "tier": 3,
+      "text": "Пройдись по именам методов и перезапиши каждый метод на объекте его привязанной к этому объекту копией."
+    }
+  ],
+  "tests": [
+    {
+      "name": "сохраняет this после отделения метода в переменную",
+      "call": "(() => { const svc = { prefix: \"ID:\", format(n) { return this.prefix + n; } }; bindAllMethods(svc, [\"format\"]); const fn = svc.format; return fn(42); })()",
+      "expected": "ID:42"
+    }
+  ],
+  "solution": "function bindAllMethods(service, methodNames) {\n  for (const name of methodNames) {\n    if (typeof service[name] === \"function\") {\n      service[name] = service[name].bind(service);\n    }\n  }\n  return service;\n}"
+}

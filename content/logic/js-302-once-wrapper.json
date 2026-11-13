@@ -1,0 +1,61 @@
+{
+  "id": "js-302-once-wrapper",
+  "title": "JS #33 Обёртка однократного вызова (once)",
+  "track": "logic",
+  "level": 3,
+  "isBoss": false,
+  "topic": "higher-order-functions",
+  "mapTopics": [
+    "Closures",
+    "Higher-Order Functions"
+  ],
+  "learn": "При кэшировании первого вызова нельзя проверять `if (!result)`, потому что целевая функция может законно вернуть `undefined`, `0` или `false`.",
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "prompt": "Напиши функцию `once(fn)`, которая возвращает новую функцию-обёртку. При первом вызове обёртка вызывает `fn` со всеми переданными аргументами и запоминает результат, а при всех последующих вызовах возвращает этот сохранённый результат, больше не вызывая `fn`.",
+  "specs": [
+    "Если fn в первый раз вернула undefined, false или 0, повторно вызывать fn всё равно нельзя",
+    "Все аргументы первого вызова должны передаваться в fn"
+  ],
+  "starterJs": "function once(fn) {\n  \n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: JavaScript implement once function closure"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Functions/rest_parameters"
+    },
+    {
+      "tier": 3,
+      "text": "Заведи отдельный булев флаг для проверки того, состоялся ли уже первый вызов, вместо проверки самого сохранённого результата."
+    }
+  ],
+  "tests": [
+    {
+      "name": "вызывает функцию только один раз и хранит первый результат",
+      "call": "(() => { let calls = 0; const init = once((x, y) => { calls++; return x + y; }); return [init(2, 3), init(10, 20), calls]; })()",
+      "expected": [
+        5,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "не вызывает повторно, даже если первый вызов вернул undefined",
+      "call": "(() => { let calls = 0; const noop = once(() => { calls++; return undefined; }); noop(); noop(); return calls; })()",
+      "expected": 1
+    },
+    {
+      "name": "корректно работает, если первый вызов вернул 0",
+      "call": "(() => { let calls = 0; const zero = once(() => { calls++; return 0; }); return [zero(), zero(), calls]; })()",
+      "expected": [
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "solution": "function once(fn) {\n  let called = false;\n  let cached;\n  return function (...args) {\n    if (!called) {\n      called = true;\n      cached = fn.apply(this, args);\n    }\n    return cached;\n  };\n}"
+}

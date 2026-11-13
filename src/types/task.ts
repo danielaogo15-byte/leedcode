@@ -8,6 +8,7 @@ export type TaskHint = {
 };
 
 export type CodeLanguage =
+  | 'css'
   | 'javascript'
   | 'typescript'
   | 'python'

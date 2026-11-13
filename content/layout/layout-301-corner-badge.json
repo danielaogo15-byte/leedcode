@@ -1,0 +1,75 @@
+{
+  "track": "layout",
+  "isBoss": false,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<div class=\"card\">\n  <span class=\"badge\">NEW</span>\n  <h3>Командный план</h3>\n  <p>Безлимитные проекты</p>\n</div>",
+  "targetCss": "body { margin: 0; font: 16px/1.4 system-ui, sans-serif; }\n.card { position: relative; width: 240px; height: 160px; margin: 40px; padding: 16px; box-sizing: border-box; background: #e2e8f0; }\n.card h3 { margin: 0 0 8px; }\n.card p { margin: 0; }\n.badge { position: absolute; top: 12px; right: 12px; background: #f59e0b; color: #fff; padding: 4px 8px; font-size: 12px; border-radius: 999px; }",
+  "solution": "/* HTML */\n<div class=\"card\">\n  <span class=\"badge\">NEW</span>\n  <h3>Командный план</h3>\n  <p>Безлимитные проекты</p>\n</div>\n\n/* CSS */\nbody { margin: 0; font: 16px/1.4 system-ui, sans-serif; }\n.card { position: relative; width: 240px; height: 160px; margin: 40px; padding: 16px; box-sizing: border-box; background: #e2e8f0; }\n.card h3 { margin: 0 0 8px; }\n.card p { margin: 0; }\n.badge { position: absolute; top: 12px; right: 12px; background: #f59e0b; color: #fff; padding: 4px 8px; font-size: 12px; border-radius: 999px; }",
+  "id": "layout-301-corner-badge",
+  "title": "Бейдж в углу карточки",
+  "level": 3,
+  "topic": "positioning",
+  "mapTopics": [
+    "CSS #35 position",
+    "CSS #36 top/right/bottom/left и inset",
+    "CSS #37 Containing block"
+  ],
+  "learn": "Элемент с абсолютным позиционированием считает отступы не от страницы, а от ближайшего «позиционированного» предка.",
+  "prompt": "Поставь бейдж «NEW» в правый верхний угол карточки: 12px от верхнего края и 12px от правого. Сама карточка не должна поменять размер, а остальной текст остаться на своих местах.",
+  "specs": [
+    "Размер карточки 240×160 менять нельзя",
+    "Карточка стоит на странице не в углу, а с отступом, поэтому бейдж нельзя «приколотить» к странице"
+  ],
+  "starterHtml": "<div class=\"card\">\n  <span class=\"badge\">NEW</span>\n  <h3>Командный план</h3>\n  <p>Безлимитные проекты</p>\n</div>\n",
+  "starterCss": "body { margin: 0; font: 16px/1.4 system-ui, sans-serif; }\n.card { width: 240px; height: 160px; margin: 40px; padding: 16px; box-sizing: border-box; background: #e2e8f0; }\n.card h3 { margin: 0 0 8px; }\n.card p { margin: 0; }\n.badge { background: #f59e0b; color: #fff; padding: 4px 8px; font-size: 12px; border-radius: 999px; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: css position absolute относительно родителя, containing block."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/position"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: бейдж нужно «вынуть» из обычного потока и задать ему отступы от краёв. Но отсчитываться они будут от того предка, у которого тоже задано позиционирование. Значит, одно правило нужно не бейджу, а карточке."
+    }
+  ],
+  "checks": [
+    {
+      "type": "boundingRect",
+      "name": "Бейдж на 12px ниже верхнего края карточки",
+      "selector": ".badge",
+      "property": "top",
+      "expected": 52,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Бейдж на 12px левее правого края карточки",
+      "selector": ".badge",
+      "property": "right",
+      "expected": 268,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Высота карточки не изменилась",
+      "selector": ".card",
+      "property": "height",
+      "expected": 160,
+      "tolerance": 1
+    },
+    {
+      "type": "boundingRect",
+      "name": "Ширина карточки не изменилась",
+      "selector": ".card",
+      "property": "width",
+      "expected": 240,
+      "tolerance": 1
+    }
+  ]
+}

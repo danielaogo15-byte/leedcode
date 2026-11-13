@@ -1,0 +1,72 @@
+{
+  "id": "layout-404-grid-layer-overlap",
+  "title": "CSS #58 Наложение текста поверх баннера через одну ячейку Grid",
+  "track": "layout",
+  "level": 4,
+  "isBoss": false,
+  "topic": "css-grid-overlap",
+  "mapTopics": [
+    "CSS Grid",
+    "Stacking"
+  ],
+  "learn": "Если назначить двум дочерним элементам одну и ту же ячейку сетки (1 / 1), они наложатся друг на друга без использования position: absolute.",
+  "needsDom": true,
+  "codeLanguage": "css",
+  "prompt": "Наложи текстовый блок .hero-content поверх фонового блока .hero-bg, используя только возможности CSS Grid (без position: absolute).",
+  "specs": [
+    "Контейнер .hero размером 480×180px работает в режиме Grid",
+    "Оба дочерних элемента (.hero-bg и .hero-content) размещены в первой строке и первой колонке сетки",
+    "Свойство position у .hero-content должно оставаться static"
+  ],
+  "starterHtml": "<section class=\"hero\">\n  <div class=\"hero-bg\"></div>\n  <div class=\"hero-content\">\n    <h2>Ночной релиз</h2>\n  </div>\n</section>\n",
+  "starterCss": ".hero {\n  width: 480px;\n  height: 180px;\n  border-radius: 12px;\n  overflow: hidden;\n}\n\n.hero-bg {\n  width: 100%;\n  height: 100%;\n  background: linear-gradient(135deg, #0284c7, #1e1b4b);\n}\n\n.hero-content {\n  padding: 24px;\n  color: #ffffff;\n}\n",
+  "targetHtml": "<section class=\"hero\">\n  <div class=\"hero-bg\"></div>\n  <div class=\"hero-content\">\n    <h2>Ночной релиз</h2>\n  </div>\n</section>",
+  "targetCss": ".hero {\n  width: 480px;\n  height: 180px;\n  border-radius: 12px;\n  overflow: hidden;\n  display: grid;\n}\n.hero-bg,\n.hero-content {\n  grid-area: 1 / 1;\n}\n.hero-bg {\n  width: 100%;\n  height: 100%;\n  background: linear-gradient(135deg, #0284c7, #1e1b4b);\n}\n.hero-content {\n  padding: 24px;\n  color: #ffffff;\n}",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Гугли: CSS Grid overlap elements same cell grid-area 1 / 1"
+    },
+    {
+      "tier": 2,
+      "text": "MDN: https://developer.mozilla.org/ru/docs/Web/CSS/grid-area"
+    },
+    {
+      "tier": 3,
+      "text": "Включи Grid у родителя и отправь оба дочерних блока в пересечение первой строки и первой колонки."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": ".hero использует Grid",
+      "selector": ".hero",
+      "property": "display",
+      "expected": "grid"
+    },
+    {
+      "type": "computedStyle",
+      "name": ".hero-content не использует position: absolute",
+      "selector": ".hero-content",
+      "property": "position",
+      "expected": "static"
+    },
+    {
+      "type": "boundingRect",
+      "name": ".hero-content начинается с верхней границы баннера (top: 0)",
+      "selector": ".hero-content",
+      "property": "top",
+      "expected": 0,
+      "tolerance": 2
+    },
+    {
+      "type": "boundingRect",
+      "name": ".hero-bg и .hero-content совпадают по левому краю (left: 0)",
+      "selector": ".hero-content",
+      "property": "left",
+      "expected": 0,
+      "tolerance": 2
+    }
+  ],
+  "solution": ".hero {\n  width: 480px;\n  height: 180px;\n  border-radius: 12px;\n  overflow: hidden;\n  display: grid;\n}\n\n.hero-bg,\n.hero-content {\n  grid-area: 1 / 1;\n}\n\n.hero-bg {\n  width: 100%;\n  height: 100%;\n  background: linear-gradient(135deg, #0284c7, #1e1b4b);\n}\n\n.hero-content {\n  padding: 24px;\n  color: #ffffff;\n}"
+}

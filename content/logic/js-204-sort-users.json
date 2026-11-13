@@ -1,0 +1,91 @@
+{
+  "track": "logic",
+  "isBoss": false,
+  "needsDom": false,
+  "codeLanguage": "javascript",
+  "starterHtml": "",
+  "starterCss": "",
+  "codeChecks": [],
+  "id": "js-204-sort-users",
+  "title": "Сортировка без побочных эффектов",
+  "level": 2,
+  "topic": "sort-immutability",
+  "mapTopics": [
+    "JS #22 Мутирующие методы: sort",
+    "JS #23 Немутирующие методы",
+    "JS #35 Ссылочные типы"
+  ],
+  "learn": "sort меняет исходный массив, и это одна из самых частых скрытых ошибок в React.",
+  "prompt": "Напиши функцию sortUsers(users, field, direction), которая возвращает новый массив, отсортированный по полю field. direction равно \"asc\" (по умолчанию) или \"desc\". Числа сортируются как числа, строки как строки. Исходный массив после вызова должен остаться в прежнем порядке.",
+  "specs": [
+    "Функция называется sortUsers и принимает массив, название поля и необязательное направление",
+    "Исходный массив менять нельзя"
+  ],
+  "starterJs": "// users: массив объектов, field: строка, direction: 'asc' | 'desc'\nfunction sortUsers(users, field, direction = 'asc') {\n\n}\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: javascript sort не мутируя исходный массив, sort функция сравнения числа, localeCompare."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: сначала сделай копию массива, и только копию сортируй. В функции сравнения для чисел возвращай разность, для строк используй специальный метод сравнения строк. Для «desc» достаточно поменять знак результата."
+    }
+  ],
+  "tests": [
+    {
+      "name": "числа по возрастанию",
+      "call": "sortUsers([{ n: 'a', age: 30 }, { n: 'b', age: 7 }, { n: 'c', age: 18 }], 'age').map((u) => u.age)",
+      "expected": [
+        7,
+        18,
+        30
+      ]
+    },
+    {
+      "name": "числа по убыванию",
+      "call": "sortUsers([{ age: 30 }, { age: 7 }, { age: 18 }], 'age', 'desc').map((u) => u.age)",
+      "expected": [
+        30,
+        18,
+        7
+      ]
+    },
+    {
+      "name": "строки по возрастанию",
+      "call": "sortUsers([{ name: 'Виктор' }, { name: 'Анна' }, { name: 'Борис' }], 'name').map((u) => u.name)",
+      "expected": [
+        "Анна",
+        "Борис",
+        "Виктор"
+      ]
+    },
+    {
+      "name": "строки по убыванию",
+      "call": "sortUsers([{ name: 'Анна' }, { name: 'Борис' }], 'name', 'desc').map((u) => u.name)",
+      "expected": [
+        "Борис",
+        "Анна"
+      ]
+    },
+    {
+      "name": "исходный массив не изменён",
+      "call": "(() => { const u = [{ age: 3 }, { age: 1 }, { age: 2 }]; sortUsers(u, 'age'); return u.map((x) => x.age); })()",
+      "expected": [
+        3,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "пустой массив",
+      "call": "sortUsers([], 'age')",
+      "expected": []
+    }
+  ],
+  "solution": "function sortUsers(users, field, direction = 'asc') {\n  const sign = direction === 'desc' ? -1 : 1;\n  return [...users].sort((a, b) => {\n    const x = a[field];\n    const y = b[field];\n    if (typeof x === 'number' && typeof y === 'number') return (x - y) * sign;\n    return String(x).localeCompare(String(y)) * sign;\n  });\n}"
+}

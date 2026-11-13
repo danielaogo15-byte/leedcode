@@ -1,0 +1,90 @@
+{
+  "track": "layout",
+  "isBoss": false,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<table>\n  <thead>\n    <tr><th>№</th><th>Товар</th><th>Сумма</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>1</td><td>Клавиатура</td><td>4 900</td></tr>\n    <tr><td>2</td><td>Мышь</td><td>2 300</td></tr>\n    <tr><td>3</td><td>Коврик</td><td>900</td></tr>\n    <tr><td>4</td><td>Кабель</td><td>450</td></tr>\n    <tr><td>5</td><td>Итого</td><td>8 550</td></tr>\n  </tbody>\n</table>",
+  "targetCss": "body { margin: 24px; }\ntable { border-collapse: collapse; }\nth, td { padding: 8px 12px; text-align: left; color: #0f172a; }\ntbody tr:nth-child(even) { background: #f1f5f9; }\ntbody tr:last-child { font-weight: bold; }\ntbody td:first-child { color: #64748b; }",
+  "solution": "/* HTML */\n<table>\n  <thead>\n    <tr><th>№</th><th>Товар</th><th>Сумма</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>1</td><td>Клавиатура</td><td>4 900</td></tr>\n    <tr><td>2</td><td>Мышь</td><td>2 300</td></tr>\n    <tr><td>3</td><td>Коврик</td><td>900</td></tr>\n    <tr><td>4</td><td>Кабель</td><td>450</td></tr>\n    <tr><td>5</td><td>Итого</td><td>8 550</td></tr>\n  </tbody>\n</table>\n\n/* CSS */\nbody { margin: 24px; }\ntable { border-collapse: collapse; }\nth, td { padding: 8px 12px; text-align: left; color: #0f172a; }\ntbody tr:nth-child(even) { background: #f1f5f9; }\ntbody tr:last-child { font-weight: bold; }\ntbody td:first-child { color: #64748b; }",
+  "id": "layout-204-zebra-table",
+  "title": "Таблица-зебра",
+  "level": 2,
+  "topic": "structural-pseudo-classes",
+  "mapTopics": [
+    "CSS #29 Структурные: :first-child, :nth-child(), :nth-of-type()"
+  ],
+  "learn": "Выбирать чётные строки и крайние элементы одним правилом.",
+  "prompt": "Оформи таблицу заказов: чётные строки тела таблицы закрашены светло-серым (#f1f5f9), нечётные без фона. Последняя строка (итого) выделена жирным. Текст в первой колонке приглушённый: цвет #64748b.",
+  "specs": [
+    "Фон задаётся самим строкам (tr), не ячейкам",
+    "HTML не меняй: ни классов, ни id добавлять нельзя"
+  ],
+  "starterHtml": "<table>\n  <thead>\n    <tr><th>№</th><th>Товар</th><th>Сумма</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>1</td><td>Клавиатура</td><td>4 900</td></tr>\n    <tr><td>2</td><td>Мышь</td><td>2 300</td></tr>\n    <tr><td>3</td><td>Коврик</td><td>900</td></tr>\n    <tr><td>4</td><td>Кабель</td><td>450</td></tr>\n    <tr><td>5</td><td>Итого</td><td>8 550</td></tr>\n  </tbody>\n</table>\n",
+  "starterCss": "body { margin: 24px; }\ntable { border-collapse: collapse; }\nth, td { padding: 8px 12px; text-align: left; color: #0f172a; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: css nth-child even odd, css last-child, css first-child."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: три правила. В одном селектор выбирает «каждую вторую» строку, в другом «последнюю», в третьем «первую ячейку в каждой строке». Ключевое слово для чётных есть прямо в языке."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Строка 2 закрашена",
+      "selector": "tbody tr:nth-child(2)",
+      "property": "backgroundColor",
+      "expected": "rgb(241, 245, 249)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Строка 4 закрашена",
+      "selector": "tbody tr:nth-child(4)",
+      "property": "backgroundColor",
+      "expected": "rgb(241, 245, 249)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Строка 1 без фона",
+      "selector": "tbody tr:nth-child(1)",
+      "property": "backgroundColor",
+      "expected": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Строка 3 без фона",
+      "selector": "tbody tr:nth-child(3)",
+      "property": "backgroundColor",
+      "expected": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Последняя строка жирная",
+      "selector": "tbody tr:last-child",
+      "property": "fontWeight",
+      "expected": "700"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Первая колонка приглушена",
+      "selector": "tbody tr:nth-child(2) td:first-child",
+      "property": "color",
+      "expected": "rgb(100, 116, 139)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Вторая колонка остаётся тёмной",
+      "selector": "tbody tr:nth-child(2) td:nth-child(2)",
+      "property": "color",
+      "expected": "rgb(15, 23, 42)"
+    }
+  ]
+}

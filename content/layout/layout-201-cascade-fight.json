@@ -1,0 +1,58 @@
+{
+  "track": "layout",
+  "isBoss": false,
+  "needsDom": true,
+  "codeLanguage": "css",
+  "starterJs": "",
+  "targetHtml": "<button class=\"btn\" id=\"cta\">Купить</button>\n<button class=\"btn\">Подробнее</button>",
+  "targetCss": "body { margin: 0; padding: 24px; }\n.btn { padding: 10px 20px; border: 0; border-radius: 8px; background: #0f172a; color: teal; }\n#cta { color: crimson; }\n.btn#cta { color: white; }",
+  "solution": "/* HTML */\n<button class=\"btn\" id=\"cta\">Купить</button>\n<button class=\"btn\">Подробнее</button>\n\n/* CSS */\nbody { margin: 0; padding: 24px; }\n.btn { padding: 10px 20px; border: 0; border-radius: 8px; background: #0f172a; color: teal; }\n#cta { color: crimson; }\n.btn#cta { color: white; }",
+  "id": "layout-201-cascade-fight",
+  "title": "Кнопка, которая не слушается",
+  "level": 2,
+  "topic": "cascade-specificity",
+  "mapTopics": [
+    "CSS #21 Каскад",
+    "CSS #22 Подсчёт специфичности",
+    "CSS #23 !important и почему его избегают"
+  ],
+  "learn": "Почему правило, написанное ниже, иногда проигрывает правилу, написанному выше.",
+  "prompt": "У кнопки «Купить» текст красный, хотя тебе нужен белый. Сделай текст кнопки «Купить» белым, а у кнопки «Подробнее» он должен остаться бирюзовым.",
+  "specs": [
+    "Готовые правила в CSS не редактируй и не удаляй: только добавляй новые",
+    "Слово !important использовать нельзя",
+    "HTML не меняй"
+  ],
+  "starterHtml": "<button class=\"btn\" id=\"cta\">Купить</button>\n<button class=\"btn\">Подробнее</button>\n",
+  "starterCss": "body { margin: 0; padding: 24px; }\n.btn { padding: 10px 20px; border: 0; border-radius: 8px; background: #0f172a; color: teal; }\n#cta { color: crimson; }\n",
+  "hints": [
+    {
+      "tier": 1,
+      "text": "Загугли: css specificity, id против class, как посчитать специфичность селектора."
+    },
+    {
+      "tier": 2,
+      "text": "https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity"
+    },
+    {
+      "tier": 3,
+      "text": "Идея: браузер выбирает правило не по порядку, а по «весу» селектора. Нужен селектор тяжелее, чем у правила, которое мешает, но он всё ещё должен целиться только в одну кнопку."
+    }
+  ],
+  "checks": [
+    {
+      "type": "computedStyle",
+      "name": "Текст кнопки «Купить» белый",
+      "selector": "#cta",
+      "property": "color",
+      "expected": "rgb(255, 255, 255)"
+    },
+    {
+      "type": "computedStyle",
+      "name": "Текст кнопки «Подробнее» остался бирюзовым",
+      "selector": "button.btn:not(#cta)",
+      "property": "color",
+      "expected": "rgb(0, 128, 128)"
+    }
+  ]
+}
