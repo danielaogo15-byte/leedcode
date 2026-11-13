@@ -6,31 +6,31 @@
 	"stack": ["pnpm", "Vite", "React", "TypeScript", "Git", "GitHub"],
 	"steps": [
 	  {
-		 "expect": "^pnpm create vite(\\s+[\\w-]+)?$",
+		 "expect": "^(pnpm create vite|npm create vite@latest)(\\s+[\\w-]+)?$",
 		 "output": "✔ Project name: … my-app\n✔ Select a framework: › React\n✔ Select a variant: › TypeScript\nScaffolding project in ./my-app...",
-		 "hint": "Создай проект командой: pnpm create vite my-app (или просто pnpm create vite)",
+		 "hint": "Создай проект через Vite: pnpm create vite my-app",
 		 "promptDir": "~"
 	  },
 	  {
-		 "expect": "^cd\\s+[\\w.-]+$",
+		 "expect": "^cd\\s+[\\w-]+$",
 		 "output": "",
 		 "hint": "Перейди в созданную папку проекта: cd my-app",
-		 "promptDir": "~/my-app"
+		 "promptDir": "~"
 	  },
 	  {
-		 "expect": "^pnpm\\s+(i|install)$",
-		 "output": "Packages: +184\n++++++++++++++++++++++++++++++\nProgress: resolved 184, reused 180, downloaded 4, added 184, done\nDone in 1.4s using pnpm v12",
-		 "hint": "Установи зависимости: pnpm i (или pnpm install)",
+		 "expect": "^pnpm\\s+(install|i)$",
+		 "output": "Packages: +174\nProgress: resolved 174, reused 174, downloaded 0, added 174, done\nDone in 1.4s",
+		 "hint": "Установи зависимости через pnpm: pnpm i",
 		 "promptDir": "~/my-app"
 	  },
 	  {
 		 "expect": "^pnpm\\s+(run\\s+)?dev$",
-		 "output": "VITE v8.3.6  ready in 240 ms\n➜  Local:   http://localhost:5173/\n(Сервер проверен и остановлен для коммита)",
-		 "hint": "Запусти dev-сервер для проверки: pnpm dev",
+		 "output": "  VITE v6.0.0  ready in 240 ms\n  ➜  Local:   http://localhost:5173/",
+		 "hint": "Запусти локальный dev-сервер проверки: pnpm dev",
 		 "promptDir": "~/my-app"
 	  },
 	  {
-		 "expect": "git init",
+		 "expect": "^git init$",
 		 "output": "Initialized empty Git repository in ~/my-app/.git/",
 		 "hint": "Инициализируй Git-репозиторий: git init",
 		 "promptDir": "~/my-app"
@@ -44,19 +44,19 @@
 	  {
 		 "expect": "^git commit -m [\"'].+[\"']$",
 		 "output": "[main (root-commit) 4a9c12e] initial commit\n 14 files changed, 420 insertions(+)",
-		 "hint": "Сделай первый коммит с сообщением в кавычках: git commit -m \"init\"",
+		 "hint": "Сделай первый коммит: git commit -m \"init\"",
 		 "promptDir": "~/my-app (main)"
 	  },
 	  {
-		 "expect": "^git remote add origin https?:\\/\\/.+|git@.+",
-		 "output": "",
-		 "hint": "Привяжи удалённый репозиторий: git remote add origin https://github.com/user/my-app.git",
+		 "expect": "^git remote add origin(\\s+\\S+)?$",
+		 "output": "Linked origin -> https://github.com/user/my-app.git",
+		 "hint": "Привяжи удалённый репозиторий: git remote add origin",
 		 "promptDir": "~/my-app (main)"
 	  },
 	  {
 		 "expect": "^git push (-u|--set-upstream) origin (main|master)$",
-		 "output": "Enumerating objects: 16, done.\nCounting objects: 100% (16/16), done.\nWriting objects: 100% (16/16), 4.12 KiB | 4.12 MiB/s, done.\nTo https://github.com/user/my-app.git\n * [new branch]      main -> main\nbranch 'main' set up to track 'origin/main'.",
-		 "hint": "Отправь ветку на GitHub: git push -u origin main",
+		 "output": "Enumerating objects: 16, done.\nTo https://github.com/user/my-app.git\n * [new branch]      main -> main\nbranch 'main' set up to track 'origin/main'.",
+		 "hint": "Отправь ветку в GitHub с флагом апстрима: git push -u origin main",
 		 "promptDir": "~/my-app (main)"
 	  }
 	]

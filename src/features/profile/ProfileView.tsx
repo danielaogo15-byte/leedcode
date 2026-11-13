@@ -59,7 +59,6 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
     return rec?.solved && rec.nextReviewAt !== null && rec.nextReviewAt <= now;
   });
 
-  // Годовой хитмап: 52 недели (364 дня)
   const heatmapWeeks = useMemo(() => {
     const weeks: { key: string; count: number; label: string }[][] = [];
     const today = new Date();
@@ -90,8 +89,8 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
 
   return (
     <div className="col-span-2 overflow-y-auto p-6">
-      <div className="mx-auto flex max-w-5xl flex-col gap-6">
-        <div className="grid gap-4 sm:grid-cols-4">
+      <div className="flex w-full flex-col gap-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-xl border border-border bg-card/60 p-4">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Trophy className="size-4 text-amber-400" />
@@ -171,7 +170,7 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
           </div>
 
           <div className="mt-3 overflow-x-auto pb-1">
-            <div className="inline-flex gap-1">
+            <div className="flex justify-between gap-1">
               {heatmapWeeks.map((week, wIdx) => (
                 <div key={wIdx} className="flex flex-col gap-1">
                   {week.map((day) => {
@@ -187,7 +186,7 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
                       <div
                         key={day.key}
                         title={day.label}
-                        className={`size-3 rounded-[3px] border ${cellColor}`}
+                        className={`size-3.5 rounded-[3px] border ${cellColor}`}
                       />
                     );
                   })}
@@ -276,7 +275,7 @@ export function ProfileView({ tasks, onSelectTask }: Props) {
             <Layers className="size-4 text-sky-400" />
             Карта уровней и 39 технологий твоего стека
           </h3>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {LEVELS.map((lvl) => {
               const info = LEVEL_ROADMAP[lvl];
               const isOpen = lvl <= Math.max(unlockedLayout, unlockedLogic);

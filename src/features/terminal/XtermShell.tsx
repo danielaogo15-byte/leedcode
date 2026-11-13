@@ -52,8 +52,8 @@ export default function XtermShell({
     startedRef.current = false;
 
     const term = new Terminal({
-      rows: 16,
-      cols: 85,
+      rows: 18,
+      cols: 115,
       scrollback: 1000,
       cursorBlink: true,
       fontFamily:
@@ -84,7 +84,7 @@ export default function XtermShell({
       `\x1b[1;34m=== VibeCode Dojo CLI · ${ritual.title} ===\x1b[0m`,
     );
     term.writeln(
-      `\x1b[90mВводи команды по шагам и нажимай Enter. Подсказка: введи ? для помощи.\x1b[0m`,
+      `\x1b[90mВводи команды по шагам и нажимай Enter. Справа в чек-листе показаны все команды.\x1b[0m`,
     );
     writePrompt(0);
 
@@ -154,7 +154,7 @@ export default function XtermShell({
           } else {
             callbacksRef.current.onErrorIncrement();
             term.writeln(
-              `\x1b[31m✖ Команда «${trimmed}» не подходит для шага ${idx + 1}/${ritual.steps.length}. Введи ? для подсказки.\x1b[0m`,
+              `\x1b[31m✖ Команда «${trimmed}» не подходит для шага ${idx + 1}/${ritual.steps.length}. Посмотри команду в чек-листе справа.\x1b[0m`,
             );
             writePrompt(idx);
           }
@@ -184,7 +184,7 @@ export default function XtermShell({
   return (
     <div
       onClick={() => containerRef.current?.querySelector('textarea')?.focus()}
-      className="w-full overflow-x-auto rounded-xl border border-border bg-[#161b26] p-3 shadow-inner"
+      className="w-full overflow-x-auto rounded-xl border border-border bg-[#161b26] p-4 shadow-inner"
     >
       <div ref={containerRef} className="w-full" />
     </div>

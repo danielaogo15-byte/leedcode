@@ -78,7 +78,7 @@ export function DrillsView() {
 
   return (
     <div className="col-span-2 overflow-y-auto p-6">
-      <div className="mx-auto flex max-w-4xl flex-col gap-5">
+      <div className="flex w-full flex-col gap-5">
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-card to-card p-5">
           <div>
             <div className="flex items-center gap-2">
@@ -156,7 +156,7 @@ export function DrillsView() {
         <div className="rounded-2xl border border-border bg-card/70 p-6 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <Badge className="bg-sky-500 text-slate-950 font-bold">
+              <Badge className="bg-sky-500 font-bold text-slate-950">
                 {card.tech}
               </Badge>
               <span className="text-xs text-muted-foreground">
