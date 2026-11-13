@@ -247,6 +247,17 @@ export function AppShell() {
     setScreen('trainer');
   };
 
+  const toggleBugHunt = () => {
+    setBugHuntMode((prev) => {
+      const next = !prev;
+      if (next) {
+        setMemoryMode(false);
+        setScreen('trainer');
+      }
+      return next;
+    });
+  };
+
   const showPreview = Boolean(
     task && (task.track === 'layout' || task.needsDom),
   );
@@ -532,7 +543,7 @@ export function AppShell() {
 
           <button
             type="button"
-            onClick={() => setBugHuntMode((prev) => !prev)}
+            onClick={toggleBugHunt}
             className={
               bugHuntMode
                 ? 'flex items-center gap-1.5 rounded-lg border border-rose-500 bg-rose-500/20 px-2.5 py-1 text-xs font-semibold text-rose-300'
@@ -541,7 +552,7 @@ export function AppShell() {
             title="Режим Bug Hunt: загрузить код с багом и починить его"
           >
             <Bug className="size-3.5 text-rose-400" />
-            <span>Почини баг</span>
+            <span>{bugHuntMode ? 'Почини баг: ВКЛ' : 'Почини баг'}</span>
           </button>
 
           <div className="flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-500 dark:text-amber-300">
@@ -707,8 +718,19 @@ export function AppShell() {
                     </div>
 
                     {bugHuntMode && bugHintText ? (
-                      <div className="mt-2 rounded-lg border border-rose-500/40 bg-rose-500/10 px-3 py-1.5 text-xs text-rose-300">
-                        🐛 <strong>Симптом бага:</strong> {bugHintText}
+                      <div className="mt-2 flex items-center justify-between gap-2 rounded-lg border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-xs text-rose-300">
+                        <span>
+                          🐛 <strong>Где искать баг:</strong> {bugHintText}
+                        </span>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setBugHuntMode(false)}
+                          className="h-6 px-2 text-[11px] text-rose-300 hover:text-white"
+                        >
+                          Выйти из режима
+                        </Button>
                       </div>
                     ) : null}
 
